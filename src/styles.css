@@ -129,6 +129,15 @@ body {
     letter-spacing: 0.3px;
 }
 
+.update-info {
+    margin: 6px 0 0;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.4px;
+    color: var(--orange-soft);
+    opacity: 0.9;
+}
+
 /* -- Custom SE filter dropdown -- */
 
 .se-filter {

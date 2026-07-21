@@ -169,6 +169,7 @@ export default function App() {
                                     </div>
                                 )}
                             </div>
+                            <p className="update-info">Update data sesuai tanggal 16 July 2026</p>
                             <p>Distributor Sales Executive · Dashboard KPI Juli</p>
                         </div>
                     </div>
