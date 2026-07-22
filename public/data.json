@@ -1,72 +1,72 @@
 {
-  "generatedAt": "2026-07-19T06:51:41.863Z",
-  "source": "UPDATE 16 JULI.xlsx",
+  "generatedAt": "2026-07-22T02:45:05.860Z",
+  "source": "UPDATE 19 JULI.xlsx",
   "totals": {
-    "osaMtd": 367235050,
+    "osaMtd": 418763550,
     "targetOsa": 731345962,
-    "osaPct": 50.21358824430072,
-    "sellinMtd": 394,
+    "osaPct": 57.25929611408724,
+    "sellinMtd": 791,
     "targetSellin": 829,
-    "sellinPct": 47.52714113389626,
-    "biometrikCount": 45,
-    "biometrikPct": 31.03448275862069,
-    "incremental": 117,
+    "sellinPct": 95.41616405307599,
+    "biometrikCount": 36,
+    "biometrikPct": 24.82758620689655,
+    "incremental": 245,
     "totalRetailers": 145,
-    "visitedRetailers": 34,
-    "transactedRetailers": 106,
-    "untransactedRetailers": 39
+    "visitedRetailers": 39,
+    "transactedRetailers": 109,
+    "untransactedRetailers": 36
   },
   "seList": [
     {
       "seName": "1-179956096674",
       "tsName": "CS NORTH MINAHASA",
       "count": 46,
-      "osaMtd": 76296050,
-      "sellinMtd": 68,
-      "bioGt1": 18,
-      "incremental": 16,
-      "visitedRetailers": 14,
-      "transactedRetailers": 38,
-      "untransactedRetailers": 8,
+      "osaMtd": 97247550,
+      "sellinMtd": 165,
+      "bioGt1": 9,
+      "incremental": 4,
+      "visitedRetailers": 16,
+      "transactedRetailers": 41,
+      "untransactedRetailers": 5,
       "targetOsa": 161453444,
       "targetSellin": 123,
-      "osaPct": 47.25575875606593,
-      "sellinPct": 55.28455284552846,
-      "biometrikPct": 39.130434782608695
+      "osaPct": 60.232564627113184,
+      "sellinPct": 134.14634146341464,
+      "biometrikPct": 19.565217391304348
     },
     {
       "seName": "1-179957288290",
       "tsName": "CS NORTH MINAHASA",
       "count": 43,
-      "osaMtd": 125916000,
+      "osaMtd": 137911000,
       "sellinMtd": 209,
-      "bioGt1": 17,
-      "incremental": 82,
-      "visitedRetailers": 13,
+      "bioGt1": 11,
+      "incremental": 120,
+      "visitedRetailers": 14,
       "transactedRetailers": 30,
       "untransactedRetailers": 13,
       "targetOsa": 226554560,
       "targetSellin": 136,
-      "osaPct": 55.57866502444268,
+      "osaPct": 60.8731954015845,
       "sellinPct": 153.6764705882353,
-      "biometrikPct": 39.53488372093023
+      "biometrikPct": 25.581395348837212
     },
     {
       "seName": "1-179957290903",
       "tsName": "CS NORTH MINAHASA",
       "count": 56,
-      "osaMtd": 165023000,
-      "sellinMtd": 117,
-      "bioGt1": 10,
-      "incremental": 19,
-      "visitedRetailers": 7,
+      "osaMtd": 183605000,
+      "sellinMtd": 417,
+      "bioGt1": 16,
+      "incremental": 121,
+      "visitedRetailers": 9,
       "transactedRetailers": 38,
       "untransactedRetailers": 18,
       "targetOsa": 343337958,
       "targetSellin": 570,
-      "osaPct": 48.06430403480177,
-      "sellinPct": 20.526315789473685,
-      "biometrikPct": 17.857142857142858
+      "osaPct": 53.4764641432393,
+      "sellinPct": 73.15789473684211,
+      "biometrikPct": 28.57142857142857
     }
   ],
   "retailers": [
@@ -79,10 +79,10 @@
       "sellinLmtd": 3,
       "osaLmtd": 2058000,
       "sellinMtd": 4,
-      "osaMtd": 1565000,
+      "osaMtd": 1765000,
       "bioLmtd": 1,
-      "bioMtd": 2,
-      "incremental": 1,
+      "bioMtd": 1,
+      "incremental": 0,
       "visit": 1
     },
     {
@@ -94,10 +94,10 @@
       "sellinLmtd": 60,
       "osaLmtd": 8236800,
       "sellinMtd": 3,
-      "osaMtd": 1000,
+      "osaMtd": 3106000,
       "bioLmtd": 1,
-      "bioMtd": 4,
-      "incremental": 3,
+      "bioMtd": 9,
+      "incremental": 8,
       "visit": 0
     },
     {
@@ -128,7 +128,7 @@
       "bioLmtd": 1,
       "bioMtd": 1,
       "incremental": 0,
-      "visit": 1
+      "visit": 2
     },
     {
       "tsName": "CS NORTH MINAHASA",
@@ -143,7 +143,7 @@
       "bioLmtd": 2,
       "bioMtd": 1,
       "incremental": 0,
-      "visit": 0
+      "visit": 2
     },
     {
       "tsName": "CS NORTH MINAHASA",
@@ -154,7 +154,7 @@
       "sellinLmtd": 0,
       "osaLmtd": 2500000,
       "sellinMtd": 0,
-      "osaMtd": 0,
+      "osaMtd": 2000000,
       "bioLmtd": 0,
       "bioMtd": 0,
       "incremental": 0,
@@ -201,8 +201,8 @@
       "sellinMtd": 11,
       "osaMtd": 2113700,
       "bioLmtd": 1,
-      "bioMtd": 1,
-      "incremental": 0,
+      "bioMtd": 3,
+      "incremental": 2,
       "visit": 0
     },
     {
@@ -213,7 +213,7 @@
       "type": "Outlet Non-Telco",
       "sellinLmtd": 2,
       "osaLmtd": 6750900,
-      "sellinMtd": 9,
+      "sellinMtd": 12,
       "osaMtd": 1979000,
       "bioLmtd": 1,
       "bioMtd": 1,
@@ -244,11 +244,11 @@
       "sellinLmtd": 3,
       "osaLmtd": 8770000,
       "sellinMtd": 5,
-      "osaMtd": 4034000,
+      "osaMtd": 7564000,
       "bioLmtd": 1,
       "bioMtd": 1,
       "incremental": 0,
-      "visit": 1
+      "visit": 4
     },
     {
       "tsName": "CS NORTH MINAHASA",
@@ -258,8 +258,8 @@
       "type": "Outlet Regular",
       "sellinLmtd": 3,
       "osaLmtd": 11704000,
-      "sellinMtd": 3,
-      "osaMtd": 2980000,
+      "sellinMtd": 94,
+      "osaMtd": 7340000,
       "bioLmtd": 1,
       "bioMtd": 1,
       "incremental": 0,
@@ -276,7 +276,7 @@
       "sellinMtd": 3,
       "osaMtd": 150000,
       "bioLmtd": 30,
-      "bioMtd": 2,
+      "bioMtd": 0,
       "incremental": 0,
       "visit": 0
     },
@@ -289,11 +289,11 @@
       "sellinLmtd": 3,
       "osaLmtd": 5433500,
       "sellinMtd": 0,
-      "osaMtd": 16654850,
+      "osaMtd": 20185350,
       "bioLmtd": 1,
       "bioMtd": 0,
       "incremental": 0,
-      "visit": 0
+      "visit": 2
     },
     {
       "tsName": "CS NORTH MINAHASA",
@@ -306,7 +306,7 @@
       "sellinMtd": 0,
       "osaMtd": 0,
       "bioLmtd": 1,
-      "bioMtd": 1,
+      "bioMtd": 0,
       "incremental": 0,
       "visit": 0
     },
@@ -334,11 +334,11 @@
       "sellinLmtd": 3,
       "osaLmtd": 1029000,
       "sellinMtd": 5,
-      "osaMtd": 100000,
+      "osaMtd": 200000,
       "bioLmtd": 1,
-      "bioMtd": 3,
-      "incremental": 2,
-      "visit": 1
+      "bioMtd": 1,
+      "incremental": 0,
+      "visit": 2
     },
     {
       "tsName": "CS NORTH MINAHASA",
@@ -351,9 +351,9 @@
       "sellinMtd": 1,
       "osaMtd": 2476800,
       "bioLmtd": 1,
-      "bioMtd": 2,
-      "incremental": 1,
-      "visit": 2
+      "bioMtd": 0,
+      "incremental": 0,
+      "visit": 3
     },
     {
       "tsName": "CS NORTH MINAHASA",
@@ -366,7 +366,7 @@
       "sellinMtd": 1,
       "osaMtd": 1617000,
       "bioLmtd": 1,
-      "bioMtd": 1,
+      "bioMtd": 0,
       "incremental": 0,
       "visit": 1
     },
@@ -381,8 +381,8 @@
       "sellinMtd": 0,
       "osaMtd": 1000000,
       "bioLmtd": 1,
-      "bioMtd": 4,
-      "incremental": 3,
+      "bioMtd": 2,
+      "incremental": 1,
       "visit": 1
     },
     {
@@ -394,10 +394,10 @@
       "sellinLmtd": 3,
       "osaLmtd": 1050200,
       "sellinMtd": 0,
-      "osaMtd": 0,
+      "osaMtd": 766000,
       "bioLmtd": 1,
-      "bioMtd": 1,
-      "incremental": 0,
+      "bioMtd": 2,
+      "incremental": 1,
       "visit": 1
     },
     {
@@ -409,10 +409,10 @@
       "sellinLmtd": 2,
       "osaLmtd": 4800000,
       "sellinMtd": 1,
-      "osaMtd": 2000000,
+      "osaMtd": 2500000,
       "bioLmtd": 1,
-      "bioMtd": 2,
-      "incremental": 1,
+      "bioMtd": 0,
+      "incremental": 0,
       "visit": 0
     },
     {
@@ -454,7 +454,7 @@
       "sellinLmtd": 3,
       "osaLmtd": 9058000,
       "sellinMtd": 0,
-      "osaMtd": 4500000,
+      "osaMtd": 5000000,
       "bioLmtd": 1,
       "bioMtd": 2,
       "incremental": 1,
@@ -471,8 +471,8 @@
       "sellinMtd": 3,
       "osaMtd": 513200,
       "bioLmtd": 1,
-      "bioMtd": 5,
-      "incremental": 4,
+      "bioMtd": 0,
+      "incremental": 0,
       "visit": 1
     },
     {
@@ -486,7 +486,7 @@
       "sellinMtd": 0,
       "osaMtd": 1650000,
       "bioLmtd": 1,
-      "bioMtd": 1,
+      "bioMtd": 0,
       "incremental": 0,
       "visit": 1
     },
@@ -503,7 +503,7 @@
       "bioLmtd": 1,
       "bioMtd": 1,
       "incremental": 0,
-      "visit": 1
+      "visit": 2
     },
     {
       "tsName": "CS NORTH MINAHASA",
@@ -516,7 +516,7 @@
       "sellinMtd": 0,
       "osaMtd": 270500,
       "bioLmtd": 1,
-      "bioMtd": 1,
+      "bioMtd": 0,
       "incremental": 0,
       "visit": 0
     },
@@ -529,9 +529,9 @@
       "sellinLmtd": 1,
       "osaLmtd": 9458000,
       "sellinMtd": 0,
-      "osaMtd": 5700000,
+      "osaMtd": 6500000,
       "bioLmtd": 1,
-      "bioMtd": 1,
+      "bioMtd": 0,
       "incremental": 0,
       "visit": 0
     },
@@ -546,8 +546,8 @@
       "sellinMtd": 3,
       "osaMtd": 1009000,
       "bioLmtd": 1,
-      "bioMtd": 4,
-      "incremental": 3,
+      "bioMtd": 0,
+      "incremental": 0,
       "visit": 0
     },
     {
@@ -561,8 +561,8 @@
       "sellinMtd": 4,
       "osaMtd": 1414000,
       "bioLmtd": 1,
-      "bioMtd": 1,
-      "incremental": 0,
+      "bioMtd": 10,
+      "incremental": 9,
       "visit": 0
     },
     {
@@ -591,7 +591,7 @@
       "sellinMtd": 0,
       "osaMtd": 4150000,
       "bioLmtd": 1,
-      "bioMtd": 1,
+      "bioMtd": 0,
       "incremental": 0,
       "visit": 0
     },
@@ -604,10 +604,10 @@
       "sellinLmtd": 3,
       "osaLmtd": 1631000,
       "sellinMtd": 0,
-      "osaMtd": 170500,
+      "osaMtd": 220500,
       "bioLmtd": 1,
-      "bioMtd": 2,
-      "incremental": 1,
+      "bioMtd": 0,
+      "incremental": 0,
       "visit": 0
     },
     {
@@ -636,8 +636,8 @@
       "sellinMtd": 0,
       "osaMtd": 141000,
       "bioLmtd": 1,
-      "bioMtd": 3,
-      "incremental": 2,
+      "bioMtd": 0,
+      "incremental": 0,
       "visit": 0
     },
     {
@@ -649,10 +649,10 @@
       "sellinLmtd": 11,
       "osaLmtd": 6983500,
       "sellinMtd": 4,
-      "osaMtd": 8459000,
+      "osaMtd": 9369000,
       "bioLmtd": 2,
-      "bioMtd": 3,
-      "incremental": 1,
+      "bioMtd": 1,
+      "incremental": 0,
       "visit": 0
     },
     {
@@ -666,9 +666,9 @@
       "sellinMtd": 0,
       "osaMtd": 1400000,
       "bioLmtd": 1,
-      "bioMtd": 4,
-      "incremental": 3,
-      "visit": 1
+      "bioMtd": 1,
+      "incremental": 0,
+      "visit": 3
     },
     {
       "tsName": "CS NORTH MINAHASA",
@@ -679,7 +679,7 @@
       "sellinLmtd": 3,
       "osaLmtd": 4100000,
       "sellinMtd": 2,
-      "osaMtd": 1300000,
+      "osaMtd": 1800000,
       "bioLmtd": 1,
       "bioMtd": 2,
       "incremental": 1,
@@ -693,7 +693,7 @@
       "type": "Outlet Non-Telco",
       "sellinLmtd": 3,
       "osaLmtd": 766000,
-      "sellinMtd": 0,
+      "sellinMtd": 3,
       "osaMtd": 450000,
       "bioLmtd": 1,
       "bioMtd": 2,
@@ -726,8 +726,8 @@
       "sellinMtd": 0,
       "osaMtd": 610500,
       "bioLmtd": 1,
-      "bioMtd": 2,
-      "incremental": 1,
+      "bioMtd": 0,
+      "incremental": 0,
       "visit": 0
     },
     {
@@ -739,7 +739,7 @@
       "sellinLmtd": 0,
       "osaLmtd": 0,
       "sellinMtd": 3,
-      "osaMtd": 0,
+      "osaMtd": 100000,
       "bioLmtd": 0,
       "bioMtd": 0,
       "incremental": 0,
@@ -769,11 +769,11 @@
       "sellinLmtd": 3,
       "osaLmtd": 26116000,
       "sellinMtd": 54,
-      "osaMtd": 21058000,
+      "osaMtd": 24058000,
       "bioLmtd": 2,
-      "bioMtd": 4,
-      "incremental": 2,
-      "visit": 3
+      "bioMtd": 5,
+      "incremental": 3,
+      "visit": 6
     },
     {
       "tsName": "CS NORTH MINAHASA",
@@ -786,9 +786,9 @@
       "sellinMtd": 11,
       "osaMtd": 0,
       "bioLmtd": 1,
-      "bioMtd": 3,
-      "incremental": 2,
-      "visit": 2
+      "bioMtd": 1,
+      "incremental": 0,
+      "visit": 3
     },
     {
       "tsName": "CS NORTH MINAHASA",
@@ -801,7 +801,7 @@
       "sellinMtd": 0,
       "osaMtd": 0,
       "bioLmtd": 1,
-      "bioMtd": 0,
+      "bioMtd": 1,
       "incremental": 0,
       "visit": 0
     },
@@ -816,8 +816,8 @@
       "sellinMtd": 2,
       "osaMtd": 7000,
       "bioLmtd": 0,
-      "bioMtd": 1,
-      "incremental": 1,
+      "bioMtd": 0,
+      "incremental": 0,
       "visit": 0
     },
     {
@@ -831,8 +831,8 @@
       "sellinMtd": 3,
       "osaMtd": 0,
       "bioLmtd": 2,
-      "bioMtd": 3,
-      "incremental": 1,
+      "bioMtd": 1,
+      "incremental": 0,
       "visit": 0
     },
     {
@@ -846,7 +846,7 @@
       "sellinMtd": 0,
       "osaMtd": 0,
       "bioLmtd": 1,
-      "bioMtd": 1,
+      "bioMtd": 0,
       "incremental": 0,
       "visit": 1
     },
@@ -873,12 +873,12 @@
       "type": "Outlet Regular",
       "sellinLmtd": 102,
       "osaLmtd": 17855500,
-      "sellinMtd": 51,
-      "osaMtd": 1125000,
+      "sellinMtd": 46,
+      "osaMtd": 1175000,
       "bioLmtd": 18,
-      "bioMtd": 66,
-      "incremental": 48,
-      "visit": 1
+      "bioMtd": 85,
+      "incremental": 67,
+      "visit": 2
     },
     {
       "tsName": "CS NORTH MINAHASA",
@@ -908,7 +908,7 @@
       "bioLmtd": 2,
       "bioMtd": 3,
       "incremental": 1,
-      "visit": 1
+      "visit": 2
     },
     {
       "tsName": "CS NORTH MINAHASA",
@@ -936,7 +936,7 @@
       "sellinMtd": 0,
       "osaMtd": 0,
       "bioLmtd": 1,
-      "bioMtd": 1,
+      "bioMtd": 0,
       "incremental": 0,
       "visit": 0
     },
@@ -979,11 +979,11 @@
       "sellinLmtd": 3,
       "osaLmtd": 58000,
       "sellinMtd": 3,
-      "osaMtd": 7000,
+      "osaMtd": 57000,
       "bioLmtd": 1,
       "bioMtd": 0,
       "incremental": 0,
-      "visit": 2
+      "visit": 3
     },
     {
       "tsName": "CS NORTH MINAHASA",
@@ -996,8 +996,8 @@
       "sellinMtd": 0,
       "osaMtd": 700000,
       "bioLmtd": 1,
-      "bioMtd": 3,
-      "incremental": 2,
+      "bioMtd": 2,
+      "incremental": 1,
       "visit": 0
     },
     {
@@ -1009,11 +1009,11 @@
       "sellinLmtd": 3,
       "osaLmtd": 8800000,
       "sellinMtd": 0,
-      "osaMtd": 5500000,
+      "osaMtd": 6500000,
       "bioLmtd": 1,
-      "bioMtd": 2,
-      "incremental": 1,
-      "visit": 0
+      "bioMtd": 1,
+      "incremental": 0,
+      "visit": 3
     },
     {
       "tsName": "CS NORTH MINAHASA",
@@ -1023,7 +1023,7 @@
       "type": "Outlet Regular",
       "sellinLmtd": 8,
       "osaLmtd": 4000000,
-      "sellinMtd": 0,
+      "sellinMtd": 3,
       "osaMtd": 3000000,
       "bioLmtd": 1,
       "bioMtd": 0,
@@ -1039,11 +1039,11 @@
       "sellinLmtd": 3,
       "osaLmtd": 22000000,
       "sellinMtd": 12,
-      "osaMtd": 14000000,
+      "osaMtd": 16000000,
       "bioLmtd": 4,
-      "bioMtd": 13,
-      "incremental": 9,
-      "visit": 1
+      "bioMtd": 19,
+      "incremental": 15,
+      "visit": 3
     },
     {
       "tsName": "CS NORTH MINAHASA",
@@ -1071,8 +1071,8 @@
       "sellinMtd": 0,
       "osaMtd": 200000,
       "bioLmtd": 1,
-      "bioMtd": 2,
-      "incremental": 1,
+      "bioMtd": 0,
+      "incremental": 0,
       "visit": 0
     },
     {
@@ -1084,11 +1084,11 @@
       "sellinLmtd": 11,
       "osaLmtd": 3600000,
       "sellinMtd": 3,
-      "osaMtd": 2650000,
+      "osaMtd": 2950000,
       "bioLmtd": 2,
-      "bioMtd": 2,
-      "incremental": 0,
-      "visit": 2
+      "bioMtd": 3,
+      "incremental": 1,
+      "visit": 4
     },
     {
       "tsName": "CS NORTH MINAHASA",
@@ -1114,10 +1114,10 @@
       "sellinLmtd": 3,
       "osaLmtd": 2667000,
       "sellinMtd": 3,
-      "osaMtd": 1550000,
+      "osaMtd": 1855000,
       "bioLmtd": 2,
-      "bioMtd": 3,
-      "incremental": 1,
+      "bioMtd": 1,
+      "incremental": 0,
       "visit": 0
     },
     {
@@ -1129,10 +1129,10 @@
       "sellinLmtd": 3,
       "osaLmtd": 8175000,
       "sellinMtd": 2,
-      "osaMtd": 5550000,
+      "osaMtd": 6350000,
       "bioLmtd": 1,
-      "bioMtd": 2,
-      "incremental": 1,
+      "bioMtd": 1,
+      "incremental": 0,
       "visit": 0
     },
     {
@@ -1146,8 +1146,8 @@
       "sellinMtd": 3,
       "osaMtd": 600000,
       "bioLmtd": 1,
-      "bioMtd": 1,
-      "incremental": 0,
+      "bioMtd": 2,
+      "incremental": 1,
       "visit": 0
     },
     {
@@ -1159,7 +1159,7 @@
       "sellinLmtd": 2,
       "osaLmtd": 2300000,
       "sellinMtd": 3,
-      "osaMtd": 1300000,
+      "osaMtd": 1500000,
       "bioLmtd": 1,
       "bioMtd": 0,
       "incremental": 0,
@@ -1189,10 +1189,10 @@
       "sellinLmtd": 3,
       "osaLmtd": 4508000,
       "sellinMtd": 4,
-      "osaMtd": 2550000,
+      "osaMtd": 2800000,
       "bioLmtd": 1,
-      "bioMtd": 0,
-      "incremental": 0,
+      "bioMtd": 2,
+      "incremental": 1,
       "visit": 0
     },
     {
@@ -1206,7 +1206,7 @@
       "sellinMtd": 1,
       "osaMtd": 658000,
       "bioLmtd": 1,
-      "bioMtd": 1,
+      "bioMtd": 0,
       "incremental": 0,
       "visit": 0
     },
@@ -1219,11 +1219,11 @@
       "sellinLmtd": 3,
       "osaLmtd": 9670000,
       "sellinMtd": 0,
-      "osaMtd": 6020000,
+      "osaMtd": 7520000,
       "bioLmtd": 2,
       "bioMtd": 0,
       "incremental": 0,
-      "visit": 1
+      "visit": 2
     },
     {
       "tsName": "CS NORTH MINAHASA",
@@ -1233,11 +1233,11 @@
       "type": "Outlet Non-Telco",
       "sellinLmtd": 0,
       "osaLmtd": 0,
-      "sellinMtd": 1,
+      "sellinMtd": 3,
       "osaMtd": 0,
       "bioLmtd": 0,
-      "bioMtd": 2,
-      "incremental": 2,
+      "bioMtd": 1,
+      "incremental": 1,
       "visit": 0
     },
     {
@@ -1251,7 +1251,7 @@
       "sellinMtd": 3,
       "osaMtd": 0,
       "bioLmtd": 1,
-      "bioMtd": 1,
+      "bioMtd": 0,
       "incremental": 0,
       "visit": 0
     },
@@ -1296,8 +1296,8 @@
       "sellinMtd": 3,
       "osaMtd": 0,
       "bioLmtd": 1,
-      "bioMtd": 4,
-      "incremental": 3,
+      "bioMtd": 1,
+      "incremental": 0,
       "visit": 0
     },
     {
@@ -1311,8 +1311,8 @@
       "sellinMtd": 3,
       "osaMtd": 0,
       "bioLmtd": 1,
-      "bioMtd": 3,
-      "incremental": 2,
+      "bioMtd": 1,
+      "incremental": 0,
       "visit": 0
     },
     {
@@ -1324,7 +1324,7 @@
       "sellinLmtd": 3,
       "osaLmtd": 6000000,
       "sellinMtd": 0,
-      "osaMtd": 3200000,
+      "osaMtd": 3700000,
       "bioLmtd": 2,
       "bioMtd": 0,
       "incremental": 0,
@@ -1341,9 +1341,9 @@
       "sellinMtd": 2,
       "osaMtd": 10000000,
       "bioLmtd": 1,
-      "bioMtd": 1,
+      "bioMtd": 0,
       "incremental": 0,
-      "visit": 2
+      "visit": 4
     },
     {
       "tsName": "CS NORTH MINAHASA",
@@ -1354,10 +1354,10 @@
       "sellinLmtd": 55,
       "osaLmtd": 11815000,
       "sellinMtd": 32,
-      "osaMtd": 9791000,
+      "osaMtd": 11831000,
       "bioLmtd": 0,
-      "bioMtd": 18,
-      "incremental": 18,
+      "bioMtd": 31,
+      "incremental": 31,
       "visit": 1
     },
     {
@@ -1371,8 +1371,8 @@
       "sellinMtd": 0,
       "osaMtd": 18752000,
       "bioLmtd": 1,
-      "bioMtd": 1,
-      "incremental": 0,
+      "bioMtd": 2,
+      "incremental": 1,
       "visit": 0
     },
     {
@@ -1401,7 +1401,7 @@
       "sellinMtd": 0,
       "osaMtd": 1300000,
       "bioLmtd": 1,
-      "bioMtd": 1,
+      "bioMtd": 0,
       "incremental": 0,
       "visit": 0
     },
@@ -1418,7 +1418,7 @@
       "bioLmtd": 0,
       "bioMtd": 1,
       "incremental": 1,
-      "visit": 1
+      "visit": 2
     },
     {
       "tsName": "CS NORTH MINAHASA",
@@ -1461,7 +1461,7 @@
       "sellinMtd": 0,
       "osaMtd": 0,
       "bioLmtd": 2,
-      "bioMtd": 1,
+      "bioMtd": 2,
       "incremental": 0,
       "visit": 0
     },
@@ -1474,11 +1474,11 @@
       "sellinLmtd": 6,
       "osaLmtd": 58067000,
       "sellinMtd": 21,
-      "osaMtd": 11609000,
+      "osaMtd": 12609000,
       "bioLmtd": 1,
-      "bioMtd": 5,
-      "incremental": 4,
-      "visit": 2
+      "bioMtd": 19,
+      "incremental": 18,
+      "visit": 3
     },
     {
       "tsName": "CS NORTH MINAHASA",
@@ -1506,8 +1506,8 @@
       "sellinMtd": 4,
       "osaMtd": 366000,
       "bioLmtd": 1,
-      "bioMtd": 2,
-      "incremental": 1,
+      "bioMtd": 3,
+      "incremental": 2,
       "visit": 0
     },
     {
@@ -1536,8 +1536,8 @@
       "sellinMtd": 0,
       "osaMtd": 0,
       "bioLmtd": 0,
-      "bioMtd": 0,
-      "incremental": 0,
+      "bioMtd": 2,
+      "incremental": 2,
       "visit": 0
     },
     {
@@ -1549,11 +1549,11 @@
       "sellinLmtd": 520,
       "osaLmtd": 58323000,
       "sellinMtd": 8,
-      "osaMtd": 17232000,
+      "osaMtd": 18232000,
       "bioLmtd": 3,
-      "bioMtd": 10,
-      "incremental": 7,
-      "visit": 1
+      "bioMtd": 20,
+      "incremental": 17,
+      "visit": 3
     },
     {
       "tsName": "CS NORTH MINAHASA",
@@ -1563,12 +1563,12 @@
       "type": "Outlet Regular",
       "sellinLmtd": 38,
       "osaLmtd": 53322000,
-      "sellinMtd": 7,
-      "osaMtd": 17203000,
+      "sellinMtd": 307,
+      "osaMtd": 18203000,
       "bioLmtd": 2,
-      "bioMtd": 0,
-      "incremental": 0,
-      "visit": 1
+      "bioMtd": 64,
+      "incremental": 62,
+      "visit": 3
     },
     {
       "tsName": "CS NORTH MINAHASA",
@@ -1626,7 +1626,7 @@
       "sellinMtd": 0,
       "osaMtd": 200000,
       "bioLmtd": 1,
-      "bioMtd": 1,
+      "bioMtd": 0,
       "incremental": 0,
       "visit": 0
     },
@@ -1639,10 +1639,10 @@
       "sellinLmtd": 0,
       "osaLmtd": 1915000,
       "sellinMtd": 0,
-      "osaMtd": 860000,
+      "osaMtd": 980000,
       "bioLmtd": 1,
-      "bioMtd": 0,
-      "incremental": 0,
+      "bioMtd": 5,
+      "incremental": 4,
       "visit": 0
     },
     {
@@ -1671,8 +1671,8 @@
       "sellinMtd": 4,
       "osaMtd": 316000,
       "bioLmtd": 1,
-      "bioMtd": 3,
-      "incremental": 2,
+      "bioMtd": 8,
+      "incremental": 7,
       "visit": 0
     },
     {
@@ -1684,11 +1684,11 @@
       "sellinLmtd": 4,
       "osaLmtd": 58616000,
       "sellinMtd": 5,
-      "osaMtd": 31377000,
+      "osaMtd": 36377000,
       "bioLmtd": 1,
       "bioMtd": 0,
       "incremental": 0,
-      "visit": 0
+      "visit": 1
     },
     {
       "tsName": "CS NORTH MINAHASA",
@@ -1699,7 +1699,7 @@
       "sellinLmtd": 4,
       "osaLmtd": 46616000,
       "sellinMtd": 13,
-      "osaMtd": 12812000,
+      "osaMtd": 14595000,
       "bioLmtd": 1,
       "bioMtd": 1,
       "incremental": 0,
@@ -1714,9 +1714,9 @@
       "sellinLmtd": 6,
       "osaLmtd": 800000,
       "sellinMtd": 4,
-      "osaMtd": 316000,
+      "osaMtd": 516000,
       "bioLmtd": 1,
-      "bioMtd": 1,
+      "bioMtd": 0,
       "incremental": 0,
       "visit": 0
     },
@@ -1729,10 +1729,10 @@
       "sellinLmtd": 29,
       "osaLmtd": 4986000,
       "sellinMtd": 4,
-      "osaMtd": 2232000,
+      "osaMtd": 4261000,
       "bioLmtd": 2,
-      "bioMtd": 3,
-      "incremental": 1,
+      "bioMtd": 11,
+      "incremental": 9,
       "visit": 0
     },
     {
@@ -1744,10 +1744,10 @@
       "sellinLmtd": 3,
       "osaLmtd": 13580000,
       "sellinMtd": 0,
-      "osaMtd": 10087000,
+      "osaMtd": 11337000,
       "bioLmtd": 0,
-      "bioMtd": 6,
-      "incremental": 6,
+      "bioMtd": 4,
+      "incremental": 4,
       "visit": 0
     },
     {
@@ -1789,11 +1789,11 @@
       "sellinLmtd": 6,
       "osaLmtd": 8700000,
       "sellinMtd": 4,
-      "osaMtd": 6066000,
+      "osaMtd": 6366000,
       "bioLmtd": 1,
-      "bioMtd": 0,
+      "bioMtd": 1,
       "incremental": 0,
-      "visit": 0
+      "visit": 1
     },
     {
       "tsName": "CS NORTH MINAHASA",
@@ -1804,7 +1804,7 @@
       "sellinLmtd": 0,
       "osaLmtd": 529000,
       "sellinMtd": 0,
-      "osaMtd": 300000,
+      "osaMtd": 500000,
       "bioLmtd": 1,
       "bioMtd": 1,
       "incremental": 0,
@@ -1821,7 +1821,7 @@
       "sellinMtd": 3,
       "osaMtd": 2087000,
       "bioLmtd": 2,
-      "bioMtd": 0,
+      "bioMtd": 1,
       "incremental": 0,
       "visit": 0
     },
@@ -1896,7 +1896,7 @@
       "sellinMtd": 0,
       "osaMtd": 200000,
       "bioLmtd": 1,
-      "bioMtd": 0,
+      "bioMtd": 1,
       "incremental": 0,
       "visit": 0
     },
@@ -1941,8 +1941,8 @@
       "sellinMtd": 0,
       "osaMtd": 250000,
       "bioLmtd": 0,
-      "bioMtd": 0,
-      "incremental": 0,
+      "bioMtd": 1,
+      "incremental": 1,
       "visit": 0
     },
     {
@@ -1954,10 +1954,10 @@
       "sellinLmtd": 0,
       "osaLmtd": 5500000,
       "sellinMtd": 0,
-      "osaMtd": 1800000,
+      "osaMtd": 3300000,
       "bioLmtd": 1,
-      "bioMtd": 1,
-      "incremental": 0,
+      "bioMtd": 2,
+      "incremental": 1,
       "visit": 0
     },
     {
@@ -1999,7 +1999,7 @@
       "sellinLmtd": 6,
       "osaLmtd": 800000,
       "sellinMtd": 4,
-      "osaMtd": 416000,
+      "osaMtd": 616000,
       "bioLmtd": 1,
       "bioMtd": 3,
       "incremental": 2,
@@ -2046,8 +2046,8 @@
       "sellinMtd": 4,
       "osaMtd": 116000,
       "bioLmtd": 1,
-      "bioMtd": 2,
-      "incremental": 1,
+      "bioMtd": 3,
+      "incremental": 2,
       "visit": 0
     },
     {
@@ -2059,7 +2059,7 @@
       "sellinLmtd": 5,
       "osaLmtd": 39061000,
       "sellinMtd": 10,
-      "osaMtd": 15290000,
+      "osaMtd": 16290000,
       "bioLmtd": 1,
       "bioMtd": 0,
       "incremental": 0,
@@ -2091,8 +2091,8 @@
       "sellinMtd": 4,
       "osaMtd": 316000,
       "bioLmtd": 2,
-      "bioMtd": 2,
-      "incremental": 0,
+      "bioMtd": 3,
+      "incremental": 1,
       "visit": 0
     },
     {
@@ -2134,11 +2134,11 @@
       "sellinLmtd": 31,
       "osaLmtd": 61670000,
       "sellinMtd": 6,
-      "osaMtd": 17174000,
+      "osaMtd": 18174000,
       "bioLmtd": 0,
-      "bioMtd": 5,
-      "incremental": 5,
-      "visit": 1
+      "bioMtd": 21,
+      "incremental": 21,
+      "visit": 4
     },
     {
       "tsName": "CS NORTH MINAHASA",
@@ -2151,8 +2151,8 @@
       "sellinMtd": 0,
       "osaMtd": 300000,
       "bioLmtd": 0,
-      "bioMtd": 0,
-      "incremental": 0,
+      "bioMtd": 1,
+      "incremental": 1,
       "visit": 0
     },
     {
@@ -2179,7 +2179,7 @@
       "sellinLmtd": 1,
       "osaLmtd": 3500000,
       "sellinMtd": 0,
-      "osaMtd": 2000000,
+      "osaMtd": 2500000,
       "bioLmtd": 0,
       "bioMtd": 0,
       "incremental": 0,
@@ -2226,8 +2226,8 @@
       "sellinMtd": 0,
       "osaMtd": 150000,
       "bioLmtd": 1,
-      "bioMtd": 1,
-      "incremental": 0,
+      "bioMtd": 4,
+      "incremental": 3,
       "visit": 0
     },
     {
@@ -2239,7 +2239,7 @@
       "sellinLmtd": 0,
       "osaLmtd": 2600000,
       "sellinMtd": 0,
-      "osaMtd": 800000,
+      "osaMtd": 1300000,
       "bioLmtd": 0,
       "bioMtd": 0,
       "incremental": 0,
