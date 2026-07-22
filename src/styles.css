@@ -911,17 +911,7 @@ body {
     border-radius: 999px;
 }
 
-@media (max-width: 720px) {
-    .retailer-grid {
-        grid-template-columns: 1fr;
-    }
-}
-
-@media (max-width: 560px) {
-    .se-table {
-        min-width: 520px;
-    }
-}
+/* (mobile responsiveness moved to bottom of file) */
 
 /* ---------- BIOMETRIK SUBLABELS (Telco / Non Telco) ---------- */
 .kpi-bio-sublabels {
@@ -991,4 +981,410 @@ body {
     color: rgba(255, 255, 255, 0.2);
     font-size: 11px;
     font-weight: 300;
+}
+
+/* ---------- RESPONSIVE: TABLET (max 900px) ---------- */
+@media (max-width: 900px) {
+    .kpi-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 14px;
+    }
+}
+
+/* ---------- RESPONSIVE: MOBILE (max 600px) ---------- */
+@media (max-width: 600px) {
+
+    /* Hero */
+    .hero {
+        padding: 18px 16px 20px;
+    }
+
+    .hero-inner {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 16px;
+    }
+
+    .brand {
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+
+    .brand-mark {
+        width: 44px;
+        height: 44px;
+        font-size: 22px;
+        border-radius: 14px;
+    }
+
+    .brand h1 {
+        font-size: 22px;
+        letter-spacing: 2px;
+    }
+
+    .brand p {
+        font-size: 12px;
+    }
+
+    .update-label {
+        font-size: 11px;
+    }
+
+    .se-filter-btn {
+        font-size: 18px;
+        letter-spacing: 1.5px;
+        padding: 5px 12px;
+        border-radius: 12px;
+    }
+
+    .se-filter-label {
+        white-space: normal;
+        word-break: break-word;
+    }
+
+    .se-menu {
+        left: 0;
+        right: auto;
+        min-width: 220px;
+        max-height: 260px;
+    }
+
+    .se-option {
+        font-size: 14px;
+        padding: 13px 14px;
+        /* Larger touch target */
+    }
+
+    .se-option-tag {
+        font-size: 10px;
+    }
+
+    .hero-stats {
+        gap: 10px;
+    }
+
+    .chip {
+        padding: 10px 14px;
+        min-width: 80px;
+        border-radius: 14px;
+        flex: 1 1 auto;
+    }
+
+    .chip strong {
+        font-size: 18px;
+    }
+
+    .chip span {
+        font-size: 10px;
+    }
+
+    /* Container & layout */
+    .container {
+        padding: 16px 14px 8px;
+    }
+
+    .kpi-grid {
+        gap: 12px;
+        margin-bottom: 20px;
+    }
+
+    /* KPI Cards */
+    .kpi {
+        padding: 14px;
+        border-radius: 14px;
+    }
+
+    .kpi-value {
+        font-size: 28px;
+        margin: 10px 0 2px;
+    }
+
+    .kpi-title {
+        font-size: 11px;
+        letter-spacing: 1.2px;
+    }
+
+    .kpi-badge {
+        font-size: 12px;
+    }
+
+    .kpi-sub {
+        font-size: 12px;
+    }
+
+    .kpi-bar {
+        margin-top: 10px;
+        height: 6px;
+    }
+
+    .kpi-hint {
+        font-size: 10px;
+        margin-top: 10px;
+    }
+
+    /* Bio sublabels - compact */
+    .kpi-bio-sublabels {
+        gap: 6px;
+    }
+
+    .kpi-bio-label {
+        font-size: 10px;
+    }
+
+    /* Retailer panels */
+    .panel {
+        padding: 14px;
+        border-radius: 14px;
+        margin-bottom: 20px;
+    }
+
+    .panel-title {
+        font-size: 16px;
+    }
+
+    .panel-sub {
+        font-size: 12px;
+    }
+
+    .panel-head {
+        gap: 12px;
+        margin-bottom: 16px;
+    }
+
+    .btn-close {
+        font-size: 12px;
+        padding: 8px 14px;
+    }
+
+    .retailer-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    .retailer-panel {
+        padding: 12px 12px 14px;
+    }
+
+    .retailer-panel-head {
+        font-size: 12px;
+        margin-bottom: 10px;
+    }
+
+    .retailer-item {
+        padding: 10px 12px;
+        gap: 10px;
+    }
+
+    .retailer-name {
+        font-size: 13px;
+    }
+
+    .retailer-qr {
+        font-size: 11px;
+    }
+
+    .retailer-val {
+        font-size: 14px;
+    }
+
+    .retailer-val-label {
+        font-size: 9px;
+    }
+
+    .retailer-list {
+        gap: 6px;
+    }
+
+    .retailer-count {
+        font-size: 14px;
+        padding: 2px 10px;
+    }
+
+    .retailer-empty {
+        font-size: 12px;
+        padding: 10px 4px;
+    }
+
+    /* Show more button — touch-friendly */
+    .show-more-btn {
+        min-height: 48px;
+        padding: 10px 14px;
+        font-size: 13px;
+        margin-top: 10px;
+    }
+
+    .show-more-count {
+        font-size: 11px;
+        padding: 2px 8px;
+    }
+
+    /* Sort button */
+    .sort-btn {
+        font-size: 14px;
+        padding: 5px 11px;
+    }
+
+    /* Incremental detail grid */
+    .incremental-grid {
+        gap: 6px 12px;
+    }
+
+    .inc-cell {
+        min-width: 50px;
+    }
+
+    .inc-val {
+        font-size: 12px;
+    }
+
+    .inc-label {
+        font-size: 8px;
+    }
+
+    /* SE Table */
+    .se-table {
+        font-size: 12px;
+        min-width: 480px;
+    }
+
+    .se-table th {
+        padding: 8px 10px;
+        font-size: 10px;
+    }
+
+    .se-table td {
+        padding: 10px 10px;
+    }
+
+    .se-name {
+        font-size: 13px;
+    }
+
+    .se-city {
+        font-size: 11px;
+    }
+
+    .pill {
+        font-size: 13px;
+    }
+
+    .se-table small {
+        font-size: 11px;
+    }
+
+    /* Footer */
+    .foot {
+        font-size: 11px;
+        padding: 14px;
+    }
+
+    /* Error / loader */
+    .error,
+    .loader {
+        font-size: 15px;
+        padding: 40px 20px;
+    }
+}
+
+/* ---------- RESPONSIVE: VERY SMALL (max 400px) ---------- */
+@media (max-width: 400px) {
+    .hero {
+        padding: 14px 12px 16px;
+    }
+
+    .brand {
+        gap: 8px;
+    }
+
+    .brand-mark {
+        width: 36px;
+        height: 36px;
+        font-size: 18px;
+        border-radius: 12px;
+    }
+
+    .brand h1 {
+        font-size: 18px;
+        letter-spacing: 1.5px;
+    }
+
+    .brand p {
+        font-size: 11px;
+    }
+
+    .update-label {
+        font-size: 10px;
+    }
+
+    .se-filter-btn {
+        font-size: 15px;
+        padding: 4px 10px;
+        gap: 8px;
+    }
+
+    .se-menu {
+        min-width: 180px;
+        max-height: 220px;
+    }
+
+    .se-option {
+        font-size: 13px;
+        padding: 11px 12px;
+    }
+
+    .kpi-grid {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
+    .kpi-value {
+        font-size: 22px;
+    }
+
+    .kpi-title {
+        font-size: 10px;
+    }
+
+    .container {
+        padding: 12px 10px 6px;
+    }
+
+    .chip {
+        padding: 8px 10px;
+        min-width: 60px;
+    }
+
+    .chip strong {
+        font-size: 16px;
+    }
+
+    .chip span {
+        font-size: 9px;
+    }
+
+    .panel {
+        padding: 12px;
+    }
+
+    .panel-title {
+        font-size: 15px;
+    }
+
+    .retailer-panel {
+        padding: 10px;
+    }
+
+    .retailer-item {
+        padding: 8px 10px;
+        gap: 8px;
+    }
+
+    .retailer-name {
+        font-size: 12px;
+    }
+
+    .se-filter-caret {
+        width: 18px;
+        height: 18px;
+    }
 }
