@@ -9,6 +9,22 @@ import { fmtNum, fmtPct } from './calc';
 const ALL = 'AWAKENING';
 const TERITORI = 'CS North Minahasa';
 
+/** Parse tanggal dari nama file sumber, misal "UPDATE 16 JULI.xlsx" => "16 July 2026" */
+function parseUpdateLabel(source: string): string {
+    const m = source.match(/UPDATE\s+(\d+)\s+(\S+?)\./i);
+    if (!m) return '';
+    const day = m[1];
+    const monthRaw = m[2].toUpperCase();
+    const months: Record<string, string> = {
+        JANUARI: 'January', FEBRUARI: 'February', MARET: 'March',
+        APRIL: 'April', MEI: 'May', JUNI: 'June',
+        JULI: 'July', AGUSTUS: 'August', SEPTEMBER: 'September',
+        OKTOBER: 'October', NOVEMBER: 'November', DESEMBER: 'December',
+    };
+    const monthEng = months[monthRaw] || monthRaw.toLowerCase();
+    return `Update data : ${day} ${monthEng} 2026`;
+}
+
 const CaretIcon = () => (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
         <polyline points="6 9 12 15 18 9" />
@@ -27,6 +43,7 @@ export default function App() {
     const [selectedSe, setSelectedSe] = useState<string>(ALL);
     const [activeMetric, setActiveMetric] = useState<MetricKey | null>('osa');
     const [open, setOpen] = useState(false);
+    const [updateLabel, setUpdateLabel] = useState<string>('');
     const filterRef = useRef<HTMLDivElement>(null);
 
     const handleMetric = (m: MetricKey) =>
@@ -38,7 +55,10 @@ export default function App() {
                 if (!r.ok) throw new Error('HTTP ' + r.status);
                 return r.json();
             })
-            .then(setData)
+            .then((d: DashboardData) => {
+                setData(d);
+                setUpdateLabel(parseUpdateLabel(d.source || ''));
+            })
             .catch((e) => setError(String(e)));
     }, []);
 
@@ -105,12 +125,28 @@ export default function App() {
 
     const osaNullCount = viewRetailers.filter((r) => r.osaMtd === 0).length;
     const sellinGte3Count = viewRetailers.filter((r) => r.sellinMtd >= 3).length;
+    const sellinNullCount = viewRetailers.filter((r) => r.sellinMtd === 0).length;
     const bioGte1Count = viewRetailers.filter((r) => r.bioMtd >= 1).length;
     const bioNullCount = viewRetailers.filter((r) => r.bioMtd === 0).length;
+    const telcoRetailers = viewRetailers.filter((r) => r.type !== 'Outlet Non-Telco');
+    const nonTelcoRetailers = viewRetailers.filter((r) => r.type === 'Outlet Non-Telco');
+    const telcoBioCount = telcoRetailers.filter((r) => r.bioMtd >= 1).length;
+    const nonTelcoBioCount = nonTelcoRetailers.filter((r) => r.bioMtd >= 1).length;
+    const bioPct = t.totalRetailers > 0 ? (bioGte1Count / t.totalRetailers) * 100 : 0;
     const visitGte1Count = viewRetailers.filter((r) => r.visit >= 1).length;
 
-    const TARGET_PER_SE = 20;
-    const totalTarget = 3 * TARGET_PER_SE;
+    const gapOsa = t.targetOsa - t.osaMtd;
+    const gapOsaPct = t.targetOsa > 0 ? ((gapOsa / t.targetOsa) * 100).toFixed(1) : '0.0';
+    const achievementOsaPct = t.targetOsa > 0 ? ((t.osaMtd / t.targetOsa) * 100).toFixed(1) : '0.0';
+
+    const INCREMENTAL_TARGET_PER_SE = 40;
+    const incrementalTarget = isAll
+        ? data.seList.length * INCREMENTAL_TARGET_PER_SE
+        : INCREMENTAL_TARGET_PER_SE;
+    const incrementalGap = incrementalTarget - t.incremental;
+    const incrementalPct = incrementalTarget > 0
+        ? (t.incremental / incrementalTarget) * 100
+        : 0;
 
     const choose = (value: string) => {
         setSelectedSe(value);
@@ -169,8 +205,7 @@ export default function App() {
                                     </div>
                                 )}
                             </div>
-                            <p className="update-info">Update data sesuai tanggal 16 July 2026</p>
-                            <p>Distributor Sales Executive · Dashboard KPI Juli</p>
+                            {updateLabel && <p className="update-label">{updateLabel}</p>}
                         </div>
                     </div>
                     <div className="hero-stats">
@@ -201,42 +236,72 @@ export default function App() {
                     <KpiCard
                         title="OSA KPI SE"
                         value={fmtPct(t.osaPct)}
-                        sub={`${fmtNum(t.osaMtd)} / ${fmtNum(t.targetOsa)}`}
                         pct={t.osaPct}
                         accent="pink"
                         onClick={() => handleMetric('osa')}
                         active={activeMetric === 'osa'}
                         hint={`Null Transaksi : (${osaNullCount})`}
+                        subLabels={[
+                            { label: 'Achievement', count: t.osaMtd, total: t.targetOsa, showTotal: false, format: 'accounting', pct: achievementOsaPct },
+                            { label: 'GAP', count: gapOsa, total: t.targetOsa, showTotal: false, format: 'accounting', pct: gapOsaPct },
+                        ]}
                     />
                     <KpiCard
                         title="SELLIN SP3GB SE"
                         value={fmtPct(t.sellinPct)}
-                        sub={`${fmtNum(t.sellinMtd)} / ${fmtNum(t.targetSellin)}`}
                         pct={t.sellinPct}
                         accent="orange"
                         onClick={() => handleMetric('sellin')}
                         active={activeMetric === 'sellin'}
-                        hint={`Sellin ≥3pcs : (${sellinGte3Count})`}
+                        hint={`Null Sellin : (${sellinNullCount})`}
+                        subLabels={[
+                            { label: 'Achievement', count: t.sellinMtd, total: t.targetSellin },
+                            { label: 'Retailer 3pcs', count: sellinGte3Count, total: t.totalRetailers },
+                        ]}
                     />
                     <KpiCard
                         title="BIOMETRIK"
-                        value={fmtPct(t.biometrikPct)}
-                        sub={`${fmtNum(bioGte1Count)} / ${fmtNum(t.totalRetailers)}`}
-                        pct={t.biometrikPct}
+                        value={fmtPct(bioPct)}
+                        pct={bioPct}
                         accent="pink"
                         onClick={() => handleMetric('biometrik')}
                         active={activeMetric === 'biometrik'}
                         hint={`Null Biometrik : (${bioNullCount})`}
+                        subLabels={[
+                            { label: 'Telco', count: telcoBioCount, total: telcoRetailers.length },
+                            { label: 'Non Telco', count: nonTelcoBioCount, total: nonTelcoRetailers.length },
+                        ]}
                     />
                     <KpiCard
                         title="INCREMENTAL"
-                        value={fmtNum(t.incremental)}
-                        sub={`${fmtNum(visitGte1Count)} / ${fmtNum(totalTarget)}`}
-                        pct={Math.min(100, t.incremental)}
+                        value={fmtPct(incrementalPct)}
+                        pct={incrementalPct}
                         accent="orange"
                         onClick={() => handleMetric('incremental')}
                         active={activeMetric === 'incremental'}
                         hint={`Visit ≥1 : (${visitGte1Count})`}
+                        subLabels={[
+                            {
+                                label: 'Incremental',
+                                count: t.incremental,
+                                total: incrementalTarget,
+                                format: 'ratio',
+                                showTotal: false,
+                                pct: incrementalTarget > 0
+                                    ? ((t.incremental / incrementalTarget) * 100).toFixed(1)
+                                    : '0.0',
+                            },
+                            {
+                                label: 'GAP',
+                                count: incrementalGap,
+                                total: incrementalTarget,
+                                format: 'ratio',
+                                showTotal: false,
+                                pct: incrementalTarget > 0
+                                    ? ((incrementalGap / incrementalTarget) * 100).toFixed(1)
+                                    : '0.0',
+                            },
+                        ]}
                     />
                 </section>
 

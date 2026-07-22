@@ -72,41 +72,79 @@ const META: Record<MetricKey, MetricMeta> = {
     },
     incremental: {
         title: 'INCREMENTAL — data Retailer',
-        leftLabel: 'KUNJUNGAN ≥ 1 & INCREMENTAL > 0',
+        leftLabel: 'RETAILER DENGAN INCREMENTAL > 0',
         rightLabel: null,
-        match: (r) => r.visit >= 1 && r.incremental > 0,
+        match: (r) => r.incremental > 0,
         opposite: () => false,
         dual: false,
         showSub: true,
-        metricLabel: 'Incremental',
-        metricValue: (r) => formatVal(r.incremental),
-        metricClass: (r) => (r.incremental > 0 ? 'pos' : 'neg'),
+        metricLabel: 'Detail',
+        metricValue: (r) => (
+            <div className="incremental-grid">
+                <div className="inc-cell">
+                    <span className="inc-label">BIO LMTD</span>
+                    <span className="inc-val">{formatVal(r.bioLmtd)}</span>
+                </div>
+                <div className="inc-cell">
+                    <span className="inc-label">BIO MTD</span>
+                    <span className="inc-val">{formatVal(r.bioMtd)}</span>
+                </div>
+                <div className={`inc-cell ${r.visit > 0 ? 'inc-cell--pos' : 'inc-cell--neg'}`}>
+                    <span className="inc-label">Incremental</span>
+                    <span className="inc-val">{formatVal(r.incremental)}</span>
+                </div>
+                <div className={`inc-cell ${r.visit > 0 ? 'inc-cell--pos' : 'inc-cell--neg'}`}>
+                    <span className="inc-label">Visit</span>
+                    <span className="inc-val">{formatVal(r.visit)}</span>
+                </div>
+            </div>
+        ),
+        metricClass: () => '',
         sortValue: (r) => r.incremental,
     },
 };
 
-function RetailerRows({ rows, metric }: { rows: Retailer[]; metric: MetricKey }) {
+const MAX_VISIBLE = 10;
+
+function RetailerRows({ rows, metric, expanded, onToggleExpanded }: {
+    rows: Retailer[];
+    metric: MetricKey;
+    expanded: boolean;
+    onToggleExpanded: () => void;
+}) {
     if (rows.length === 0) {
         return <div className="retailer-empty">Tidak ada retailer</div>;
     }
     const m = META[metric];
+    const visible = expanded ? rows : rows.slice(0, MAX_VISIBLE);
+    const hiddenCount = rows.length - MAX_VISIBLE;
     return (
-        <ul className="retailer-list">
-            {rows.map((r, i) => (
-                <li className="retailer-item" key={`${r.retailerName}-${r.seName}-${i}`}>
-                    <div className="retailer-main">
-                        <span className="retailer-name">{r.retailerName}</span>
-                        <span className="retailer-qr">QR: {r.qr}</span>
-                    </div>
-                    <div className="retailer-val-wrap">
-                        <span className={`retailer-val ${m.metricClass(r)}`}>
-                            {m.metricValue(r)}
-                        </span>
-                        <span className="retailer-val-label">{m.metricLabel}</span>
-                    </div>
-                </li>
-            ))}
-        </ul>
+        <>
+            <ul className="retailer-list">
+                {visible.map((r, i) => (
+                    <li className="retailer-item" key={`${r.retailerName}-${r.seName}-${i}`}>
+                        <div className="retailer-main">
+                            <span className="retailer-name">{r.retailerName}</span>
+                            <span className="retailer-qr">QR: {r.qr}</span>
+                        </div>
+                        <div className="retailer-val-wrap">
+                            <span className={`retailer-val ${m.metricClass(r)}`}>
+                                {m.metricValue(r)}
+                            </span>
+                            {metric !== 'incremental' && (
+                                <span className="retailer-val-label">{m.metricLabel}</span>
+                            )}
+                        </div>
+                    </li>
+                ))}
+            </ul>
+            {hiddenCount > 0 && !expanded && (
+                <button className="show-more-btn" onClick={onToggleExpanded}>
+                    <span>Lihat selengkapnya</span>
+                    <span className="show-more-count">+{hiddenCount} outlet</span>
+                </button>
+            )}
+        </>
     );
 }
 
@@ -148,12 +186,17 @@ export default function RetailerTable({ metric, allRetailers, onClose }: Props) 
 
     const [sortLeft, setSortLeft] = useState<SortDir>(null);
     const [sortRight, setSortRight] = useState<SortDir>(null);
+    const [expandedLeft, setExpandedLeft] = useState(false);
+    const [expandedRight, setExpandedRight] = useState(false);
 
     const left = useMemo(() => sortRows(leftAll, sortLeft, meta.sortValue), [leftAll, sortLeft, meta]);
     const right = useMemo(() => sortRows(rightAll, sortRight, meta.sortValue), [rightAll, sortRight, meta]);
 
     const toggleLeft = () => setSortLeft((s) => (s === 'asc' ? 'desc' : s === 'desc' ? null : 'asc'));
     const toggleRight = () => setSortRight((s) => (s === 'asc' ? 'desc' : s === 'desc' ? null : 'asc'));
+
+    const toggleExpandLeft = () => setExpandedLeft((s) => !s);
+    const toggleExpandRight = () => setExpandedRight((s) => !s);
 
     return (
         <section className="panel retailer-panel-wrap">
@@ -182,7 +225,7 @@ export default function RetailerTable({ metric, allRetailers, onClose }: Props) 
                             <span className="retailer-count">{left.length}</span>
                         </div>
                         <div className="table-wrap">
-                            <RetailerRows rows={left} metric={metric} />
+                            <RetailerRows rows={left} metric={metric} expanded={expandedLeft} onToggleExpanded={toggleExpandLeft} />
                         </div>
                     </div>
                     <div className="retailer-panel retailer-panel--right">
@@ -192,7 +235,7 @@ export default function RetailerTable({ metric, allRetailers, onClose }: Props) 
                             <span className="retailer-count">{right.length}</span>
                         </div>
                         <div className="table-wrap">
-                            <RetailerRows rows={right} metric={metric} />
+                            <RetailerRows rows={right} metric={metric} expanded={expandedRight} onToggleExpanded={toggleExpandRight} />
                         </div>
                     </div>
                 </div>
@@ -205,7 +248,7 @@ export default function RetailerTable({ metric, allRetailers, onClose }: Props) 
                             <span className="retailer-count">{left.length}</span>
                         </div>
                         <div className="table-wrap">
-                            <RetailerRows rows={left} metric={metric} />
+                            <RetailerRows rows={left} metric={metric} expanded={expandedLeft} onToggleExpanded={toggleExpandLeft} />
                         </div>
                     </div>
                 </div>
