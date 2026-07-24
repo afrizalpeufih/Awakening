@@ -129,9 +129,8 @@ export default function App() {
     const bioGte1Count = viewRetailers.filter((r) => r.bioMtd >= 1).length;
     const bioNullCount = viewRetailers.filter((r) => r.bioMtd === 0).length;
     const telcoRetailers = viewRetailers.filter((r) => r.type !== 'Outlet Non-Telco');
-    const nonTelcoRetailers = viewRetailers.filter((r) => r.type === 'Outlet Non-Telco');
     const telcoBioCount = telcoRetailers.filter((r) => r.bioMtd >= 1).length;
-    const nonTelcoBioCount = nonTelcoRetailers.filter((r) => r.bioMtd >= 1).length;
+    const qssoCount = viewRetailers.filter((r) => r.bioMtd >= 3).length;
     const bioPct = t.totalRetailers > 0 ? (bioGte1Count / t.totalRetailers) * 100 : 0;
     const visitGte1Count = viewRetailers.filter((r) => r.visit >= 1).length;
 
@@ -269,7 +268,7 @@ export default function App() {
                         hint={`Null Biometrik : (${bioNullCount})`}
                         subLabels={[
                             { label: 'Telco', count: telcoBioCount, total: telcoRetailers.length },
-                            { label: 'Non Telco', count: nonTelcoBioCount, total: nonTelcoRetailers.length },
+                            { label: 'Retailer QSSO', count: qssoCount, total: t.totalRetailers },
                         ]}
                     />
                     <KpiCard

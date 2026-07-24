@@ -8,7 +8,7 @@ const XLSX = require('xlsx');
 const fs = require('fs');
 const path = require('path');
 
-const SRC = 'C:\\Users\\AMN\\Documents\\Projek\\Projectg\\AWAKENING\\UPDATE 19 JULI.xlsx';
+const SRC = 'C:\\Users\\AMN\\Documents\\Projek\\Projectg\\AWAKENING\\UPDATE 20 JULI.xlsx';
 const wb = XLSX.readFile(SRC, { cellDates: true });
 
 const dataWs = wb.Sheets['DATA'];
@@ -114,7 +114,7 @@ const seList = Object.entries(bySe).map(([seName, rows]) => {
 
 const out = {
     generatedAt: new Date().toISOString(),
-    source: 'UPDATE 19 JULI.xlsx',
+    source: 'UPDATE 20 JULI.xlsx',
     totals,
     seList,
     retailers,
