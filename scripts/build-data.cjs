@@ -1,4 +1,4 @@
-// Build data.json from UPDATE 19 JULI.xlsx
+// Build data.json from UPDATE 24 JULI.xlsx
 // Metrics per user spec:
 // 1. OSA KPI SE = SUM(OSA KPI MTD) all retailers vs SUM(TARGET OSA JULY)
 // 2. SELLIN SP3GB SE = SUM(Sellin SP3GB MTD) vs SUM(Target Sellin SP3GB)
@@ -8,7 +8,7 @@ const XLSX = require('xlsx');
 const fs = require('fs');
 const path = require('path');
 
-const SRC = 'C:\\Users\\AMN\\Documents\\Projek\\Projectg\\AWAKENING\\UPDATE 20 JULI.xlsx';
+const SRC = 'C:\\Users\\AMN\\Documents\\Projek\\Projectg\\AWAKENING\\UPDATE 24 JULI.xlsx';
 const wb = XLSX.readFile(SRC, { cellDates: true });
 
 const dataWs = wb.Sheets['DATA'];
@@ -114,7 +114,7 @@ const seList = Object.entries(bySe).map(([seName, rows]) => {
 
 const out = {
     generatedAt: new Date().toISOString(),
-    source: 'UPDATE 20 JULI.xlsx',
+    source: 'UPDATE 24 JULI.xlsx',
     totals,
     seList,
     retailers,
