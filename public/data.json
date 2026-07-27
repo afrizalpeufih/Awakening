@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-27T01:15:04.938Z",
+  "generatedAt": "2026-07-27T16:28:08.544Z",
   "source": "UPDATE 24 JULI.xlsx",
   "totals": {
     "osaMtd": 552029399,
@@ -8,9 +8,9 @@
     "sellinMtd": 1013,
     "targetSellin": 829,
     "sellinPct": 122.19541616405307,
-    "biometrikCount": 42,
-    "biometrikPct": 28.965517241379313,
-    "incremental": 319,
+    "biometrikCount": 54,
+    "biometrikPct": 37.24137931034483,
+    "incremental": 360,
     "totalRetailers": 145,
     "visitedRetailers": 48,
     "transactedRetailers": 121,
@@ -24,7 +24,7 @@
       "osaMtd": 114049400,
       "sellinMtd": 179,
       "bioGt1": 10,
-      "incremental": 28,
+      "incremental": 32,
       "visitedRetailers": 20,
       "transactedRetailers": 46,
       "untransactedRetailers": 0,
@@ -40,8 +40,8 @@
       "count": 43,
       "osaMtd": 184982000,
       "sellinMtd": 265,
-      "bioGt1": 14,
-      "incremental": 135,
+      "bioGt1": 18,
+      "incremental": 145,
       "visitedRetailers": 17,
       "transactedRetailers": 35,
       "untransactedRetailers": 8,
@@ -49,7 +49,7 @@
       "targetSellin": 136,
       "osaPct": 81.65008905581065,
       "sellinPct": 194.85294117647058,
-      "biometrikPct": 32.55813953488372
+      "biometrikPct": 41.86046511627907
     },
     {
       "seName": "1-179957290903",
@@ -57,8 +57,8 @@
       "count": 56,
       "osaMtd": 252997999,
       "sellinMtd": 569,
-      "bioGt1": 18,
-      "incremental": 156,
+      "bioGt1": 26,
+      "incremental": 183,
       "visitedRetailers": 11,
       "transactedRetailers": 40,
       "untransactedRetailers": 16,
@@ -66,7 +66,7 @@
       "targetSellin": 570,
       "osaPct": 73.68774500604445,
       "sellinPct": 99.82456140350877,
-      "biometrikPct": 32.142857142857146
+      "biometrikPct": 46.42857142857143
     }
   ],
   "retailers": [
@@ -96,8 +96,8 @@
       "sellinMtd": 8,
       "osaMtd": 3106000,
       "bioLmtd": 1,
-      "bioMtd": 10,
-      "incremental": 9,
+      "bioMtd": 11,
+      "incremental": 10,
       "visit": 1
     },
     {
@@ -201,8 +201,8 @@
       "sellinMtd": 11,
       "osaMtd": 2113700,
       "bioLmtd": 1,
-      "bioMtd": 3,
-      "incremental": 2,
+      "bioMtd": 5,
+      "incremental": 4,
       "visit": 0
     },
     {
@@ -261,8 +261,8 @@
       "sellinMtd": 37,
       "osaMtd": 8481200,
       "bioLmtd": 1,
-      "bioMtd": 1,
-      "incremental": 0,
+      "bioMtd": 2,
+      "incremental": 1,
       "visit": 0
     },
     {
@@ -321,8 +321,8 @@
       "sellinMtd": 3,
       "osaMtd": 2200000,
       "bioLmtd": 1,
-      "bioMtd": 4,
-      "incremental": 3,
+      "bioMtd": 7,
+      "incremental": 6,
       "visit": 1
     },
     {
@@ -336,8 +336,8 @@
       "sellinMtd": 15,
       "osaMtd": 400000,
       "bioLmtd": 1,
-      "bioMtd": 2,
-      "incremental": 1,
+      "bioMtd": 1,
+      "incremental": 0,
       "visit": 2
     },
     {
@@ -681,8 +681,8 @@
       "sellinMtd": 3,
       "osaMtd": 2300000,
       "bioLmtd": 1,
-      "bioMtd": 3,
-      "incremental": 2,
+      "bioMtd": 4,
+      "incremental": 3,
       "visit": 2
     },
     {
@@ -771,8 +771,8 @@
       "sellinMtd": 55,
       "osaMtd": 29058000,
       "bioLmtd": 2,
-      "bioMtd": 5,
-      "incremental": 3,
+      "bioMtd": 8,
+      "incremental": 6,
       "visit": 6
     },
     {
@@ -861,8 +861,8 @@
       "sellinMtd": 3,
       "osaMtd": 1000,
       "bioLmtd": 0,
-      "bioMtd": 0,
-      "incremental": 0,
+      "bioMtd": 1,
+      "incremental": 1,
       "visit": 0
     },
     {
@@ -876,8 +876,8 @@
       "sellinMtd": 70,
       "osaMtd": 4340000,
       "bioLmtd": 18,
-      "bioMtd": 91,
-      "incremental": 73,
+      "bioMtd": 88,
+      "incremental": 70,
       "visit": 3
     },
     {
@@ -921,8 +921,8 @@
       "sellinMtd": 6,
       "osaMtd": 57000,
       "bioLmtd": 0,
-      "bioMtd": 0,
-      "incremental": 0,
+      "bioMtd": 2,
+      "incremental": 2,
       "visit": 0
     },
     {
@@ -936,8 +936,8 @@
       "sellinMtd": 3,
       "osaMtd": 50000,
       "bioLmtd": 1,
-      "bioMtd": 0,
-      "incremental": 0,
+      "bioMtd": 3,
+      "incremental": 2,
       "visit": 0
     },
     {
@@ -981,8 +981,8 @@
       "sellinMtd": 3,
       "osaMtd": 3342000,
       "bioLmtd": 1,
-      "bioMtd": 0,
-      "incremental": 0,
+      "bioMtd": 2,
+      "incremental": 1,
       "visit": 3
     },
     {
@@ -996,8 +996,8 @@
       "sellinMtd": 0,
       "osaMtd": 950000,
       "bioLmtd": 1,
-      "bioMtd": 2,
-      "incremental": 1,
+      "bioMtd": 3,
+      "incremental": 2,
       "visit": 1
     },
     {
@@ -1041,8 +1041,8 @@
       "sellinMtd": 12,
       "osaMtd": 20000000,
       "bioLmtd": 4,
-      "bioMtd": 21,
-      "incremental": 17,
+      "bioMtd": 26,
+      "incremental": 22,
       "visit": 3
     },
     {
@@ -1131,8 +1131,8 @@
       "sellinMtd": 2,
       "osaMtd": 7050000,
       "bioLmtd": 1,
-      "bioMtd": 2,
-      "incremental": 1,
+      "bioMtd": 1,
+      "incremental": 0,
       "visit": 0
     },
     {
@@ -1146,8 +1146,8 @@
       "sellinMtd": 3,
       "osaMtd": 700000,
       "bioLmtd": 1,
-      "bioMtd": 2,
-      "incremental": 1,
+      "bioMtd": 5,
+      "incremental": 4,
       "visit": 0
     },
     {
@@ -1161,8 +1161,8 @@
       "sellinMtd": 3,
       "osaMtd": 1950000,
       "bioLmtd": 1,
-      "bioMtd": 0,
-      "incremental": 0,
+      "bioMtd": 2,
+      "incremental": 1,
       "visit": 0
     },
     {
@@ -1191,8 +1191,8 @@
       "sellinMtd": 4,
       "osaMtd": 3500000,
       "bioLmtd": 1,
-      "bioMtd": 2,
-      "incremental": 1,
+      "bioMtd": 4,
+      "incremental": 3,
       "visit": 0
     },
     {
@@ -1251,7 +1251,7 @@
       "sellinMtd": 6,
       "osaMtd": 0,
       "bioLmtd": 1,
-      "bioMtd": 0,
+      "bioMtd": 1,
       "incremental": 0,
       "visit": 0
     },
@@ -1266,8 +1266,8 @@
       "sellinMtd": 3,
       "osaMtd": 8000000,
       "bioLmtd": 1,
-      "bioMtd": 1,
-      "incremental": 0,
+      "bioMtd": 2,
+      "incremental": 1,
       "visit": 1
     },
     {
@@ -1356,8 +1356,8 @@
       "sellinMtd": 32,
       "osaMtd": 15116000,
       "bioLmtd": 0,
-      "bioMtd": 34,
-      "incremental": 34,
+      "bioMtd": 36,
+      "incremental": 36,
       "visit": 1
     },
     {
@@ -1476,8 +1476,8 @@
       "sellinMtd": 21,
       "osaMtd": 15609000,
       "bioLmtd": 1,
-      "bioMtd": 20,
-      "incremental": 19,
+      "bioMtd": 28,
+      "incremental": 27,
       "visit": 3
     },
     {
@@ -1506,8 +1506,8 @@
       "sellinMtd": 4,
       "osaMtd": 566000,
       "bioLmtd": 1,
-      "bioMtd": 3,
-      "incremental": 2,
+      "bioMtd": 4,
+      "incremental": 3,
       "visit": 0
     },
     {
@@ -1536,8 +1536,8 @@
       "sellinMtd": 0,
       "osaMtd": 0,
       "bioLmtd": 0,
-      "bioMtd": 2,
-      "incremental": 2,
+      "bioMtd": 3,
+      "incremental": 3,
       "visit": 0
     },
     {
@@ -1551,8 +1551,8 @@
       "sellinMtd": 8,
       "osaMtd": 27232000,
       "bioLmtd": 3,
-      "bioMtd": 21,
-      "incremental": 18,
+      "bioMtd": 31,
+      "incremental": 28,
       "visit": 5
     },
     {
@@ -1566,8 +1566,8 @@
       "sellinMtd": 407,
       "osaMtd": 27203000,
       "bioLmtd": 2,
-      "bioMtd": 90,
-      "incremental": 88,
+      "bioMtd": 88,
+      "incremental": 86,
       "visit": 4
     },
     {
@@ -1626,8 +1626,8 @@
       "sellinMtd": 0,
       "osaMtd": 200000,
       "bioLmtd": 1,
-      "bioMtd": 0,
-      "incremental": 0,
+      "bioMtd": 2,
+      "incremental": 1,
       "visit": 0
     },
     {
@@ -1671,8 +1671,8 @@
       "sellinMtd": 4,
       "osaMtd": 316000,
       "bioLmtd": 1,
-      "bioMtd": 8,
-      "incremental": 7,
+      "bioMtd": 11,
+      "incremental": 10,
       "visit": 0
     },
     {
@@ -1686,8 +1686,8 @@
       "sellinMtd": 5,
       "osaMtd": 48377000,
       "bioLmtd": 1,
-      "bioMtd": 0,
-      "incremental": 0,
+      "bioMtd": 2,
+      "incremental": 1,
       "visit": 2
     },
     {
@@ -1701,8 +1701,8 @@
       "sellinMtd": 13,
       "osaMtd": 17595000,
       "bioLmtd": 1,
-      "bioMtd": 2,
-      "incremental": 1,
+      "bioMtd": 3,
+      "incremental": 2,
       "visit": 1
     },
     {
@@ -1716,7 +1716,7 @@
       "sellinMtd": 4,
       "osaMtd": 716000,
       "bioLmtd": 1,
-      "bioMtd": 0,
+      "bioMtd": 1,
       "incremental": 0,
       "visit": 0
     },
@@ -1731,8 +1731,8 @@
       "sellinMtd": 4,
       "osaMtd": 4406000,
       "bioLmtd": 2,
-      "bioMtd": 14,
-      "incremental": 12,
+      "bioMtd": 18,
+      "incremental": 16,
       "visit": 0
     },
     {
@@ -1746,8 +1746,8 @@
       "sellinMtd": 0,
       "osaMtd": 14394999,
       "bioLmtd": 0,
-      "bioMtd": 4,
-      "incremental": 4,
+      "bioMtd": 5,
+      "incremental": 5,
       "visit": 1
     },
     {
@@ -1776,8 +1776,8 @@
       "sellinMtd": 0,
       "osaMtd": 11000000,
       "bioLmtd": 0,
-      "bioMtd": 0,
-      "incremental": 0,
+      "bioMtd": 3,
+      "incremental": 3,
       "visit": 0
     },
     {
@@ -1791,8 +1791,8 @@
       "sellinMtd": 4,
       "osaMtd": 10953000,
       "bioLmtd": 1,
-      "bioMtd": 1,
-      "incremental": 0,
+      "bioMtd": 4,
+      "incremental": 3,
       "visit": 1
     },
     {
@@ -1821,7 +1821,7 @@
       "sellinMtd": 3,
       "osaMtd": 2587000,
       "bioLmtd": 2,
-      "bioMtd": 1,
+      "bioMtd": 0,
       "incremental": 0,
       "visit": 0
     },
@@ -1881,8 +1881,8 @@
       "sellinMtd": 0,
       "osaMtd": 2000000,
       "bioLmtd": 0,
-      "bioMtd": 0,
-      "incremental": 0,
+      "bioMtd": 1,
+      "incremental": 1,
       "visit": 0
     },
     {
@@ -1896,8 +1896,8 @@
       "sellinMtd": 0,
       "osaMtd": 200000,
       "bioLmtd": 1,
-      "bioMtd": 1,
-      "incremental": 0,
+      "bioMtd": 2,
+      "incremental": 1,
       "visit": 0
     },
     {
@@ -1911,8 +1911,8 @@
       "sellinMtd": 0,
       "osaMtd": 0,
       "bioLmtd": 0,
-      "bioMtd": 0,
-      "incremental": 0,
+      "bioMtd": 2,
+      "incremental": 2,
       "visit": 0
     },
     {
@@ -1941,8 +1941,8 @@
       "sellinMtd": 0,
       "osaMtd": 250000,
       "bioLmtd": 0,
-      "bioMtd": 1,
-      "incremental": 1,
+      "bioMtd": 2,
+      "incremental": 2,
       "visit": 0
     },
     {
@@ -2061,8 +2061,8 @@
       "sellinMtd": 11,
       "osaMtd": 25493000,
       "bioLmtd": 1,
-      "bioMtd": 0,
-      "incremental": 0,
+      "bioMtd": 2,
+      "incremental": 1,
       "visit": 0
     },
     {
@@ -2106,7 +2106,7 @@
       "sellinMtd": 0,
       "osaMtd": 1000000,
       "bioLmtd": 1,
-      "bioMtd": 0,
+      "bioMtd": 1,
       "incremental": 0,
       "visit": 0
     },
@@ -2136,8 +2136,8 @@
       "sellinMtd": 56,
       "osaMtd": 27174000,
       "bioLmtd": 0,
-      "bioMtd": 23,
-      "incremental": 23,
+      "bioMtd": 28,
+      "incremental": 28,
       "visit": 5
     },
     {
@@ -2151,8 +2151,8 @@
       "sellinMtd": 0,
       "osaMtd": 300000,
       "bioLmtd": 0,
-      "bioMtd": 2,
-      "incremental": 2,
+      "bioMtd": 3,
+      "incremental": 3,
       "visit": 0
     },
     {
@@ -2181,8 +2181,8 @@
       "sellinMtd": 1,
       "osaMtd": 3000000,
       "bioLmtd": 0,
-      "bioMtd": 0,
-      "incremental": 0,
+      "bioMtd": 1,
+      "incremental": 1,
       "visit": 0
     },
     {
@@ -2211,8 +2211,8 @@
       "sellinMtd": 0,
       "osaMtd": 0,
       "bioLmtd": 0,
-      "bioMtd": 0,
-      "incremental": 0,
+      "bioMtd": 1,
+      "incremental": 1,
       "visit": 0
     },
     {
