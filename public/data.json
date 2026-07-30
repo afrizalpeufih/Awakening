@@ -1,72 +1,72 @@
 {
-  "generatedAt": "2026-07-29T04:22:10.861Z",
-  "source": "UPDATE 27 JULI.xlsx",
+  "generatedAt": "2026-07-30T17:15:42.191Z",
+  "source": "UPDATE 29 JULI.xlsx",
   "totals": {
-    "osaMtd": 567350289,
+    "osaMtd": 654655839,
     "targetOsa": 731345962,
-    "osaPct": 77.57618397843838,
-    "sellinMtd": 1100,
+    "osaPct": 89.51383791191289,
+    "sellinMtd": 1106,
     "targetSellin": 829,
-    "sellinPct": 132.68998793727383,
-    "biometrikCount": 55,
-    "biometrikPct": 37.93103448275862,
-    "incremental": 374,
+    "sellinPct": 133.41375150784077,
+    "biometrikCount": 104,
+    "biometrikPct": 71.72413793103448,
+    "incremental": 405,
     "totalRetailers": 145,
     "visitedRetailers": 48,
-    "transactedRetailers": 122,
-    "untransactedRetailers": 23
+    "transactedRetailers": 124,
+    "untransactedRetailers": 21
   },
   "seList": [
     {
       "seName": "1-179956096674",
       "tsName": "CS NORTH MINAHASA",
       "count": 46,
-      "osaMtd": 116412000,
-      "sellinMtd": 196,
-      "bioGt1": 10,
-      "incremental": 32,
+      "osaMtd": 133631100,
+      "sellinMtd": 199,
+      "bioGt1": 34,
+      "incremental": 80,
       "visitedRetailers": 20,
       "transactedRetailers": 46,
       "untransactedRetailers": 0,
       "targetOsa": 161453444,
       "targetSellin": 123,
-      "osaPct": 72.10251891560765,
-      "sellinPct": 159.34959349593495,
-      "biometrikPct": 21.73913043478261
+      "osaPct": 82.76757478149553,
+      "sellinPct": 161.78861788617886,
+      "biometrikPct": 73.91304347826086
     },
     {
       "seName": "1-179957288290",
       "tsName": "CS NORTH MINAHASA",
       "count": 43,
-      "osaMtd": 193211000,
-      "sellinMtd": 267,
-      "bioGt1": 19,
-      "incremental": 149,
+      "osaMtd": 220598450,
+      "sellinMtd": 269,
+      "bioGt1": 31,
+      "incremental": 133,
       "visitedRetailers": 17,
-      "transactedRetailers": 36,
-      "untransactedRetailers": 7,
+      "transactedRetailers": 38,
+      "untransactedRetailers": 5,
       "targetOsa": 226554560,
       "targetSellin": 136,
-      "osaPct": 85.28232669428503,
-      "sellinPct": 196.3235294117647,
-      "biometrikPct": 44.18604651162791
+      "osaPct": 97.37100414134238,
+      "sellinPct": 197.79411764705884,
+      "biometrikPct": 72.09302325581395
     },
     {
       "seName": "1-179957290903",
       "tsName": "CS NORTH MINAHASA",
       "count": 56,
-      "osaMtd": 257727289,
-      "sellinMtd": 637,
-      "bioGt1": 26,
-      "incremental": 193,
+      "osaMtd": 300426289,
+      "sellinMtd": 638,
+      "bioGt1": 39,
+      "incremental": 192,
       "visitedRetailers": 11,
       "transactedRetailers": 40,
       "untransactedRetailers": 16,
       "targetOsa": 343337958,
       "targetSellin": 570,
-      "osaPct": 75.06518955879618,
-      "sellinPct": 111.75438596491227,
-      "biometrikPct": 46.42857142857143
+      "osaPct": 87.50162398297947,
+      "sellinPct": 111.9298245614035,
+      "biometrikPct": 69.64285714285714
     }
   ],
   "retailers": [
@@ -79,10 +79,10 @@
       "sellinLmtd": 3,
       "osaLmtd": 2058000,
       "sellinMtd": 5,
-      "osaMtd": 2265000,
+      "osaMtd": 2565000,
       "bioLmtd": 1,
-      "bioMtd": 1,
-      "incremental": 0,
+      "bioMtd": 2,
+      "incremental": 1,
       "visit": 1
     },
     {
@@ -93,11 +93,11 @@
       "type": "Outlet Regular",
       "sellinLmtd": 60,
       "osaLmtd": 8236800,
-      "sellinMtd": 11,
+      "sellinMtd": 16,
       "osaMtd": 3106000,
       "bioLmtd": 1,
-      "bioMtd": 11,
-      "incremental": 10,
+      "bioMtd": 18,
+      "incremental": 17,
       "visit": 1
     },
     {
@@ -126,8 +126,8 @@
       "sellinMtd": 3,
       "osaMtd": 50000,
       "bioLmtd": 1,
-      "bioMtd": 1,
-      "incremental": 0,
+      "bioMtd": 3,
+      "incremental": 2,
       "visit": 2
     },
     {
@@ -141,8 +141,8 @@
       "sellinMtd": 3,
       "osaMtd": 369000,
       "bioLmtd": 2,
-      "bioMtd": 1,
-      "incremental": 0,
+      "bioMtd": 4,
+      "incremental": 2,
       "visit": 2
     },
     {
@@ -171,8 +171,8 @@
       "sellinMtd": 3,
       "osaMtd": 1000,
       "bioLmtd": 0,
-      "bioMtd": 0,
-      "incremental": 0,
+      "bioMtd": 3,
+      "incremental": 3,
       "visit": 0
     },
     {
@@ -186,8 +186,8 @@
       "sellinMtd": 3,
       "osaMtd": 1000,
       "bioLmtd": 0,
-      "bioMtd": 0,
-      "incremental": 0,
+      "bioMtd": 3,
+      "incremental": 3,
       "visit": 0
     },
     {
@@ -198,11 +198,11 @@
       "type": "Outlet Non-Telco",
       "sellinLmtd": 3,
       "osaLmtd": 8681000,
-      "sellinMtd": 11,
+      "sellinMtd": 10,
       "osaMtd": 2113700,
       "bioLmtd": 1,
-      "bioMtd": 5,
-      "incremental": 4,
+      "bioMtd": 6,
+      "incremental": 5,
       "visit": 0
     },
     {
@@ -216,8 +216,8 @@
       "sellinMtd": 14,
       "osaMtd": 1979000,
       "bioLmtd": 1,
-      "bioMtd": 1,
-      "incremental": 0,
+      "bioMtd": 18,
+      "incremental": 17,
       "visit": 0
     },
     {
@@ -231,8 +231,8 @@
       "sellinMtd": 3,
       "osaMtd": 1000,
       "bioLmtd": 0,
-      "bioMtd": 0,
-      "incremental": 0,
+      "bioMtd": 3,
+      "incremental": 3,
       "visit": 0
     },
     {
@@ -243,11 +243,11 @@
       "type": "Outlet Non-Telco",
       "sellinLmtd": 3,
       "osaLmtd": 8770000,
-      "sellinMtd": 16,
-      "osaMtd": 8143300,
+      "sellinMtd": 12,
+      "osaMtd": 12053300,
       "bioLmtd": 1,
-      "bioMtd": 1,
-      "incremental": 0,
+      "bioMtd": 5,
+      "incremental": 4,
       "visit": 4
     },
     {
@@ -258,11 +258,11 @@
       "type": "Outlet Regular",
       "sellinLmtd": 3,
       "osaLmtd": 11704000,
-      "sellinMtd": 32,
-      "osaMtd": 8481200,
+      "sellinMtd": 31,
+      "osaMtd": 12461200,
       "bioLmtd": 1,
-      "bioMtd": 2,
-      "incremental": 1,
+      "bioMtd": 8,
+      "incremental": 7,
       "visit": 0
     },
     {
@@ -273,10 +273,10 @@
       "type": "Outlet Non-Telco",
       "sellinLmtd": 11,
       "osaLmtd": 8702500,
-      "sellinMtd": 4,
-      "osaMtd": 200000,
+      "sellinMtd": 3,
+      "osaMtd": 2320600,
       "bioLmtd": 30,
-      "bioMtd": 0,
+      "bioMtd": 3,
       "incremental": 0,
       "visit": 0
     },
@@ -289,10 +289,10 @@
       "sellinLmtd": 3,
       "osaLmtd": 5433500,
       "sellinMtd": 5,
-      "osaMtd": 22123000,
+      "osaMtd": 26103000,
       "bioLmtd": 1,
-      "bioMtd": 0,
-      "incremental": 0,
+      "bioMtd": 3,
+      "incremental": 2,
       "visit": 2
     },
     {
@@ -306,8 +306,8 @@
       "sellinMtd": 6,
       "osaMtd": 1000,
       "bioLmtd": 1,
-      "bioMtd": 0,
-      "incremental": 0,
+      "bioMtd": 6,
+      "incremental": 5,
       "visit": 0
     },
     {
@@ -321,8 +321,8 @@
       "sellinMtd": 3,
       "osaMtd": 2200000,
       "bioLmtd": 1,
-      "bioMtd": 7,
-      "incremental": 6,
+      "bioMtd": 9,
+      "incremental": 8,
       "visit": 1
     },
     {
@@ -336,8 +336,8 @@
       "sellinMtd": 15,
       "osaMtd": 400000,
       "bioLmtd": 1,
-      "bioMtd": 1,
-      "incremental": 0,
+      "bioMtd": 5,
+      "incremental": 4,
       "visit": 2
     },
     {
@@ -351,8 +351,8 @@
       "sellinMtd": 4,
       "osaMtd": 2616600,
       "bioLmtd": 1,
-      "bioMtd": 0,
-      "incremental": 0,
+      "bioMtd": 4,
+      "incremental": 3,
       "visit": 3
     },
     {
@@ -366,8 +366,8 @@
       "sellinMtd": 5,
       "osaMtd": 2117000,
       "bioLmtd": 1,
-      "bioMtd": 1,
-      "incremental": 0,
+      "bioMtd": 5,
+      "incremental": 4,
       "visit": 1
     },
     {
@@ -381,8 +381,8 @@
       "sellinMtd": 0,
       "osaMtd": 3762500,
       "bioLmtd": 1,
-      "bioMtd": 2,
-      "incremental": 1,
+      "bioMtd": 0,
+      "incremental": 0,
       "visit": 1
     },
     {
@@ -396,8 +396,8 @@
       "sellinMtd": 0,
       "osaMtd": 966000,
       "bioLmtd": 1,
-      "bioMtd": 2,
-      "incremental": 1,
+      "bioMtd": 0,
+      "incremental": 0,
       "visit": 1
     },
     {
@@ -409,10 +409,10 @@
       "sellinLmtd": 2,
       "osaLmtd": 4800000,
       "sellinMtd": 3,
-      "osaMtd": 3500000,
+      "osaMtd": 4000000,
       "bioLmtd": 1,
-      "bioMtd": 0,
-      "incremental": 0,
+      "bioMtd": 3,
+      "incremental": 2,
       "visit": 0
     },
     {
@@ -424,7 +424,7 @@
       "sellinLmtd": 3,
       "osaLmtd": 3895000,
       "sellinMtd": 0,
-      "osaMtd": 1615000,
+      "osaMtd": 2138500,
       "bioLmtd": 1,
       "bioMtd": 1,
       "incremental": 0,
@@ -454,10 +454,10 @@
       "sellinLmtd": 3,
       "osaLmtd": 9058000,
       "sellinMtd": 3,
-      "osaMtd": 7000000,
+      "osaMtd": 8000000,
       "bioLmtd": 1,
-      "bioMtd": 2,
-      "incremental": 1,
+      "bioMtd": 4,
+      "incremental": 3,
       "visit": 1
     },
     {
@@ -471,8 +471,8 @@
       "sellinMtd": 3,
       "osaMtd": 513200,
       "bioLmtd": 1,
-      "bioMtd": 0,
-      "incremental": 0,
+      "bioMtd": 3,
+      "incremental": 2,
       "visit": 1
     },
     {
@@ -486,8 +486,8 @@
       "sellinMtd": 0,
       "osaMtd": 2000000,
       "bioLmtd": 1,
-      "bioMtd": 0,
-      "incremental": 0,
+      "bioMtd": 3,
+      "incremental": 2,
       "visit": 1
     },
     {
@@ -516,8 +516,8 @@
       "sellinMtd": 2,
       "osaMtd": 470500,
       "bioLmtd": 1,
-      "bioMtd": 0,
-      "incremental": 0,
+      "bioMtd": 2,
+      "incremental": 1,
       "visit": 0
     },
     {
@@ -529,10 +529,10 @@
       "sellinLmtd": 1,
       "osaLmtd": 9458000,
       "sellinMtd": 3,
-      "osaMtd": 9600000,
+      "osaMtd": 9900000,
       "bioLmtd": 1,
-      "bioMtd": 0,
-      "incremental": 0,
+      "bioMtd": 4,
+      "incremental": 3,
       "visit": 0
     },
     {
@@ -546,8 +546,8 @@
       "sellinMtd": 3,
       "osaMtd": 1009000,
       "bioLmtd": 1,
-      "bioMtd": 1,
-      "incremental": 0,
+      "bioMtd": 3,
+      "incremental": 2,
       "visit": 0
     },
     {
@@ -558,11 +558,11 @@
       "type": "Outlet Regular",
       "sellinLmtd": 3,
       "osaLmtd": 6930000,
-      "sellinMtd": 13,
-      "osaMtd": 1414000,
+      "sellinMtd": 17,
+      "osaMtd": 1419000,
       "bioLmtd": 1,
-      "bioMtd": 10,
-      "incremental": 9,
+      "bioMtd": 21,
+      "incremental": 20,
       "visit": 1
     },
     {
@@ -574,9 +574,9 @@
       "sellinLmtd": 3,
       "osaLmtd": 308000,
       "sellinMtd": 1,
-      "osaMtd": 200000,
+      "osaMtd": 700000,
       "bioLmtd": 2,
-      "bioMtd": 1,
+      "bioMtd": 2,
       "incremental": 0,
       "visit": 0
     },
@@ -591,7 +591,7 @@
       "sellinMtd": 0,
       "osaMtd": 4250000,
       "bioLmtd": 1,
-      "bioMtd": 0,
+      "bioMtd": 1,
       "incremental": 0,
       "visit": 0
     },
@@ -606,8 +606,8 @@
       "sellinMtd": 0,
       "osaMtd": 220500,
       "bioLmtd": 1,
-      "bioMtd": 0,
-      "incremental": 0,
+      "bioMtd": 3,
+      "incremental": 2,
       "visit": 0
     },
     {
@@ -636,8 +636,8 @@
       "sellinMtd": 0,
       "osaMtd": 141000,
       "bioLmtd": 1,
-      "bioMtd": 0,
-      "incremental": 0,
+      "bioMtd": 3,
+      "incremental": 2,
       "visit": 0
     },
     {
@@ -651,8 +651,8 @@
       "sellinMtd": 4,
       "osaMtd": 9369000,
       "bioLmtd": 2,
-      "bioMtd": 1,
-      "incremental": 0,
+      "bioMtd": 3,
+      "incremental": 1,
       "visit": 0
     },
     {
@@ -663,10 +663,10 @@
       "type": "Outlet Regular",
       "sellinLmtd": 3,
       "osaLmtd": 3058000,
-      "sellinMtd": 0,
+      "sellinMtd": 1,
       "osaMtd": 2300000,
       "bioLmtd": 1,
-      "bioMtd": 1,
+      "bioMtd": 0,
       "incremental": 0,
       "visit": 4
     },
@@ -681,8 +681,8 @@
       "sellinMtd": 3,
       "osaMtd": 2300000,
       "bioLmtd": 1,
-      "bioMtd": 4,
-      "incremental": 3,
+      "bioMtd": 3,
+      "incremental": 2,
       "visit": 2
     },
     {
@@ -694,10 +694,10 @@
       "sellinLmtd": 3,
       "osaLmtd": 766000,
       "sellinMtd": 6,
-      "osaMtd": 700000,
+      "osaMtd": 800000,
       "bioLmtd": 1,
-      "bioMtd": 2,
-      "incremental": 1,
+      "bioMtd": 5,
+      "incremental": 4,
       "visit": 2
     },
     {
@@ -726,8 +726,8 @@
       "sellinMtd": 3,
       "osaMtd": 610500,
       "bioLmtd": 1,
-      "bioMtd": 0,
-      "incremental": 0,
+      "bioMtd": 3,
+      "incremental": 2,
       "visit": 0
     },
     {
@@ -741,8 +741,8 @@
       "sellinMtd": 3,
       "osaMtd": 100000,
       "bioLmtd": 0,
-      "bioMtd": 0,
-      "incremental": 0,
+      "bioMtd": 2,
+      "incremental": 2,
       "visit": 0
     },
     {
@@ -768,11 +768,11 @@
       "type": "Outlet KRO",
       "sellinLmtd": 3,
       "osaLmtd": 26116000,
-      "sellinMtd": 57,
-      "osaMtd": 30058000,
+      "sellinMtd": 58,
+      "osaMtd": 32058000,
       "bioLmtd": 2,
-      "bioMtd": 9,
-      "incremental": 7,
+      "bioMtd": 12,
+      "incremental": 10,
       "visit": 6
     },
     {
@@ -784,10 +784,10 @@
       "sellinLmtd": 0,
       "osaLmtd": 34616800,
       "sellinMtd": 12,
-      "osaMtd": 7860000,
+      "osaMtd": 17641000,
       "bioLmtd": 1,
-      "bioMtd": 2,
-      "incremental": 1,
+      "bioMtd": 7,
+      "incremental": 6,
       "visit": 3
     },
     {
@@ -801,8 +801,8 @@
       "sellinMtd": 3,
       "osaMtd": 50000,
       "bioLmtd": 1,
-      "bioMtd": 1,
-      "incremental": 0,
+      "bioMtd": 3,
+      "incremental": 2,
       "visit": 0
     },
     {
@@ -814,10 +814,10 @@
       "sellinLmtd": 0,
       "osaLmtd": 0,
       "sellinMtd": 4,
-      "osaMtd": 2122000,
+      "osaMtd": 2712000,
       "bioLmtd": 0,
-      "bioMtd": 1,
-      "incremental": 1,
+      "bioMtd": 5,
+      "incremental": 5,
       "visit": 0
     },
     {
@@ -829,10 +829,10 @@
       "sellinLmtd": 0,
       "osaLmtd": 10523500,
       "sellinMtd": 4,
-      "osaMtd": 0,
+      "osaMtd": 1376000,
       "bioLmtd": 2,
-      "bioMtd": 1,
-      "incremental": 0,
+      "bioMtd": 4,
+      "incremental": 2,
       "visit": 0
     },
     {
@@ -861,8 +861,8 @@
       "sellinMtd": 5,
       "osaMtd": 1000,
       "bioLmtd": 0,
-      "bioMtd": 1,
-      "incremental": 1,
+      "bioMtd": 5,
+      "incremental": 5,
       "visit": 0
     },
     {
@@ -873,11 +873,11 @@
       "type": "Outlet Regular",
       "sellinLmtd": 102,
       "osaLmtd": 17855500,
-      "sellinMtd": 39,
-      "osaMtd": 4340000,
+      "sellinMtd": 38,
+      "osaMtd": 5595500,
       "bioLmtd": 18,
-      "bioMtd": 89,
-      "incremental": 71,
+      "bioMtd": 76,
+      "incremental": 58,
       "visit": 3
     },
     {
@@ -889,10 +889,10 @@
       "sellinLmtd": 0,
       "osaLmtd": 0,
       "sellinMtd": 6,
-      "osaMtd": 7000,
+      "osaMtd": 1212000,
       "bioLmtd": 0,
-      "bioMtd": 0,
-      "incremental": 0,
+      "bioMtd": 7,
+      "incremental": 7,
       "visit": 0
     },
     {
@@ -904,7 +904,7 @@
       "sellinLmtd": 3,
       "osaLmtd": 6000000,
       "sellinMtd": 0,
-      "osaMtd": 3000000,
+      "osaMtd": 4000000,
       "bioLmtd": 2,
       "bioMtd": 3,
       "incremental": 1,
@@ -919,10 +919,10 @@
       "sellinLmtd": 0,
       "osaLmtd": 0,
       "sellinMtd": 6,
-      "osaMtd": 86000,
+      "osaMtd": 1291000,
       "bioLmtd": 0,
-      "bioMtd": 5,
-      "incremental": 5,
+      "bioMtd": 10,
+      "incremental": 10,
       "visit": 0
     },
     {
@@ -936,8 +936,8 @@
       "sellinMtd": 3,
       "osaMtd": 50000,
       "bioLmtd": 1,
-      "bioMtd": 3,
-      "incremental": 2,
+      "bioMtd": 5,
+      "incremental": 4,
       "visit": 0
     },
     {
@@ -951,8 +951,8 @@
       "sellinMtd": 6,
       "osaMtd": 0,
       "bioLmtd": 0,
-      "bioMtd": 0,
-      "incremental": 0,
+      "bioMtd": 6,
+      "incremental": 6,
       "visit": 0
     },
     {
@@ -964,9 +964,9 @@
       "sellinLmtd": 3,
       "osaLmtd": 5050000,
       "sellinMtd": 0,
-      "osaMtd": 1750000,
+      "osaMtd": 2750000,
       "bioLmtd": 1,
-      "bioMtd": 1,
+      "bioMtd": 0,
       "incremental": 0,
       "visit": 0
     },
@@ -979,10 +979,10 @@
       "sellinLmtd": 3,
       "osaLmtd": 58000,
       "sellinMtd": 8,
-      "osaMtd": 3342000,
+      "osaMtd": 4547000,
       "bioLmtd": 1,
-      "bioMtd": 2,
-      "incremental": 1,
+      "bioMtd": 9,
+      "incremental": 8,
       "visit": 3
     },
     {
@@ -994,7 +994,7 @@
       "sellinLmtd": 3,
       "osaLmtd": 1500000,
       "sellinMtd": 0,
-      "osaMtd": 950000,
+      "osaMtd": 1450000,
       "bioLmtd": 1,
       "bioMtd": 3,
       "incremental": 2,
@@ -1009,10 +1009,10 @@
       "sellinLmtd": 3,
       "osaLmtd": 8800000,
       "sellinMtd": 0,
-      "osaMtd": 8800000,
+      "osaMtd": 9600000,
       "bioLmtd": 1,
-      "bioMtd": 1,
-      "incremental": 0,
+      "bioMtd": 2,
+      "incremental": 1,
       "visit": 3
     },
     {
@@ -1024,9 +1024,9 @@
       "sellinLmtd": 8,
       "osaLmtd": 4000000,
       "sellinMtd": 3,
-      "osaMtd": 4500000,
+      "osaMtd": 5500000,
       "bioLmtd": 1,
-      "bioMtd": 0,
+      "bioMtd": 1,
       "incremental": 0,
       "visit": 0
     },
@@ -1041,8 +1041,8 @@
       "sellinMtd": 12,
       "osaMtd": 22000000,
       "bioLmtd": 4,
-      "bioMtd": 27,
-      "incremental": 23,
+      "bioMtd": 28,
+      "incremental": 24,
       "visit": 3
     },
     {
@@ -1056,7 +1056,7 @@
       "sellinMtd": 1,
       "osaMtd": 500000,
       "bioLmtd": 1,
-      "bioMtd": 0,
+      "bioMtd": 1,
       "incremental": 0,
       "visit": 0
     },
@@ -1084,10 +1084,10 @@
       "sellinLmtd": 11,
       "osaLmtd": 3600000,
       "sellinMtd": 3,
-      "osaMtd": 3850000,
+      "osaMtd": 4150000,
       "bioLmtd": 2,
-      "bioMtd": 4,
-      "incremental": 2,
+      "bioMtd": 2,
+      "incremental": 0,
       "visit": 6
     },
     {
@@ -1114,10 +1114,10 @@
       "sellinLmtd": 3,
       "osaLmtd": 2667000,
       "sellinMtd": 3,
-      "osaMtd": 2455000,
+      "osaMtd": 2655000,
       "bioLmtd": 2,
-      "bioMtd": 1,
-      "incremental": 0,
+      "bioMtd": 3,
+      "incremental": 1,
       "visit": 0
     },
     {
@@ -1129,10 +1129,10 @@
       "sellinLmtd": 3,
       "osaLmtd": 8175000,
       "sellinMtd": 2,
-      "osaMtd": 7050000,
+      "osaMtd": 8050000,
       "bioLmtd": 1,
-      "bioMtd": 1,
-      "incremental": 0,
+      "bioMtd": 2,
+      "incremental": 1,
       "visit": 0
     },
     {
@@ -1159,10 +1159,10 @@
       "sellinLmtd": 2,
       "osaLmtd": 2300000,
       "sellinMtd": 5,
-      "osaMtd": 1950000,
+      "osaMtd": 2300000,
       "bioLmtd": 1,
-      "bioMtd": 2,
-      "incremental": 1,
+      "bioMtd": 5,
+      "incremental": 4,
       "visit": 0
     },
     {
@@ -1174,7 +1174,7 @@
       "sellinLmtd": 3,
       "osaLmtd": 350000,
       "sellinMtd": 0,
-      "osaMtd": 200000,
+      "osaMtd": 350000,
       "bioLmtd": 1,
       "bioMtd": 0,
       "incremental": 0,
@@ -1189,10 +1189,10 @@
       "sellinLmtd": 3,
       "osaLmtd": 4508000,
       "sellinMtd": 6,
-      "osaMtd": 3600000,
+      "osaMtd": 4000000,
       "bioLmtd": 1,
-      "bioMtd": 4,
-      "incremental": 3,
+      "bioMtd": 7,
+      "incremental": 6,
       "visit": 0
     },
     {
@@ -1203,7 +1203,7 @@
       "type": "Outlet Regular",
       "sellinLmtd": 3,
       "osaLmtd": 500000,
-      "sellinMtd": 1,
+      "sellinMtd": 3,
       "osaMtd": 658000,
       "bioLmtd": 1,
       "bioMtd": 1,
@@ -1219,7 +1219,7 @@
       "sellinLmtd": 3,
       "osaLmtd": 9670000,
       "sellinMtd": 0,
-      "osaMtd": 9970000,
+      "osaMtd": 10470000,
       "bioLmtd": 2,
       "bioMtd": 0,
       "incremental": 0,
@@ -1236,8 +1236,8 @@
       "sellinMtd": 5,
       "osaMtd": 100000,
       "bioLmtd": 0,
-      "bioMtd": 1,
-      "incremental": 1,
+      "bioMtd": 6,
+      "incremental": 6,
       "visit": 2
     },
     {
@@ -1251,8 +1251,8 @@
       "sellinMtd": 6,
       "osaMtd": 0,
       "bioLmtd": 1,
-      "bioMtd": 1,
-      "incremental": 0,
+      "bioMtd": 6,
+      "incremental": 5,
       "visit": 0
     },
     {
@@ -1266,8 +1266,8 @@
       "sellinMtd": 3,
       "osaMtd": 8000000,
       "bioLmtd": 1,
-      "bioMtd": 2,
-      "incremental": 1,
+      "bioMtd": 1,
+      "incremental": 0,
       "visit": 1
     },
     {
@@ -1279,10 +1279,10 @@
       "sellinLmtd": 0,
       "osaLmtd": 0,
       "sellinMtd": 6,
-      "osaMtd": 8144000,
+      "osaMtd": 8294000,
       "bioLmtd": 0,
-      "bioMtd": 3,
-      "incremental": 3,
+      "bioMtd": 8,
+      "incremental": 8,
       "visit": 5
     },
     {
@@ -1294,10 +1294,10 @@
       "sellinLmtd": 0,
       "osaLmtd": 0,
       "sellinMtd": 7,
-      "osaMtd": 0,
+      "osaMtd": 469950,
       "bioLmtd": 1,
-      "bioMtd": 3,
-      "incremental": 2,
+      "bioMtd": 9,
+      "incremental": 8,
       "visit": 0
     },
     {
@@ -1311,8 +1311,8 @@
       "sellinMtd": 5,
       "osaMtd": 0,
       "bioLmtd": 1,
-      "bioMtd": 2,
-      "incremental": 1,
+      "bioMtd": 5,
+      "incremental": 4,
       "visit": 0
     },
     {
@@ -1324,9 +1324,9 @@
       "sellinLmtd": 3,
       "osaLmtd": 6000000,
       "sellinMtd": 1,
-      "osaMtd": 5150000,
+      "osaMtd": 5600000,
       "bioLmtd": 2,
-      "bioMtd": 0,
+      "bioMtd": 2,
       "incremental": 0,
       "visit": 0
     },
@@ -1341,8 +1341,8 @@
       "sellinMtd": 4,
       "osaMtd": 15000000,
       "bioLmtd": 1,
-      "bioMtd": 0,
-      "incremental": 0,
+      "bioMtd": 4,
+      "incremental": 3,
       "visit": 4
     },
     {
@@ -1356,8 +1356,8 @@
       "sellinMtd": 32,
       "osaMtd": 15116000,
       "bioLmtd": 0,
-      "bioMtd": 36,
-      "incremental": 36,
+      "bioMtd": 6,
+      "incremental": 6,
       "visit": 1
     },
     {
@@ -1371,8 +1371,8 @@
       "sellinMtd": 6,
       "osaMtd": 18752000,
       "bioLmtd": 1,
-      "bioMtd": 5,
-      "incremental": 4,
+      "bioMtd": 9,
+      "incremental": 8,
       "visit": 0
     },
     {
@@ -1399,7 +1399,7 @@
       "sellinLmtd": 3,
       "osaLmtd": 300000,
       "sellinMtd": 0,
-      "osaMtd": 2200000,
+      "osaMtd": 2700000,
       "bioLmtd": 1,
       "bioMtd": 0,
       "incremental": 0,
@@ -1428,11 +1428,11 @@
       "type": "Outlet Non-Telco",
       "sellinLmtd": 0,
       "osaLmtd": 0,
-      "sellinMtd": 4,
+      "sellinMtd": 7,
       "osaMtd": 0,
       "bioLmtd": 0,
-      "bioMtd": 0,
-      "incremental": 0,
+      "bioMtd": 2,
+      "incremental": 2,
       "visit": 0
     },
     {
@@ -1474,11 +1474,11 @@
       "sellinLmtd": 6,
       "osaLmtd": 58067000,
       "sellinMtd": 21,
-      "osaMtd": 15609000,
+      "osaMtd": 17609000,
       "bioLmtd": 1,
-      "bioMtd": 31,
-      "incremental": 30,
-      "visit": 5
+      "bioMtd": 33,
+      "incremental": 32,
+      "visit": 6
     },
     {
       "tsName": "CS NORTH MINAHASA",
@@ -1488,11 +1488,11 @@
       "type": "Outlet Regular",
       "sellinLmtd": 0,
       "osaLmtd": 0,
-      "sellinMtd": 3,
+      "sellinMtd": 6,
       "osaMtd": 0,
       "bioLmtd": 0,
-      "bioMtd": 0,
-      "incremental": 0,
+      "bioMtd": 2,
+      "incremental": 2,
       "visit": 0
     },
     {
@@ -1506,8 +1506,8 @@
       "sellinMtd": 4,
       "osaMtd": 666000,
       "bioLmtd": 1,
-      "bioMtd": 4,
-      "incremental": 3,
+      "bioMtd": 3,
+      "incremental": 2,
       "visit": 0
     },
     {
@@ -1518,11 +1518,11 @@
       "type": "Outlet Regular",
       "sellinLmtd": 5,
       "osaLmtd": 0,
-      "sellinMtd": 0,
+      "sellinMtd": 1,
       "osaMtd": 0,
       "bioLmtd": 1,
-      "bioMtd": 0,
-      "incremental": 0,
+      "bioMtd": 3,
+      "incremental": 2,
       "visit": 0
     },
     {
@@ -1533,11 +1533,11 @@
       "type": "Outlet Regular",
       "sellinLmtd": 0,
       "osaLmtd": 203000,
-      "sellinMtd": 3,
+      "sellinMtd": 6,
       "osaMtd": 0,
       "bioLmtd": 0,
-      "bioMtd": 3,
-      "incremental": 3,
+      "bioMtd": 6,
+      "incremental": 6,
       "visit": 0
     },
     {
@@ -1549,10 +1549,10 @@
       "sellinLmtd": 520,
       "osaLmtd": 58323000,
       "sellinMtd": 8,
-      "osaMtd": 27232000,
+      "osaMtd": 32232000,
       "bioLmtd": 3,
-      "bioMtd": 31,
-      "incremental": 28,
+      "bioMtd": 28,
+      "incremental": 25,
       "visit": 6
     },
     {
@@ -1564,10 +1564,10 @@
       "sellinLmtd": 38,
       "osaLmtd": 53322000,
       "sellinMtd": 407,
-      "osaMtd": 27203000,
+      "osaMtd": 36203000,
       "bioLmtd": 2,
-      "bioMtd": 93,
-      "incremental": 91,
+      "bioMtd": 98,
+      "incremental": 96,
       "visit": 4
     },
     {
@@ -1581,8 +1581,8 @@
       "sellinMtd": 0,
       "osaMtd": 450000,
       "bioLmtd": 0,
-      "bioMtd": 0,
-      "incremental": 0,
+      "bioMtd": 3,
+      "incremental": 3,
       "visit": 0
     },
     {
@@ -1593,11 +1593,11 @@
       "type": "Outlet Regular",
       "sellinLmtd": 0,
       "osaLmtd": 0,
-      "sellinMtd": 2,
+      "sellinMtd": 5,
       "osaMtd": 0,
       "bioLmtd": 0,
-      "bioMtd": 0,
-      "incremental": 0,
+      "bioMtd": 3,
+      "incremental": 3,
       "visit": 0
     },
     {
@@ -1626,8 +1626,8 @@
       "sellinMtd": 0,
       "osaMtd": 200000,
       "bioLmtd": 1,
-      "bioMtd": 2,
-      "incremental": 1,
+      "bioMtd": 5,
+      "incremental": 4,
       "visit": 0
     },
     {
@@ -1639,10 +1639,10 @@
       "sellinLmtd": 0,
       "osaLmtd": 1915000,
       "sellinMtd": 0,
-      "osaMtd": 1280000,
+      "osaMtd": 1400000,
       "bioLmtd": 1,
-      "bioMtd": 5,
-      "incremental": 4,
+      "bioMtd": 2,
+      "incremental": 1,
       "visit": 0
     },
     {
@@ -1671,8 +1671,8 @@
       "sellinMtd": 4,
       "osaMtd": 316000,
       "bioLmtd": 1,
-      "bioMtd": 13,
-      "incremental": 12,
+      "bioMtd": 12,
+      "incremental": 11,
       "visit": 0
     },
     {
@@ -1684,10 +1684,10 @@
       "sellinLmtd": 4,
       "osaLmtd": 58616000,
       "sellinMtd": 5,
-      "osaMtd": 51377000,
+      "osaMtd": 54377000,
       "bioLmtd": 1,
-      "bioMtd": 3,
-      "incremental": 2,
+      "bioMtd": 5,
+      "incremental": 4,
       "visit": 2
     },
     {
@@ -1699,10 +1699,10 @@
       "sellinLmtd": 4,
       "osaLmtd": 46616000,
       "sellinMtd": 14,
-      "osaMtd": 17595290,
+      "osaMtd": 19595290,
       "bioLmtd": 1,
-      "bioMtd": 3,
-      "incremental": 2,
+      "bioMtd": 4,
+      "incremental": 3,
       "visit": 2
     },
     {
@@ -1716,8 +1716,8 @@
       "sellinMtd": 4,
       "osaMtd": 716000,
       "bioLmtd": 1,
-      "bioMtd": 1,
-      "incremental": 0,
+      "bioMtd": 4,
+      "incremental": 3,
       "visit": 0
     },
     {
@@ -1729,10 +1729,10 @@
       "sellinLmtd": 29,
       "osaLmtd": 4986000,
       "sellinMtd": 4,
-      "osaMtd": 4406000,
+      "osaMtd": 8406000,
       "bioLmtd": 2,
-      "bioMtd": 18,
-      "incremental": 16,
+      "bioMtd": 14,
+      "incremental": 12,
       "visit": 0
     },
     {
@@ -1746,8 +1746,8 @@
       "sellinMtd": 0,
       "osaMtd": 14394999,
       "bioLmtd": 0,
-      "bioMtd": 5,
-      "incremental": 5,
+      "bioMtd": 2,
+      "incremental": 2,
       "visit": 1
     },
     {
@@ -1761,7 +1761,7 @@
       "sellinMtd": 0,
       "osaMtd": 700000,
       "bioLmtd": 1,
-      "bioMtd": 0,
+      "bioMtd": 1,
       "incremental": 0,
       "visit": 0
     },
@@ -1789,10 +1789,10 @@
       "sellinLmtd": 6,
       "osaLmtd": 8700000,
       "sellinMtd": 4,
-      "osaMtd": 11282000,
+      "osaMtd": 11311000,
       "bioLmtd": 1,
-      "bioMtd": 5,
-      "incremental": 4,
+      "bioMtd": 6,
+      "incremental": 5,
       "visit": 1
     },
     {
@@ -1804,7 +1804,7 @@
       "sellinLmtd": 0,
       "osaLmtd": 529000,
       "sellinMtd": 0,
-      "osaMtd": 600000,
+      "osaMtd": 800000,
       "bioLmtd": 1,
       "bioMtd": 1,
       "incremental": 0,
@@ -1819,9 +1819,9 @@
       "sellinLmtd": 4,
       "osaLmtd": 2400000,
       "sellinMtd": 3,
-      "osaMtd": 2587000,
+      "osaMtd": 3587000,
       "bioLmtd": 2,
-      "bioMtd": 0,
+      "bioMtd": 1,
       "incremental": 0,
       "visit": 0
     },
@@ -1836,8 +1836,8 @@
       "sellinMtd": 4,
       "osaMtd": 1916000,
       "bioLmtd": 1,
-      "bioMtd": 0,
-      "incremental": 0,
+      "bioMtd": 3,
+      "incremental": 2,
       "visit": 0
     },
     {
@@ -1849,7 +1849,7 @@
       "sellinLmtd": 0,
       "osaLmtd": 998000,
       "sellinMtd": 0,
-      "osaMtd": 600000,
+      "osaMtd": 1200000,
       "bioLmtd": 0,
       "bioMtd": 1,
       "incremental": 1,
@@ -1881,8 +1881,8 @@
       "sellinMtd": 0,
       "osaMtd": 2000000,
       "bioLmtd": 0,
-      "bioMtd": 1,
-      "incremental": 1,
+      "bioMtd": 4,
+      "incremental": 4,
       "visit": 0
     },
     {
@@ -1894,7 +1894,7 @@
       "sellinLmtd": 0,
       "osaLmtd": 200000,
       "sellinMtd": 0,
-      "osaMtd": 200000,
+      "osaMtd": 500000,
       "bioLmtd": 1,
       "bioMtd": 2,
       "incremental": 1,
@@ -1908,11 +1908,11 @@
       "type": "Outlet Regular",
       "sellinLmtd": 0,
       "osaLmtd": 0,
-      "sellinMtd": 0,
+      "sellinMtd": 3,
       "osaMtd": 0,
       "bioLmtd": 0,
-      "bioMtd": 2,
-      "incremental": 2,
+      "bioMtd": 3,
+      "incremental": 3,
       "visit": 0
     },
     {
@@ -1954,7 +1954,7 @@
       "sellinLmtd": 0,
       "osaLmtd": 5500000,
       "sellinMtd": 0,
-      "osaMtd": 3300000,
+      "osaMtd": 3800000,
       "bioLmtd": 1,
       "bioMtd": 2,
       "incremental": 1,
@@ -1999,10 +1999,10 @@
       "sellinLmtd": 6,
       "osaLmtd": 800000,
       "sellinMtd": 4,
-      "osaMtd": 716000,
+      "osaMtd": 916000,
       "bioLmtd": 1,
-      "bioMtd": 3,
-      "incremental": 2,
+      "bioMtd": 2,
+      "incremental": 1,
       "visit": 1
     },
     {
@@ -2016,8 +2016,8 @@
       "sellinMtd": 4,
       "osaMtd": 466000,
       "bioLmtd": 1,
-      "bioMtd": 0,
-      "incremental": 0,
+      "bioMtd": 3,
+      "incremental": 2,
       "visit": 0
     },
     {
@@ -2059,10 +2059,10 @@
       "sellinLmtd": 5,
       "osaLmtd": 39061000,
       "sellinMtd": 11,
-      "osaMtd": 25493000,
+      "osaMtd": 30493000,
       "bioLmtd": 1,
-      "bioMtd": 2,
-      "incremental": 1,
+      "bioMtd": 6,
+      "incremental": 5,
       "visit": 0
     },
     {
@@ -2106,8 +2106,8 @@
       "sellinMtd": 0,
       "osaMtd": 1000000,
       "bioLmtd": 1,
-      "bioMtd": 1,
-      "incremental": 0,
+      "bioMtd": 4,
+      "incremental": 3,
       "visit": 0
     },
     {
@@ -2133,11 +2133,11 @@
       "type": "Outlet Regular",
       "sellinLmtd": 31,
       "osaLmtd": 61670000,
-      "sellinMtd": 106,
-      "osaMtd": 28174000,
+      "sellinMtd": 85,
+      "osaMtd": 37174000,
       "bioLmtd": 0,
-      "bioMtd": 28,
-      "incremental": 28,
+      "bioMtd": 23,
+      "incremental": 23,
       "visit": 5
     },
     {
@@ -2163,11 +2163,11 @@
       "type": "Outlet Non-Telco",
       "sellinLmtd": 0,
       "osaLmtd": 0,
-      "sellinMtd": 2,
+      "sellinMtd": 5,
       "osaMtd": 0,
       "bioLmtd": 0,
-      "bioMtd": 0,
-      "incremental": 0,
+      "bioMtd": 3,
+      "incremental": 3,
       "visit": 0
     },
     {
@@ -2179,7 +2179,7 @@
       "sellinLmtd": 1,
       "osaLmtd": 3500000,
       "sellinMtd": 1,
-      "osaMtd": 3000000,
+      "osaMtd": 3500000,
       "bioLmtd": 0,
       "bioMtd": 1,
       "incremental": 1,
@@ -2208,11 +2208,11 @@
       "type": "Outlet Regular",
       "sellinLmtd": 0,
       "osaLmtd": 0,
-      "sellinMtd": 3,
+      "sellinMtd": 6,
       "osaMtd": 0,
       "bioLmtd": 0,
-      "bioMtd": 1,
-      "incremental": 1,
+      "bioMtd": 3,
+      "incremental": 3,
       "visit": 0
     },
     {
@@ -2224,7 +2224,7 @@
       "sellinLmtd": 3,
       "osaLmtd": 450000,
       "sellinMtd": 0,
-      "osaMtd": 250000,
+      "osaMtd": 300000,
       "bioLmtd": 1,
       "bioMtd": 5,
       "incremental": 4,
@@ -2239,10 +2239,10 @@
       "sellinLmtd": 0,
       "osaLmtd": 2600000,
       "sellinMtd": 0,
-      "osaMtd": 1300000,
+      "osaMtd": 1500000,
       "bioLmtd": 0,
-      "bioMtd": 0,
-      "incremental": 0,
+      "bioMtd": 3,
+      "incremental": 3,
       "visit": 0
     }
   ]
