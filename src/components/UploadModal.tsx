@@ -51,7 +51,7 @@ export const UploadModal: React.FC<UploadModalProps> = ({
             console.log('[DEBUG] Supabase Key exists:', !!import.meta.env.VITE_SUPABASE_ANON_KEY);
             
             getUploadHistory()
-                .then((items) => {
+                .then((items: HistoryItem[]) => {
                     console.log('[DEBUG] Fetched items:', items.length, items);
                     setHistory(items);
                     
@@ -61,7 +61,7 @@ export const UploadModal: React.FC<UploadModalProps> = ({
                         setDebugInfo(`✓ Berhasil memuat ${items.length} riwayat file dari database.`);
                     }
                 })
-                .catch((err) => {
+                .catch((err: any) => {
                     console.error('[DEBUG] Error fetching history:', err);
                     setError(`Gagal memuat riwayat: ${err.message || err}`);
                     setDebugInfo(`❌ Error: ${err.message || err}`);
