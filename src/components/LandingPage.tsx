@@ -1,6 +1,5 @@
-import { useMemo, useState } from 'react';
+import { useMemo } from 'react';
 import type { DashboardData } from '../types';
-import { UploadModal } from './UploadModal';
 
 // Helper to convert TS Name to URL-friendly slug
 const slugify = (text: string): string =>
@@ -11,12 +10,9 @@ const slugify = (text: string): string =>
 
 type Props = {
   data: DashboardData;
-  onDataLoaded: (newData: DashboardData, fileName?: string, historyId?: string) => void;
-  activeHistoryId: string | null;
 };
 
-export default function LandingPage({ data, onDataLoaded, activeHistoryId }: Props) {
-  const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
+export default function LandingPage({ data }: Props) {
   const allTsNames = useMemo(
     () => Array.from(new Set(data.seList.map((r) => r.tsName))).sort(),
     [data]
@@ -118,12 +114,7 @@ export default function LandingPage({ data, onDataLoaded, activeHistoryId }: Pro
         <div className="hero-glow" />
         <div className="landing-hero-inner">
           <div className="landing-brand">
-            <span
-              className="brand-mark brand-mark-clickable"
-              aria-hidden="true"
-              onClick={() => setIsUploadModalOpen(true)}
-              title="Klik untuk Upload File Excel & Riwayat Data"
-            >
+            <span className="brand-mark" aria-hidden="true">
               A
             </span>
             <h1 className="landing-title">AWAKENING Dashboard</h1>
@@ -194,13 +185,6 @@ export default function LandingPage({ data, onDataLoaded, activeHistoryId }: Pro
       <footer className="landing-foot">
         Dibangun dengan Vite · React · TypeScript — siap deploy ke Vercel
       </footer>
-
-      <UploadModal
-        isOpen={isUploadModalOpen}
-        onClose={() => setIsUploadModalOpen(false)}
-        onDataLoaded={onDataLoaded}
-        activeHistoryId={activeHistoryId}
-      />
     </div>
   );
 }
