@@ -1303,6 +1303,13 @@ body {
     contain-intrinsic-size: auto 52px;
 }
 
+/* When a retailer-item holds an incremental-grid, force it to stack vertically */
+.retailer-item:has(.incremental-grid) {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+}
+
 .retailer-item:hover {
     background: rgba(255, 255, 255, 0.08);
     border-left: 3px solid var(--pink);
@@ -1342,6 +1349,14 @@ body {
     gap: 2px;
 }
 
+/* When val-wrap holds an incremental-grid, stretch it to full width */
+.retailer-item:has(.incremental-grid) .retailer-val-wrap {
+    align-items: flex-start;
+    width: 100%;
+    flex: 1 1 100%;
+    max-width: 100%;
+}
+
 .retailer-val {
     font-size: 14px;
     font-weight: 700;
@@ -1371,6 +1386,7 @@ body {
     gap: 4px 8px;
     align-items: center;
     width: 100%;
+    min-width: 0;
 }
 
 .inc-cell {
