@@ -22,13 +22,15 @@ function getLocalHistory(): HistoryItem[] {
 
 function saveLocalHistory(history: HistoryItem[]): void {
   try {
-    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(history.slice(0, 10)));
+    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(history.slice(0, 15)));
   } catch (e) {
     console.warn('Gagal menyimpan riwayat ke localStorage:', e);
   }
 }
 
 export async function getUploadHistory(): Promise<HistoryItem[]> {
+  const localItems = getLocalHistory();
+
   if (supabase) {
     try {
       let { data, error } = await supabase
@@ -37,29 +39,43 @@ export async function getUploadHistory(): Promise<HistoryItem[]> {
         .order('uploaded_at', { ascending: false });
 
       if (error) {
-        // Retry without specific column ordering in case uploaded_at isn't indexed
+        // Retry select all without explicit ordering in case uploaded_at index isn't present
         const retry = await supabase.from('upload_history').select('*');
         data = retry.data;
         error = retry.error;
       }
 
-      if (!error && data && data.length > 0) {
-        const items: HistoryItem[] = data.map((row: any) => ({
+      if (!error && data) {
+        const dbItems: HistoryItem[] = data.map((row: any) => ({
           id: String(row.id),
           fileName: row.file_name || row.fileName || 'file.xlsx',
           uploadedAt: row.uploaded_at || row.uploadedAt || new Date().toISOString(),
           data: row.data,
           isActive: Boolean(row.is_active ?? row.isActive ?? false),
         }));
-        saveLocalHistory(items);
-        return items;
+
+        // Gabungkan data DB dan LocalStorage agar file baru lokal tidak tertimpa/hilang
+        const itemMap = new Map<string, HistoryItem>();
+        dbItems.forEach((item) => itemMap.set(item.id, item));
+        localItems.forEach((item) => {
+          if (!itemMap.has(item.id)) {
+            itemMap.set(item.id, item);
+          }
+        });
+
+        const merged = Array.from(itemMap.values()).sort(
+          (a, b) => new Date(b.uploadedAt).getTime() - new Date(a.uploadedAt).getTime()
+        );
+
+        saveLocalHistory(merged);
+        return merged;
       }
     } catch (err) {
       console.warn('Supabase query error, fallback ke localStorage:', err);
     }
   }
 
-  return getLocalHistory();
+  return localItems;
 }
 
 export async function saveUploadToHistory(file: File, data: DashboardData): Promise<HistoryItem> {
@@ -79,6 +95,7 @@ export async function saveUploadToHistory(file: File, data: DashboardData): Prom
 
   if (supabase) {
     try {
+      // Set is_active = false pada entri sebelumnya
       await supabase.from('upload_history').update({ is_active: false }).neq('id', '0');
 
       const { error } = await supabase.from('upload_history').insert({
@@ -90,10 +107,10 @@ export async function saveUploadToHistory(file: File, data: DashboardData): Prom
       });
 
       if (error) {
-        console.warn('Supabase insert error (menggunakan data lokal):', error.message);
+        console.warn('Supabase insert error (tetap menggunakan data lokal):', error.message);
       }
     } catch (err) {
-      console.warn('Supabase insert exception (menggunakan data lokal):', err);
+      console.warn('Supabase insert exception (tetap menggunakan data lokal):', err);
     }
   }
 
