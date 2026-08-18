@@ -13,9 +13,10 @@ type Props = {
   data: DashboardData;
   onDataLoaded: (newData: DashboardData, fileName?: string, historyId?: string) => void;
   activeHistoryId: string | null;
+  onSelectTs?: (tsName: string) => void;
 };
 
-export default function LandingPage({ data, onDataLoaded, activeHistoryId }: Props) {
+export default function LandingPage({ data, onDataLoaded, activeHistoryId, onSelectTs }: Props) {
   const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
   const allTsNames = useMemo(
     () => Array.from(new Set(data.seList.map((r) => r.tsName))).sort(),
@@ -23,8 +24,13 @@ export default function LandingPage({ data, onDataLoaded, activeHistoryId }: Pro
   );
 
   const handleTsClick = (tsName: string) => {
-    const slug = slugify(tsName);
-    window.location.href = `/${slug}`;
+    if (onSelectTs) {
+      onSelectTs(tsName);
+    } else {
+      const slug = slugify(tsName);
+      window.history.pushState({}, '', `/${slug}`);
+      window.dispatchEvent(new Event('popstate'));
+    }
   };
 
   // Calculate aggregate metrics per territory

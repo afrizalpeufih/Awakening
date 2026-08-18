@@ -1,28 +1,44 @@
 import { useEffect, useRef, useState } from 'react';
 import type { DashboardData, Totals } from './types';
 import KpiCard from './components/KpiCard';
-
 import RetailerTable from './components/RetailerTable';
 import type { MetricKey } from './components/RetailerTable';
+import LandingPage from './components/LandingPage';
+import { UploadModal } from './components/UploadModal';
+import { getUploadHistory } from './supabaseDb';
 import { fmtNum, fmtPct } from './calc';
 
 const ALL = 'AWAKENING';
-const TERITORI = 'CS North Minahasa';
+const DEFAULT_TERRITORY = 'CS North Minahasa';
 
-/** Parse tanggal dari nama file sumber, misal "UPDATE 16 JULI.xlsx" => "16 July 2026" */
+const slugify = (text: string): string =>
+    text.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9\-]/g, '');
+
+/** Parse tanggal dari nama file sumber, misal "UPDATE 31 JULI.xlsx" => "Update data : 31 July 2026" */
 function parseUpdateLabel(source: string): string {
-    const m = source.match(/UPDATE\s+(\d+)\s+(\S+?)\./i);
-    if (!m) return '';
+    if (!source) return '';
+    const clean = source.replace(/\.[^/.]+$/, '').trim();
+    const m = clean.match(/(?:UPDATE\s+)?(\d{1,2})\s+([A-Za-z]+)(?:\s+(\d{4}))?/i);
+    if (!m) return clean.startsWith('Update') ? clean : `Update data : ${clean}`;
     const day = m[1];
     const monthRaw = m[2].toUpperCase();
+    const year = m[3] || '2026';
     const months: Record<string, string> = {
-        JANUARI: 'January', FEBRUARI: 'February', MARET: 'March',
-        APRIL: 'April', MEI: 'May', JUNI: 'June',
-        JULI: 'July', AGUSTUS: 'August', SEPTEMBER: 'September',
-        OKTOBER: 'October', NOVEMBER: 'November', DESEMBER: 'December',
+        JANUARI: 'January', JAN: 'January', JANUARY: 'January',
+        FEBRUARI: 'February', FEB: 'February', FEBRUARY: 'February',
+        MARET: 'March', MAR: 'March', MARCH: 'March',
+        APRIL: 'April', APR: 'April',
+        MEI: 'May', MAY: 'May',
+        JUNI: 'June', JUN: 'June', JUNE: 'June',
+        JULI: 'July', JUL: 'July', JULY: 'July',
+        AGUSTUS: 'August', AGUS: 'August', AGT: 'August', AUG: 'August', AUGUST: 'August',
+        SEPTEMBER: 'September', SEP: 'September',
+        OKTOBER: 'October', OKT: 'October', OCT: 'October', OCTOBER: 'October',
+        NOVEMBER: 'November', NOV: 'November',
+        DESEMBER: 'December', DES: 'December', DEC: 'December', DECEMBER: 'December',
     };
-    const monthEng = months[monthRaw] || monthRaw.toLowerCase();
-    return `Update data : ${day} ${monthEng} 2026`;
+    const monthEng = months[monthRaw] || monthRaw;
+    return `Update data : ${day} ${monthEng} ${year}`;
 }
 
 const CaretIcon = () => (
@@ -40,27 +56,87 @@ const CheckIcon = () => (
 export default function App() {
     const [data, setData] = useState<DashboardData | null>(null);
     const [error, setError] = useState<string | null>(null);
+    const [viewMode, setViewMode] = useState<'landing' | 'dashboard'>('landing');
+    const [selectedTs, setSelectedTs] = useState<string | null>(null);
     const [selectedSe, setSelectedSe] = useState<string>(ALL);
     const [activeMetric, setActiveMetric] = useState<MetricKey | null>('osa');
     const [open, setOpen] = useState(false);
     const [updateLabel, setUpdateLabel] = useState<string>('');
+    const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
+    const [activeHistoryId, setActiveHistoryId] = useState<string | null>(null);
     const filterRef = useRef<HTMLDivElement>(null);
 
     const handleMetric = (m: MetricKey) =>
         setActiveMetric((cur) => (cur === m ? null : m));
 
+    const applyRouting = (d: DashboardData) => {
+        const path = window.location.pathname.replace(/^\/+/, '');
+        if (path && path !== 'index.html') {
+            const allTs = Array.from(new Set(d.seList.map((r) => r.tsName)));
+            const foundTs = allTs.find((ts) => slugify(ts) === path);
+            if (foundTs) {
+                setSelectedTs(foundTs);
+                setViewMode('dashboard');
+            } else {
+                setViewMode('landing');
+            }
+        } else {
+            setViewMode('landing');
+        }
+    };
+
     useEffect(() => {
-        fetch('./data.json')
-            .then((r) => {
-                if (!r.ok) throw new Error('HTTP ' + r.status);
-                return r.json();
+        // Cek data terbaru dari database Supabase terlebih dahulu
+        getUploadHistory()
+            .then((historyItems) => {
+                if (historyItems && historyItems.length > 0) {
+                    const activeItem = historyItems.find((item) => item.isActive) || historyItems[0];
+                    if (activeItem && activeItem.data) {
+                        setData(activeItem.data);
+                        setActiveHistoryId(activeItem.id);
+                        setUpdateLabel(parseUpdateLabel(activeItem.fileName || activeItem.data.source || ''));
+                        applyRouting(activeItem.data);
+                        return;
+                    }
+                }
+                throw new Error('Tidak ada riwayat di Supabase');
             })
-            .then((d: DashboardData) => {
-                setData(d);
-                setUpdateLabel(parseUpdateLabel(d.source || ''));
-            })
-            .catch((e) => setError(String(e)));
+            .catch(() => {
+                // Fallback ke data.json lokal jika Supabase kosong / offline
+                fetch('./data.json')
+                    .then((r) => {
+                        if (!r.ok) throw new Error('HTTP ' + r.status);
+                        return r.json();
+                    })
+                    .then((d: DashboardData) => {
+                        setData(d);
+                        setUpdateLabel(parseUpdateLabel(d.source || ''));
+                        applyRouting(d);
+                    })
+                    .catch((e) => setError(String(e)));
+            });
     }, []);
+
+    useEffect(() => {
+        const onPopState = () => {
+            const path = window.location.pathname.replace(/^\/+/, '');
+            if (!path || path === 'index.html') {
+                setViewMode('landing');
+                setSelectedTs(null);
+            } else if (data) {
+                const allTs = Array.from(new Set(data.seList.map((r) => r.tsName)));
+                const foundTs = allTs.find((ts) => slugify(ts) === path);
+                if (foundTs) {
+                    setSelectedTs(foundTs);
+                    setViewMode('dashboard');
+                } else {
+                    setViewMode('landing');
+                }
+            }
+        };
+        window.addEventListener('popstate', onPopState);
+        return () => window.removeEventListener('popstate', onPopState);
+    }, [data]);
 
     useEffect(() => {
         if (!open) return;
@@ -80,6 +156,31 @@ export default function App() {
         };
     }, [open]);
 
+    const handleDataLoaded = (newData: DashboardData, fileName?: string, historyId?: string) => {
+        setData(newData);
+        if (fileName || newData.source) {
+            setUpdateLabel(parseUpdateLabel(fileName || newData.source || ''));
+        }
+        if (historyId) {
+            setActiveHistoryId(historyId);
+        }
+    };
+
+    const handleSelectTs = (tsName: string) => {
+        const slug = slugify(tsName);
+        window.history.pushState({}, '', `/${slug}`);
+        setSelectedTs(tsName);
+        setSelectedSe(ALL);
+        setViewMode('dashboard');
+    };
+
+    const goHome = () => {
+        window.history.pushState({}, '', '/');
+        setViewMode('landing');
+        setSelectedTs(null);
+        setSelectedSe(ALL);
+    };
+
     if (error) {
         return (
             <div className="app">
@@ -91,17 +192,73 @@ export default function App() {
     if (!data) {
         return (
             <div className="app">
-                <div className="loader">Memuat dashboard…</div>
+                <div className="loader">Memuat data dari database Supabase…</div>
             </div>
         );
     }
 
-    const isAll = selectedSe === ALL;
-    const row = isAll ? null : data.seList.find((r) => r.seName === selectedSe) ?? null;
+    if (viewMode === 'landing') {
+        return (
+            <>
+                <LandingPage
+                    data={data}
+                    onDataLoaded={handleDataLoaded}
+                    activeHistoryId={activeHistoryId}
+                    onSelectTs={handleSelectTs}
+                />
+                <UploadModal
+                    isOpen={isUploadModalOpen}
+                    onClose={() => setIsUploadModalOpen(false)}
+                    onDataLoaded={handleDataLoaded}
+                    activeHistoryId={activeHistoryId}
+                />
+            </>
+        );
+    }
 
-    const viewTotals: Totals = isAll || !row
-        ? data.totals
-        : {
+    // DASHBOARD VIEW
+    const currentTs = selectedTs || DEFAULT_TERRITORY;
+    const territorySeRows = data.seList.filter((r) => r.tsName === currentTs);
+    const territoryRetailers = data.retailers.filter((r) => r.tsName === currentTs);
+
+    const isAll = selectedSe === ALL;
+    const row = isAll ? null : territorySeRows.find((r) => r.seName === selectedSe) ?? null;
+
+    let viewTotals: Totals;
+    let viewRetailers = territoryRetailers;
+
+    if (isAll) {
+        const totalRetailers = territoryRetailers.length;
+        const osaMtd = territoryRetailers.reduce((s, r) => s + r.osaMtd, 0);
+        const targetOsa = territorySeRows.reduce((s, r) => s + r.targetOsa, 0);
+        const osaPct = targetOsa > 0 ? (osaMtd / targetOsa) * 100 : 0;
+        const sellinMtd = territoryRetailers.reduce((s, r) => s + r.sellinMtd, 0);
+        const targetSellin = territorySeRows.reduce((s, r) => s + r.targetSellin, 0);
+        const sellinPct = targetSellin > 0 ? (sellinMtd / targetSellin) * 100 : 0;
+        const bioGt1 = territoryRetailers.filter((r) => r.bioMtd >= 1).length;
+        const biometrikPct = totalRetailers > 0 ? (bioGt1 / totalRetailers) * 100 : 0;
+        const incremental = territorySeRows.reduce((s, r) => s + r.incremental, 0);
+        const visitedRetailers = territoryRetailers.filter((r) => r.visit >= 1).length;
+        const transactedRetailers = territoryRetailers.filter((r) => r.osaMtd !== 0).length;
+        const untransactedRetailers = totalRetailers - transactedRetailers;
+
+        viewTotals = {
+            osaMtd,
+            targetOsa,
+            osaPct,
+            sellinMtd,
+            targetSellin,
+            sellinPct,
+            biometrikCount: bioGt1,
+            biometrikPct,
+            incremental,
+            totalRetailers,
+            visitedRetailers,
+            transactedRetailers,
+            untransactedRetailers,
+        };
+    } else if (row) {
+        viewTotals = {
             osaMtd: row.osaMtd,
             targetOsa: row.targetOsa,
             osaPct: row.osaPct,
@@ -116,11 +273,11 @@ export default function App() {
             transactedRetailers: row.transactedRetailers,
             untransactedRetailers: row.untransactedRetailers,
         };
+        viewRetailers = territoryRetailers.filter((r) => r.seName === selectedSe);
+    } else {
+        viewTotals = data.totals;
+    }
 
-
-    const viewRetailers = isAll
-        ? data.retailers
-        : data.retailers.filter((r) => r.seName === selectedSe);
     const t = viewTotals;
 
     const osaNullCount = viewRetailers.filter((r) => r.osaMtd === 0).length;
@@ -140,7 +297,7 @@ export default function App() {
 
     const INCREMENTAL_TARGET_PER_SE = 40;
     const incrementalTarget = isAll
-        ? data.seList.length * INCREMENTAL_TARGET_PER_SE
+        ? (territorySeRows.length || 1) * INCREMENTAL_TARGET_PER_SE
         : INCREMENTAL_TARGET_PER_SE;
     const incrementalGap = incrementalTarget - t.incremental;
     const incrementalPct = incrementalTarget > 0
@@ -153,8 +310,8 @@ export default function App() {
     };
 
     const options = [
-        { value: ALL, label: TERITORI, tag: 'Semua' },
-        ...data.seList.map((r) => ({ value: r.seName, label: r.seName, tag: '' })),
+        { value: ALL, label: currentTs, tag: 'Semua' },
+        ...territorySeRows.map((r) => ({ value: r.seName, label: r.seName, tag: '' })),
     ];
 
     return (
@@ -163,46 +320,81 @@ export default function App() {
                 <div className="hero-glow" />
                 <div className="hero-inner">
                     <div className="brand">
-                        <span className="brand-mark">A</span>
+                        <span
+                            className="brand-mark brand-mark-clickable"
+                            onClick={() => setIsUploadModalOpen(true)}
+                            title="Klik untuk Upload File Excel & Riwayat Data"
+                        >
+                            A
+                        </span>
                         <div>
-                            <div
-                                className={'se-filter' + (open ? ' open' : '')}
-                                ref={filterRef}
-                            >
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                                 <button
                                     type="button"
-                                    className="se-filter-btn"
-                                    id="se-filter"
-                                    aria-haspopup="listbox"
-                                    aria-expanded={open}
-                                    aria-label="Pilih Sales Executive"
-                                    onClick={() => setOpen((v) => !v)}
+                                    className="btn-home-header"
+                                    onClick={goHome}
+                                    title="Kembali ke Landing Page"
+                                    style={{
+                                        display: 'inline-flex',
+                                        alignItems: 'center',
+                                        justifyContent: 'center',
+                                        padding: '6px 10px',
+                                        borderRadius: '8px',
+                                        background: 'rgba(255, 255, 255, 0.08)',
+                                        border: '1px solid rgba(255, 255, 255, 0.15)',
+                                        color: '#fff',
+                                        cursor: 'pointer',
+                                        fontSize: '13px',
+                                        fontWeight: 500,
+                                        gap: '6px',
+                                        transition: 'all 0.2s ease',
+                                    }}
                                 >
-                                    <span className="se-filter-label">{selectedSe === ALL ? TERITORI : selectedSe}</span>
-                                    <span className="se-filter-caret"><CaretIcon /></span>
+                                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                                        <polyline points="9 22 9 12 15 12 15 22" />
+                                    </svg>
+                                    <span>HOME</span>
                                 </button>
+                                <div
+                                    className={'se-filter' + (open ? ' open' : '')}
+                                    ref={filterRef}
+                                >
+                                    <button
+                                        type="button"
+                                        className="se-filter-btn"
+                                        id="se-filter"
+                                        aria-haspopup="listbox"
+                                        aria-expanded={open}
+                                        aria-label="Pilih Sales Executive"
+                                        onClick={() => setOpen((v) => !v)}
+                                    >
+                                        <span className="se-filter-label">{selectedSe === ALL ? currentTs : selectedSe}</span>
+                                        <span className="se-filter-caret"><CaretIcon /></span>
+                                    </button>
 
-                                {open && (
-                                    <div className="se-menu" role="listbox" aria-label="Sales Executive">
-                                        {options.map((opt) => {
-                                            const active = opt.value === selectedSe;
-                                            return (
-                                                <button
-                                                    type="button"
-                                                    key={opt.value}
-                                                    role="option"
-                                                    aria-selected={active}
-                                                    className={'se-option' + (active ? ' active' : '')}
-                                                    onClick={() => choose(opt.value)}
-                                                >
-                                                    <span>{opt.label}</span>
-                                                    {opt.tag && <span className="se-option-tag">{opt.tag}</span>}
-                                                    {active ? <CheckIcon /> : <span className="se-option-dot" />}
-                                                </button>
-                                            );
-                                        })}
-                                    </div>
-                                )}
+                                    {open && (
+                                        <div className="se-menu" role="listbox" aria-label="Sales Executive">
+                                            {options.map((opt) => {
+                                                const active = opt.value === selectedSe;
+                                                return (
+                                                    <button
+                                                        type="button"
+                                                        key={opt.value}
+                                                        role="option"
+                                                        aria-selected={active}
+                                                        className={'se-option' + (active ? ' active' : '')}
+                                                        onClick={() => choose(opt.value)}
+                                                    >
+                                                        <span>{opt.label}</span>
+                                                        {opt.tag && <span className="se-option-tag">{opt.tag}</span>}
+                                                        {active ? <CheckIcon /> : <span className="se-option-dot" />}
+                                                    </button>
+                                                );
+                                            })}
+                                        </div>
+                                    )}
+                                </div>
                             </div>
                             {updateLabel && <p className="update-label">{updateLabel}</p>}
                         </div>
@@ -316,6 +508,13 @@ export default function App() {
             <footer className="foot">
                 Dibangun dengan Vite · React · TypeScript — siap deploy ke Vercel
             </footer>
+
+            <UploadModal
+                isOpen={isUploadModalOpen}
+                onClose={() => setIsUploadModalOpen(false)}
+                onDataLoaded={handleDataLoaded}
+                activeHistoryId={activeHistoryId}
+            />
         </div>
     );
 }
