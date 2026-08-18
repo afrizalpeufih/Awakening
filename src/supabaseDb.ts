@@ -12,7 +12,17 @@ export const supabase = supabaseUrl && supabaseAnonKey
 const LOCAL_STORAGE_KEY = 'awakening_upload_history';
 const STORAGE_BUCKET = 'excel-files';
 
-// ─── localStorage helpers ──────────────────────────────────────────────────
+// ─── URL helpers ─────────────────────────────────────────────────────────────
+
+/**
+ * Construct the Storage public URL for a given upload ID.
+ * No 'data_url' column needed in DB — URL is always predictable from id.
+ */
+function getStorageUrl(id: string): string {
+  return `${supabaseUrl}/storage/v1/object/public/${STORAGE_BUCKET}/history/${id}.json`;
+}
+
+// ─── localStorage helpers ─────────────────────────────────────────────────────
 
 function getLocalHistory(): HistoryItem[] {
   try {
@@ -36,11 +46,11 @@ function saveLocalHistory(history: HistoryItem[]): void {
 // ─── Supabase Storage helpers ──────────────────────────────────────────────
 
 /**
- * Upload DashboardData JSON to Supabase Storage and return its public URL.
- * Falls back to null if upload fails.
+ * Upload DashboardData JSON to Supabase Storage bucket.
+ * Path: history/{id}.json
  */
-async function uploadDataToStorage(id: string, data: DashboardData): Promise<string | null> {
-  if (!supabase) return null;
+async function uploadDataToStorage(id: string, data: DashboardData): Promise<boolean> {
+  if (!supabase) return false;
   try {
     const jsonBlob = new Blob([JSON.stringify(data)], { type: 'application/json' });
     const filePath = `history/${id}.json`;
@@ -49,24 +59,22 @@ async function uploadDataToStorage(id: string, data: DashboardData): Promise<str
       .upload(filePath, jsonBlob, { upsert: true, contentType: 'application/json' });
     if (error) {
       console.warn('[Storage] Upload error:', error.message);
-      return null;
+      return false;
     }
-    const { data: urlData } = supabase.storage
-      .from(STORAGE_BUCKET)
-      .getPublicUrl(filePath);
-    return urlData?.publicUrl || null;
+    return true;
   } catch (err) {
     console.warn('[Storage] Upload exception:', err);
-    return null;
+    return false;
   }
 }
 
 /**
- * Fetch DashboardData from a public Supabase Storage URL.
+ * Fetch DashboardData JSON from Supabase Storage by id.
  */
-async function fetchDataFromStorage(dataUrl: string): Promise<DashboardData | null> {
+async function fetchDataFromStorage(id: string): Promise<DashboardData | null> {
   try {
-    const res = await fetch(dataUrl + '?t=' + Date.now()); // cache-bust
+    const url = getStorageUrl(id) + '?t=' + Date.now(); // cache-bust
+    const res = await fetch(url);
     if (!res.ok) return null;
     return await res.json();
   } catch {
@@ -81,9 +89,10 @@ export async function getUploadHistory(): Promise<HistoryItem[]> {
 
   if (supabase) {
     try {
+      // Only select columns that actually exist in the table
       const { data, error } = await supabase
         .from('upload_history')
-        .select('id, file_name, uploaded_at, is_active, data_url')
+        .select('id, file_name, uploaded_at, is_active')
         .order('uploaded_at', { ascending: false });
 
       if (!error && data && data.length > 0) {
@@ -92,11 +101,10 @@ export async function getUploadHistory(): Promise<HistoryItem[]> {
           fileName: row.file_name || 'file.xlsx',
           uploadedAt: row.uploaded_at || new Date().toISOString(),
           isActive: Boolean(row.is_active ?? false),
-          data: null as any,            // loaded on-demand when user clicks
-          _dataUrl: row.data_url,       // store URL for lazy loading
+          data: null as any, // loaded on-demand
         }));
 
-        // Merge: DB items take priority; add local-only items that aren't in DB yet
+        // Merge: DB items take priority; add local-only items not yet in DB
         const itemMap = new Map<string, HistoryItem>();
         dbItems.forEach((item) => itemMap.set(item.id, item));
         localItems.forEach((item) => {
@@ -122,19 +130,15 @@ export async function getUploadHistory(): Promise<HistoryItem[]> {
 
 /**
  * Load the full DashboardData for a history item.
- * Fetches from Supabase Storage URL stored in the item.
+ * Constructs Storage URL from item id — no 'data_url' column needed.
  */
 export async function loadHistoryItemData(item: HistoryItem): Promise<DashboardData | null> {
   // Already cached in memory
   if (item.data) return item.data;
 
-  const dataUrl = (item as any)._dataUrl as string | undefined;
-  if (dataUrl) {
-    const data = await fetchDataFromStorage(dataUrl);
-    if (data) return data;
-  }
-
-  return null;
+  // Fetch from Supabase Storage using predictable URL from id
+  const data = await fetchDataFromStorage(item.id);
+  return data;
 }
 
 export async function saveUploadToHistory(file: File, data: DashboardData): Promise<HistoryItem> {
@@ -147,40 +151,55 @@ export async function saveUploadToHistory(file: File, data: DashboardData): Prom
     isActive: true,
   };
 
-  // 1. Update local metadata (no full data to stay under quota)
+  // 1. Save slim metadata to localStorage as backup
   const localHistory = getLocalHistory();
   localHistory.forEach((item) => (item.isActive = false));
   localHistory.unshift({ ...newItem, data: null as any });
   saveLocalHistory(localHistory);
 
   if (!supabase) {
-    console.warn('[Supabase] Client tidak tersedia, data hanya tersimpan lokal.');
+    console.warn('[Supabase] Client tidak tersedia.');
     throw new Error('Database cloud tidak tersedia. Data hanya tersimpan di browser ini.');
   }
 
-  // 2. Upload data JSON to Supabase Storage
-  const dataUrl = await uploadDataToStorage(id, data);
-  if (!dataUrl) {
-    throw new Error('Gagal mengunggah data ke Supabase Storage. Periksa bucket "dashboarddata" dan izin public.');
+  // 2. Upload JSON data to Supabase Storage
+  const uploaded = await uploadDataToStorage(id, data);
+  if (!uploaded) {
+    throw new Error(
+      `Gagal mengunggah data ke Storage. Pastikan bucket "${STORAGE_BUCKET}" memiliki policy INSERT untuk public.`
+    );
   }
 
-  // 3. Insert metadata row into DB (data_url points to Storage)
-  const { error: insertError } = await supabase
-    .from('upload_history')
-    .insert({
-      id: newItem.id,
-      file_name: newItem.fileName,
-      uploaded_at: newItem.uploadedAt,
-      is_active: true,
-      data_url: dataUrl,
-    });
+  // 3. Insert ONLY metadata into DB (no data_url column needed)
+  const insertPayload: any = {
+    id: newItem.id,
+    file_name: newItem.fileName,
+    uploaded_at: newItem.uploadedAt,
+  };
 
-  if (insertError) {
-    throw new Error(`Gagal menyimpan metadata ke database: ${insertError.message}`);
+  // Try with is_active column — gracefully ignore if column doesn't exist
+  try {
+    const { error: insertError } = await supabase
+      .from('upload_history')
+      .insert({ ...insertPayload, is_active: true });
+
+    if (insertError) {
+      // If is_active column doesn't exist, retry without it
+      if (insertError.message.includes('is_active')) {
+        const { error: retryError } = await supabase
+          .from('upload_history')
+          .insert(insertPayload);
+        if (retryError) throw retryError;
+      } else {
+        throw insertError;
+      }
+    }
+  } catch (err: any) {
+    throw new Error(`Gagal menyimpan metadata ke database: ${err.message}`);
   }
 
-  // 4. Mark all others as inactive
-  await supabase
+  // 4. Mark all others as inactive (best-effort)
+  supabase
     .from('upload_history')
     .update({ is_active: false })
     .neq('id', id)
@@ -188,7 +207,7 @@ export async function saveUploadToHistory(file: File, data: DashboardData): Prom
       if (error) console.warn('[Supabase] update is_active warning:', error.message);
     });
 
-  console.log('[Supabase] ✓ Upload selesai:', id, '→', dataUrl);
+  console.log('[Supabase] ✓ Upload selesai:', id, '→', getStorageUrl(id));
   return newItem;
 }
 
@@ -199,7 +218,7 @@ export async function deleteHistoryItem(id: string): Promise<HistoryItem[]> {
   if (supabase) {
     try {
       await supabase.from('upload_history').delete().eq('id', id);
-      // Also remove from Storage
+      // Also remove JSON from Storage
       await supabase.storage.from(STORAGE_BUCKET).remove([`history/${id}.json`]);
     } catch (err) {
       console.warn('[Supabase] delete exception:', err);
