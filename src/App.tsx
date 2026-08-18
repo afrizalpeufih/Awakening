@@ -174,13 +174,6 @@ export default function App() {
         setViewMode('dashboard');
     };
 
-    const goHome = () => {
-        window.history.pushState({}, '', '/');
-        setViewMode('landing');
-        setSelectedTs(null);
-        setSelectedSe(ALL);
-    };
-
     if (error) {
         return (
             <div className="app">
@@ -328,38 +321,10 @@ export default function App() {
                             A
                         </span>
                         <div>
-                            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                                <button
-                                    type="button"
-                                    className="btn-home-header"
-                                    onClick={goHome}
-                                    title="Kembali ke Landing Page"
-                                    style={{
-                                        display: 'inline-flex',
-                                        alignItems: 'center',
-                                        justifyContent: 'center',
-                                        padding: '6px 10px',
-                                        borderRadius: '8px',
-                                        background: 'rgba(255, 255, 255, 0.08)',
-                                        border: '1px solid rgba(255, 255, 255, 0.15)',
-                                        color: '#fff',
-                                        cursor: 'pointer',
-                                        fontSize: '13px',
-                                        fontWeight: 500,
-                                        gap: '6px',
-                                        transition: 'all 0.2s ease',
-                                    }}
-                                >
-                                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
-                                        <polyline points="9 22 9 12 15 12 15 22" />
-                                    </svg>
-                                    <span>HOME</span>
-                                </button>
-                                <div
-                                    className={'se-filter' + (open ? ' open' : '')}
-                                    ref={filterRef}
-                                >
+                            <div
+                                className={'se-filter' + (open ? ' open' : '')}
+                                ref={filterRef}
+                            >
                                     <button
                                         type="button"
                                         className="se-filter-btn"
@@ -395,9 +360,8 @@ export default function App() {
                                         </div>
                                     )}
                                 </div>
+                                {updateLabel && <p className="update-label">{updateLabel}</p>}
                             </div>
-                            {updateLabel && <p className="update-label">{updateLabel}</p>}
-                        </div>
                     </div>
                     <div className="hero-stats">
                         <div className="chip">
