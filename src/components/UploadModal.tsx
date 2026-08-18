@@ -7,6 +7,7 @@ import {
     saveUploadToHistory,
     deleteHistoryItem,
     setActiveHistoryId,
+    loadHistoryItemData,
 } from '../supabaseDb';
 
 interface UploadModalProps {
@@ -99,20 +100,33 @@ export const UploadModal: React.FC<UploadModalProps> = ({
     };
 
     const handleHistoryItemClick = async (item: HistoryItem) => {
-        // Langsung restore data tanpa masuk detail
         setError(null);
-        await setActiveHistoryId(item.id);
-        onDataLoaded(item.data, item.fileName, item.id);
-        setSuccessMsg(`Data berhasil dimuat dari file: "${item.fileName}"!`);
-        
-        // Refresh history list
-        const updatedHistory = await getUploadHistory();
-        setHistory(updatedHistory);
-        
-        // Tutup modal setelah 1 detik
-        setTimeout(() => {
-            onClose();
-        }, 1000);
+        setSuccessMsg(null);
+        setDebugInfo('Memuat data...');
+        try {
+            const data = await loadHistoryItemData(item);
+            if (!data) {
+                setError('Gagal memuat data. File mungkin sudah dihapus dari storage.');
+                setDebugInfo('');
+                return;
+            }
+            await setActiveHistoryId(item.id);
+            onDataLoaded(data, item.fileName, item.id);
+            setSuccessMsg(`Data berhasil dimuat dari file: "${item.fileName}"!`);
+            setDebugInfo('');
+            
+            // Refresh history list
+            const updatedHistory = await getUploadHistory();
+            setHistory(updatedHistory);
+            
+            // Tutup modal setelah 1 detik
+            setTimeout(() => {
+                onClose();
+            }, 1000);
+        } catch (err: any) {
+            setError(`Gagal memuat data: ${err.message || err}`);
+            setDebugInfo('');
+        }
     };
 
     const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -144,18 +158,28 @@ export const UploadModal: React.FC<UploadModalProps> = ({
 
     const handleRestore = async (item: HistoryItem) => {
         setError(null);
-        await setActiveHistoryId(item.id);
-        onDataLoaded(item.data, item.fileName, item.id);
-        setSuccessMsg(`Data berhasil di-restore ke versi file: "${item.fileName}"!`);
-        
-        // Refresh history list
-        const updatedHistory = await getUploadHistory();
-        setHistory(updatedHistory);
-        
-        // Clear success message after 1.5 seconds
-        setTimeout(() => {
-            setSuccessMsg(null);
-        }, 1500);
+        setSuccessMsg(null);
+        try {
+            const data = await loadHistoryItemData(item);
+            if (!data) {
+                setError('Gagal memuat data. File mungkin sudah dihapus dari storage.');
+                return;
+            }
+            await setActiveHistoryId(item.id);
+            onDataLoaded(data, item.fileName, item.id);
+            setSuccessMsg(`Data berhasil di-restore ke versi file: "${item.fileName}"!`);
+            
+            // Refresh history list
+            const updatedHistory = await getUploadHistory();
+            setHistory(updatedHistory);
+            
+            // Clear success message after 1.5 seconds
+            setTimeout(() => {
+                setSuccessMsg(null);
+            }, 1500);
+        } catch (err: any) {
+            setError(`Gagal restore: ${err.message || err}`);
+        }
     };
 
     const handleDelete = async (id: string, e?: React.MouseEvent) => {
