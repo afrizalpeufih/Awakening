@@ -170,25 +170,29 @@ export async function saveUploadToHistory(file: File, data: DashboardData): Prom
     );
   }
 
-  // 3. Insert ONLY metadata into DB (no data_url column needed)
-  const insertPayload: any = {
+  // 3. Insert metadata into DB — handle various table schemas gracefully
+  const basePayload: any = {
     id: newItem.id,
     file_name: newItem.fileName,
     uploaded_at: newItem.uploadedAt,
+    is_active: true,
+    // Stub for tables that have a NOT NULL "data" column.
+    // Real data is stored in Supabase Storage (history/{id}.json).
+    data: { _storageRef: true, id: newItem.id },
   };
 
-  // Try with is_active column — gracefully ignore if column doesn't exist
   try {
     const { error: insertError } = await supabase
       .from('upload_history')
-      .insert({ ...insertPayload, is_active: true });
+      .insert(basePayload);
 
     if (insertError) {
-      // If is_active column doesn't exist, retry without it
-      if (insertError.message.includes('is_active')) {
+      // Retry without is_active if that column doesn't exist
+      if (insertError.message.toLowerCase().includes('is_active')) {
+        const { data: _d, is_active: _a, ...withoutActive } = basePayload;
         const { error: retryError } = await supabase
           .from('upload_history')
-          .insert(insertPayload);
+          .insert({ ...withoutActive, data: basePayload.data });
         if (retryError) throw retryError;
       } else {
         throw insertError;
@@ -197,6 +201,7 @@ export async function saveUploadToHistory(file: File, data: DashboardData): Prom
   } catch (err: any) {
     throw new Error(`Gagal menyimpan metadata ke database: ${err.message}`);
   }
+
 
   // 4. Mark all others as inactive (best-effort)
   supabase
