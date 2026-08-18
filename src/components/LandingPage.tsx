@@ -50,7 +50,8 @@ export default function LandingPage({ data, onDataLoaded, activeHistoryId, onSel
     
     // Use actual incremental calculation (matching DashboardView logic)
     const totalIncremental = tsData.reduce((sum, r) => sum + r.incremental, 0);
-    const incrementalPct = (totalIncremental / 40) * 100;
+    const incrementalTarget = (tsData.length || 1) * 40;
+    const incrementalPct = incrementalTarget > 0 ? (totalIncremental / incrementalTarget) * 100 : 0;
 
     return {
       totalRetailers,
