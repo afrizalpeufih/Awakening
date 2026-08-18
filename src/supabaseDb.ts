@@ -10,7 +10,7 @@ export const supabase = supabaseUrl && supabaseAnonKey
   : null;
 
 const LOCAL_STORAGE_KEY = 'awakening_upload_history';
-const STORAGE_BUCKET = 'dashboarddata';
+const STORAGE_BUCKET = 'excel-files';
 
 // ─── localStorage helpers ──────────────────────────────────────────────────
 
