@@ -59,22 +59,22 @@ const META: Record<MetricKey, MetricMeta> = {
     },
     biometrik: {
         title: 'BIOMETRIK — data Retailer',
-        leftLabel: 'BIOMETRIK > 0 (ADA BIO)',
-        rightLabel: 'BIOMETRIK = 0 (NULL BIO)',
-        match: (r) => r.bioMtd > 0,
-        opposite: (r) => r.bioMtd === 0,
+        leftLabel: 'BIO MTD ≥ BIO LMTD (HIJAU)',
+        rightLabel: 'BIO MTD < BIO LMTD (MERAH)',
+        match: (r) => r.bioMtd >= r.bioLmtd,
+        opposite: (r) => r.bioMtd < r.bioLmtd,
         dual: true,
         showSub: true,
         metricLabel: 'Bio',
         metricValue: (r) => formatVal(r.bioMtd),
-        metricClass: (r) => (r.bioMtd > 0 ? 'pos' : 'neg'),
+        metricClass: (r) => (r.bioMtd >= r.bioLmtd ? 'pos' : 'neg'),
         sortValue: (r) => r.bioMtd,
     },
     incremental: {
         title: 'INCREMENTAL — data Retailer',
-        leftLabel: 'RETAILER DENGAN INCREMENTAL > 0',
+        leftLabel: 'SEMUA DATA RETAILER',
         rightLabel: null,
-        match: (r) => r.incremental > 0,
+        match: () => true,
         opposite: () => false,
         dual: false,
         showSub: true,
@@ -85,11 +85,11 @@ const META: Record<MetricKey, MetricMeta> = {
                     <span className="inc-label">BIO LMTD</span>
                     <span className="inc-val">{formatVal(r.bioLmtd)}</span>
                 </div>
-                <div className="inc-cell">
+                <div className={`inc-cell ${r.bioMtd >= r.bioLmtd ? 'inc-cell--pos' : 'inc-cell--neg'}`}>
                     <span className="inc-label">BIO MTD</span>
                     <span className="inc-val">{formatVal(r.bioMtd)}</span>
                 </div>
-                <div className={`inc-cell ${r.visit > 0 ? 'inc-cell--pos' : 'inc-cell--neg'}`}>
+                <div className={`inc-cell ${r.incremental > 0 ? 'inc-cell--pos' : 'inc-cell--neg'}`}>
                     <span className="inc-label">Incremental</span>
                     <span className="inc-val">{formatVal(r.incremental)}</span>
                 </div>
@@ -184,10 +184,10 @@ export default function RetailerTable({ metric, allRetailers, onClose }: Props) 
     const leftAll = allRetailers.filter(meta.match);
     const rightAll = meta.dual ? allRetailers.filter(meta.opposite) : [];
 
-    const [sortLeft, setSortLeft] = useState<SortDir>(null);
+    const [sortLeft, setSortLeft] = useState<SortDir>(metric === 'incremental' ? 'desc' : null);
     const [sortRight, setSortRight] = useState<SortDir>(null);
-    const [expandedLeft, setExpandedLeft] = useState(false);
-    const [expandedRight, setExpandedRight] = useState(false);
+    const [expandedLeft, setExpandedLeft] = useState(true);
+    const [expandedRight, setExpandedRight] = useState(true);
 
     const left = useMemo(() => sortRows(leftAll, sortLeft, meta.sortValue), [leftAll, sortLeft, meta]);
     const right = useMemo(() => sortRows(rightAll, sortRight, meta.sortValue), [rightAll, sortRight, meta]);
