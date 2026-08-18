@@ -54,9 +54,9 @@ export default function LandingPage({ data, onDataLoaded, activeHistoryId, onSel
     const biometrikCount = tsRetailers.filter((r) => r.bioMtd >= 1).length;
     const biometrikPct = totalRetailers > 0 ? (biometrikCount / totalRetailers) * 100 : 0;
     
-    // Actual incremental calculation (matching DashboardView)
+    // Actual incremental calculation (matching DashboardView dynamic TARGET sheet)
     const totalIncremental = tsData.reduce((sum, r) => sum + r.incremental, 0);
-    const incrementalTarget = (tsData.length || 1) * 40;
+    const incrementalTarget = tsData.reduce((sum, r) => sum + (r.targetIncremental || 40), 0);
     const incrementalPct = incrementalTarget > 0 ? (totalIncremental / incrementalTarget) * 100 : 0;
 
     return {

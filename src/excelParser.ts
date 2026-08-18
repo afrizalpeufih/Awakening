@@ -8,7 +8,7 @@ const num = (v: any): number => {
 
 /**
  * Flexible column key resolver that handles space/underscore variations,
- * uppercase/lowercase, and different month names in column titles (e.g. TARGET OSA, TARGET OSA JULY, TARGET OSA AUGUST).
+ * uppercase/lowercase, and different month names in column titles.
  */
 const getVal = (row: Record<string, any>, keys: string[]): any => {
     if (!row) return undefined;
@@ -47,7 +47,7 @@ export function parseExcelWorkbook(buffer: ArrayBuffer, fileName: string): Dashb
     const dataRows: Record<string, any>[] = XLSX.utils.sheet_to_json(dataWs);
     const targetRows: Record<string, any>[] = targetWs ? XLSX.utils.sheet_to_json(targetWs) : [];
 
-    const targetBySe: Record<string, { tsName: string; targetOsa: number; targetSellin: number }> = {};
+    const targetBySe: Record<string, { tsName: string; targetOsa: number; targetSellin: number; targetIncremental: number; targetVisit: number }> = {};
     for (const t of targetRows) {
         const se = String(getVal(t, ['SE_NAME', 'SE NAME', 'SE']) ?? '').trim();
         if (se) {
@@ -55,6 +55,8 @@ export function parseExcelWorkbook(buffer: ArrayBuffer, fileName: string): Dashb
                 tsName: String(getVal(t, ['TS_NAME', 'TS NAME', 'TS']) ?? '').trim(),
                 targetOsa: num(getVal(t, ['TARGET OSA JULY', 'TARGET OSA AUGUST', 'TARGET OSA', 'TARGET OSA MONTH'])),
                 targetSellin: num(getVal(t, ['Target Sellin SP3GB', 'TARGET SELLIN SP3GB', 'TARGET SELLIN'])),
+                targetIncremental: num(getVal(t, ['Target INCREMENTAL', 'TARGET INCREMENTAL', 'INCREMENTAL TARGET', 'TARGET INC'])) || 40,
+                targetVisit: num(getVal(t, ['Target VISIT', 'TARGET VISIT', 'VISIT TARGET'])) || 20,
             };
         }
     }
@@ -92,6 +94,8 @@ export function parseExcelWorkbook(buffer: ArrayBuffer, fileName: string): Dashb
 
     const targetOsa = Object.values(targetBySe).reduce((s, t) => s + t.targetOsa, 0);
     const targetSellin = Object.values(targetBySe).reduce((s, t) => s + t.targetSellin, 0);
+    const targetIncremental = Object.values(targetBySe).reduce((s, t) => s + t.targetIncremental, 0);
+    const targetVisit = Object.values(targetBySe).reduce((s, t) => s + t.targetVisit, 0);
 
     const osaPct = targetOsa ? (osaMtd / targetOsa) * 100 : 0;
     const sellinPct = targetSellin ? (sellinMtd / targetSellin) * 100 : 0;
@@ -110,6 +114,8 @@ export function parseExcelWorkbook(buffer: ArrayBuffer, fileName: string): Dashb
         biometrikCount: bioGt1,
         biometrikPct,
         incremental,
+        targetIncremental,
+        targetVisit,
         totalRetailers,
         visitedRetailers: retailers.filter((r) => r.visit >= 1).length,
         transactedRetailers,
@@ -123,7 +129,7 @@ export function parseExcelWorkbook(buffer: ArrayBuffer, fileName: string): Dashb
     }
 
     const seList: SeRow[] = Object.entries(bySe).map(([seName, rows]) => {
-        const t = targetBySe[seName] || { tsName: rows[0]?.tsName || '', targetOsa: 0, targetSellin: 0 };
+        const t = targetBySe[seName] || { tsName: rows[0]?.tsName || '', targetOsa: 0, targetSellin: 0, targetIncremental: 40, targetVisit: 20 };
         const seTsName = t.tsName || rows[0]?.tsName || '';
         const seOsa = rows.reduce((s, r) => s + r.osaMtd, 0);
         const seSellin = rows.reduce((s, r) => s + r.sellinMtd, 0);
@@ -140,6 +146,8 @@ export function parseExcelWorkbook(buffer: ArrayBuffer, fileName: string): Dashb
             sellinMtd: seSellin,
             bioGt1: seBio,
             incremental: seInc,
+            targetIncremental: t.targetIncremental,
+            targetVisit: t.targetVisit,
             visitedRetailers: seVisit,
             transactedRetailers: seTransacted,
             untransactedRetailers: seUntransacted,

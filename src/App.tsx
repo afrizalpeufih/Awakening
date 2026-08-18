@@ -241,6 +241,9 @@ export default function App() {
         const transactedRetailers = territoryRetailers.filter((r) => r.osaMtd !== 0).length;
         const untransactedRetailers = totalRetailers - transactedRetailers;
 
+        const targetIncremental = territorySeRows.reduce((s, r) => s + (r.targetIncremental || 40), 0);
+        const targetVisit = territorySeRows.reduce((s, r) => s + (r.targetVisit || 20), 0);
+
         viewTotals = {
             osaMtd,
             targetOsa,
@@ -251,6 +254,8 @@ export default function App() {
             biometrikCount: bioGt1,
             biometrikPct,
             incremental,
+            targetIncremental,
+            targetVisit,
             totalRetailers,
             visitedRetailers,
             transactedRetailers,
@@ -267,6 +272,8 @@ export default function App() {
             biometrikCount: row.bioGt1,
             biometrikPct: row.biometrikPct,
             incremental: row.incremental,
+            targetIncremental: row.targetIncremental || 40,
+            targetVisit: row.targetVisit || 20,
             totalRetailers: row.count,
             visitedRetailers: row.visitedRetailers,
             transactedRetailers: row.transactedRetailers,
@@ -294,10 +301,9 @@ export default function App() {
     const gapOsaPct = t.targetOsa > 0 ? ((gapOsa / t.targetOsa) * 100).toFixed(1) : '0.0';
     const achievementOsaPct = t.targetOsa > 0 ? ((t.osaMtd / t.targetOsa) * 100).toFixed(1) : '0.0';
 
-    const INCREMENTAL_TARGET_PER_SE = 40;
     const incrementalTarget = isAll
-        ? (territorySeRows.length || 1) * INCREMENTAL_TARGET_PER_SE
-        : INCREMENTAL_TARGET_PER_SE;
+        ? territorySeRows.reduce((sum, r) => sum + (r.targetIncremental || 40), 0)
+        : (territorySeRows.find((r) => r.seName === selectedSe)?.targetIncremental || 40);
     const incrementalGap = incrementalTarget - t.incremental;
     const incrementalPct = incrementalTarget > 0
         ? (t.incremental / incrementalTarget) * 100

@@ -11,6 +11,8 @@ export type SeRow = {
     bioGt1: number;
     biometrikPct: number;
     incremental: number;
+    targetIncremental: number;
+    targetVisit: number;
     visitedRetailers: number;
     transactedRetailers: number;
     untransactedRetailers: number;
@@ -42,6 +44,8 @@ export type Totals = {
     biometrikCount: number;
     biometrikPct: number;
     incremental: number;
+    targetIncremental: number;
+    targetVisit: number;
     totalRetailers: number;
     visitedRetailers: number;
     transactedRetailers: number;
