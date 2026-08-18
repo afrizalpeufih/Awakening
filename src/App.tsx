@@ -5,7 +5,7 @@ import RetailerTable from './components/RetailerTable';
 import type { MetricKey } from './components/RetailerTable';
 import LandingPage from './components/LandingPage';
 import { UploadModal } from './components/UploadModal';
-import { getUploadHistory } from './supabaseDb';
+import { getUploadHistory, loadHistoryItemData } from './supabaseDb';
 import { fmtNum, fmtPct } from './calc';
 
 const ALL = 'AWAKENING';
@@ -86,23 +86,26 @@ export default function App() {
     };
 
     useEffect(() => {
-        // Cek data terbaru dari database Supabase terlebih dahulu
-        getUploadHistory()
-            .then((historyItems) => {
+        // Cek data terbaru dari database & storage Supabase terlebih dahulu
+        const loadInitial = async () => {
+            try {
+                const historyItems = await getUploadHistory();
                 if (historyItems && historyItems.length > 0) {
                     const activeItem = historyItems.find((item) => item.isActive) || historyItems[0];
-                    if (activeItem && activeItem.data) {
-                        setData(activeItem.data);
-                        setActiveHistoryId(activeItem.id);
-                        setUpdateLabel(parseUpdateLabel(activeItem.fileName || activeItem.data.source || ''));
-                        applyRouting(activeItem.data);
-                        return;
+                    if (activeItem) {
+                        const fullData = await loadHistoryItemData(activeItem);
+                        if (fullData) {
+                            setData(fullData);
+                            setActiveHistoryId(activeItem.id);
+                            setUpdateLabel(parseUpdateLabel(activeItem.fileName || fullData.source || ''));
+                            applyRouting(fullData);
+                            return;
+                        }
                     }
                 }
-                throw new Error('Tidak ada riwayat di Supabase');
-            })
-            .catch(() => {
-                // Fallback ke data.json lokal jika Supabase kosong / offline
+                throw new Error('Tidak ada riwayat aktif di Supabase');
+            } catch (err) {
+                console.log('[Supabase] Fallback ke data.json default...');
                 fetch('./data.json')
                     .then((r) => {
                         if (!r.ok) throw new Error('HTTP ' + r.status);
@@ -114,7 +117,10 @@ export default function App() {
                         applyRouting(d);
                     })
                     .catch((e) => setError(String(e)));
-            });
+            }
+        };
+
+        loadInitial();
     }, []);
 
     useEffect(() => {
