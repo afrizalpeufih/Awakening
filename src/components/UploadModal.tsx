@@ -101,19 +101,17 @@ export const UploadModal: React.FC<UploadModalProps> = ({
 
     const handleHistoryItemClick = async (item: HistoryItem) => {
         setError(null);
-        setSuccessMsg(null);
-        setDebugInfo('Memuat data...');
+        setSuccessMsg('Memuat data...');
         try {
             const data = await loadHistoryItemData(item);
             if (!data) {
                 setError('Gagal memuat data. File mungkin sudah dihapus dari storage.');
-                setDebugInfo('');
+                setSuccessMsg(null);
                 return;
             }
             await setActiveHistoryId(item.id);
             onDataLoaded(data, item.fileName, item.id);
             setSuccessMsg(`Data berhasil dimuat dari file: "${item.fileName}"!`);
-            setDebugInfo('');
             
             // Refresh history list
             const updatedHistory = await getUploadHistory();
@@ -125,7 +123,7 @@ export const UploadModal: React.FC<UploadModalProps> = ({
             }, 1000);
         } catch (err: any) {
             setError(`Gagal memuat data: ${err.message || err}`);
-            setDebugInfo('');
+            setSuccessMsg(null);
         }
     };
 
@@ -158,11 +156,12 @@ export const UploadModal: React.FC<UploadModalProps> = ({
 
     const handleRestore = async (item: HistoryItem) => {
         setError(null);
-        setSuccessMsg(null);
+        setSuccessMsg('Memuat data...');
         try {
             const data = await loadHistoryItemData(item);
             if (!data) {
                 setError('Gagal memuat data. File mungkin sudah dihapus dari storage.');
+                setSuccessMsg(null);
                 return;
             }
             await setActiveHistoryId(item.id);
@@ -179,6 +178,7 @@ export const UploadModal: React.FC<UploadModalProps> = ({
             }, 1500);
         } catch (err: any) {
             setError(`Gagal restore: ${err.message || err}`);
+            setSuccessMsg(null);
         }
     };
 

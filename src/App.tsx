@@ -5,7 +5,7 @@ import RetailerTable from './components/RetailerTable';
 import type { MetricKey } from './components/RetailerTable';
 import LandingPage from './components/LandingPage';
 import { UploadModal } from './components/UploadModal';
-import { getUploadHistory, loadHistoryItemData } from './supabaseDb';
+import { getUploadHistory } from './supabaseDb';
 import { fmtNum, fmtPct } from './calc';
 
 const ALL = 'AWAKENING';
@@ -88,19 +88,15 @@ export default function App() {
     useEffect(() => {
         // Cek data terbaru dari database Supabase terlebih dahulu
         getUploadHistory()
-            .then(async (historyItems) => {
+            .then((historyItems) => {
                 if (historyItems && historyItems.length > 0) {
                     const activeItem = historyItems.find((item) => item.isActive) || historyItems[0];
-                    if (activeItem) {
-                        // Load data from Storage (cross-device sync)
-                        const data = await loadHistoryItemData(activeItem);
-                        if (data) {
-                            setData(data);
-                            setActiveHistoryId(activeItem.id);
-                            setUpdateLabel(parseUpdateLabel(activeItem.fileName || data.source || ''));
-                            applyRouting(data);
-                            return;
-                        }
+                    if (activeItem && activeItem.data) {
+                        setData(activeItem.data);
+                        setActiveHistoryId(activeItem.id);
+                        setUpdateLabel(parseUpdateLabel(activeItem.fileName || activeItem.data.source || ''));
+                        applyRouting(activeItem.data);
+                        return;
                     }
                 }
                 throw new Error('Tidak ada riwayat di Supabase');

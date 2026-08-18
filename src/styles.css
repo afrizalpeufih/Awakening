@@ -147,6 +147,17 @@ body {
     animation: fadeIn 0.25s ease;
 }
 
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+/* ---------- MODAL — MOBILE RESPONSIVE (max 600px) ---------- */
 @media (max-width: 600px) {
     .modal-backdrop {
         padding: 0;
@@ -164,6 +175,7 @@ body {
     .modal-header {
         gap: 10px;
         margin-bottom: 16px;
+        flex-wrap: wrap;
     }
 
     .modal-header-brand {
@@ -183,6 +195,12 @@ body {
 
     .modal-subtitle {
         font-size: 11px;
+    }
+
+    .modal-header-actions {
+        display: flex;
+        gap: 8px;
+        align-items: center;
     }
 
     .btn-home-modal {
@@ -246,16 +264,10 @@ body {
     .dropzone-text span {
         font-size: 11px;
     }
-}
 
-
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-
-    to {
-        opacity: 1;
+    .modal-alert {
+        font-size: 12px;
+        padding: 10px 12px;
     }
 }
 
