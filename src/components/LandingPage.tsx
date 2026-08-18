@@ -38,17 +38,23 @@ export default function LandingPage({ data, onDataLoaded, activeHistoryId, onSel
     const tsData = data.seList.filter((r) => r.tsName === tsName);
     const tsRetailers = data.retailers.filter((r) => r.tsName === tsName);
     
-    const totalRetailers = tsData.reduce((sum, r) => sum + r.count, 0);
+    const totalRetailers = tsRetailers.length;
     
-    // Use weighted average for OSA and SELLIN (matching DashboardView logic)
-    const osaPct = tsData.reduce((sum, r) => sum + r.osaPct * r.count, 0) / (totalRetailers || 1);
-    const sellinPct = tsData.reduce((sum, r) => sum + r.sellinPct * r.count, 0) / (totalRetailers || 1);
+    // Total OSA MTD vs Total Target OSA for territory (matching DashboardView)
+    const totalOsaMtd = tsRetailers.reduce((sum, r) => sum + r.osaMtd, 0);
+    const totalTargetOsa = tsData.reduce((sum, r) => sum + r.targetOsa, 0);
+    const osaPct = totalTargetOsa > 0 ? (totalOsaMtd / totalTargetOsa) * 100 : 0;
     
-    // Use actual retailer count for biometrik (matching DashboardView logic)
+    // Total Sellin MTD vs Total Target Sellin for territory (matching DashboardView)
+    const totalSellinMtd = tsRetailers.reduce((sum, r) => sum + r.sellinMtd, 0);
+    const totalTargetSellin = tsData.reduce((sum, r) => sum + r.targetSellin, 0);
+    const sellinPct = totalTargetSellin > 0 ? (totalSellinMtd / totalTargetSellin) * 100 : 0;
+    
+    // Actual retailer count for biometrik (matching DashboardView)
     const biometrikCount = tsRetailers.filter((r) => r.bioMtd >= 1).length;
-    const biometrikPct = totalRetailers ? (biometrikCount / totalRetailers) * 100 : 0;
+    const biometrikPct = totalRetailers > 0 ? (biometrikCount / totalRetailers) * 100 : 0;
     
-    // Use actual incremental calculation (matching DashboardView logic)
+    // Actual incremental calculation (matching DashboardView)
     const totalIncremental = tsData.reduce((sum, r) => sum + r.incremental, 0);
     const incrementalTarget = (tsData.length || 1) * 40;
     const incrementalPct = incrementalTarget > 0 ? (totalIncremental / incrementalTarget) * 100 : 0;
