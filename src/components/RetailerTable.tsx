@@ -59,15 +59,15 @@ const META: Record<MetricKey, MetricMeta> = {
     },
     biometrik: {
         title: 'BIOMETRIK — data Retailer',
-        leftLabel: 'BIO MTD ≥ BIO LMTD (HIJAU)',
-        rightLabel: 'BIO MTD < BIO LMTD (MERAH)',
-        match: (r) => r.bioMtd >= r.bioLmtd,
-        opposite: (r) => r.bioMtd < r.bioLmtd,
+        leftLabel: 'BIO MTD > 0 (ADA BIO)',
+        rightLabel: 'BIO MTD = 0 (NULL BIO)',
+        match: (r) => r.bioMtd > 0,
+        opposite: (r) => r.bioMtd <= 0,
         dual: true,
         showSub: true,
         metricLabel: 'Bio',
         metricValue: (r) => formatVal(r.bioMtd),
-        metricClass: (r) => (r.bioMtd >= r.bioLmtd ? 'pos' : 'neg'),
+        metricClass: (r) => (r.bioMtd > 0 ? 'pos' : 'neg'),
         sortValue: (r) => r.bioMtd,
     },
     incremental: {
@@ -85,7 +85,7 @@ const META: Record<MetricKey, MetricMeta> = {
                     <span className="inc-label">BIO LMTD</span>
                     <span className="inc-val">{formatVal(r.bioLmtd)}</span>
                 </div>
-                <div className={`inc-cell ${r.bioMtd >= r.bioLmtd ? 'inc-cell--pos' : 'inc-cell--neg'}`}>
+                <div className={`inc-cell ${r.bioMtd > 0 ? 'inc-cell--pos' : 'inc-cell--neg'}`}>
                     <span className="inc-label">BIO MTD</span>
                     <span className="inc-val">{formatVal(r.bioMtd)}</span>
                 </div>
