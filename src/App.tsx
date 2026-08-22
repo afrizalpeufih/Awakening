@@ -44,6 +44,17 @@ function parseUpdateLabel(source: string): string {
     return `Update data : ${day} ${monthEng} ${year}`;
 }
 
+/** Parse active day number from file source or update label (e.g. "20 August 2026" => 20) */
+function parseActiveDay(sourceOrLabel?: string): number {
+    if (!sourceOrLabel) return 31;
+    const m = sourceOrLabel.match(/(?:UPDATE\s+|Update\s+data\s*:\s*)?(\d{1,2})/i);
+    if (m) {
+        const day = parseInt(m[1], 10);
+        if (day >= 1 && day <= 31) return day;
+    }
+    return 31;
+}
+
 const CaretIcon = () => (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
         <polyline points="6 9 12 15 18 9" />
@@ -98,6 +109,24 @@ export default function App() {
                     if (activeItem) {
                         const fullData = await loadHistoryItemData(activeItem);
                         if (fullData) {
+                            // If cached Supabase data is missing ecDaily, enrich from local data.json
+                            if (!fullData.seList[0]?.ecDaily) {
+                                try {
+                                    const localRes = await fetch('./data.json');
+                                    if (localRes.ok) {
+                                        const localData = await localRes.json();
+                                        if (localData.seList[0]?.ecDaily) {
+                                            const ecMap = new Map(localData.seList.map((s: any) => [s.seName, s.ecDaily]));
+                                            fullData.seList = fullData.seList.map((s: any) => ({
+                                                ...s,
+                                                ecDaily: ecMap.get(s.seName) || s.ecDaily,
+                                            }));
+                                        }
+                                    }
+                                } catch {
+                                    // ignore fallback error
+                                }
+                            }
                             setData(fullData);
                             setActiveHistoryId(activeItem.id);
                             setUpdateLabel(parseUpdateLabel(activeItem.fileName || fullData.source || ''));
@@ -500,6 +529,7 @@ export default function App() {
                         seList={selectedSe === ALL ? territorySeRows : territorySeRows.filter((r) => r.seName === selectedSe)}
                         onClose={() => setActiveMetric(null)}
                         currentTs={selectedSe === ALL ? currentTs : `${selectedSe} (${currentTs})`}
+                        activeDay={parseActiveDay(updateLabel || data.source)}
                     />
                 )}
 

@@ -6,12 +6,13 @@ type Props = {
     seList: SeRow[];
     onClose: () => void;
     currentTs: string;
+    activeDay?: number;
 };
 
 type RangeOption = '1-8' | '9-16' | '17-24' | '25-31' | 'all';
 
-export const EcTable: React.FC<Props> = ({ seList, onClose, currentTs }) => {
-    const [range, setRange] = useState<RangeOption>('1-8');
+export const EcTable: React.FC<Props> = ({ seList, onClose, currentTs, activeDay = 31 }) => {
+    const [range, setRange] = useState<RangeOption>('all');
 
     const days = useMemo(() => {
         switch (range) {
@@ -97,6 +98,13 @@ export const EcTable: React.FC<Props> = ({ seList, onClose, currentTs }) => {
                 <div className="ec-range-pills">
                     <button
                         type="button"
+                        className={`ec-range-pill ${range === 'all' ? 'active' : ''}`}
+                        onClick={() => setRange('all')}
+                    >
+                        Semua TGL (1–31)
+                    </button>
+                    <button
+                        type="button"
                         className={`ec-range-pill ${range === '1-8' ? 'active' : ''}`}
                         onClick={() => setRange('1-8')}
                     >
@@ -122,13 +130,6 @@ export const EcTable: React.FC<Props> = ({ seList, onClose, currentTs }) => {
                         onClick={() => setRange('25-31')}
                     >
                         TGL 25–31
-                    </button>
-                    <button
-                        type="button"
-                        className={`ec-range-pill ${range === 'all' ? 'active' : ''}`}
-                        onClick={() => setRange('all')}
-                    >
-                        Semua TGL
                     </button>
                 </div>
                 {range !== 'all' && (
@@ -162,11 +163,14 @@ export const EcTable: React.FC<Props> = ({ seList, onClose, currentTs }) => {
                         <tr>
                             <th className="ec-sticky-col ec-th-se">SALES EXECUTIVE</th>
                             <th className="ec-sticky-col-target ec-th-target">TOTAL VS TARGET</th>
-                            {days.map((d) => (
-                                <th key={d} className="ec-th-day">
-                                    TGL {d}
-                                </th>
-                            ))}
+                            {days.map((d) => {
+                                const isLocked = d > activeDay;
+                                return (
+                                    <th key={d} className={`ec-th-day ${isLocked ? 'ec-th-locked' : ''}`}>
+                                        TGL {d}
+                                    </th>
+                                );
+                            })}
                         </tr>
                     </thead>
                     <tbody>
@@ -202,6 +206,19 @@ export const EcTable: React.FC<Props> = ({ seList, onClose, currentTs }) => {
                                         </div>
                                     </td>
                                     {days.map((d) => {
+                                        const isLocked = d > activeDay;
+                                        if (isLocked) {
+                                            return (
+                                                <td
+                                                    key={d}
+                                                    className="ec-td-day ec-val-locked"
+                                                    title={`Tanggal ${d} belum berjalan (Data per ${activeDay} Agt)`}
+                                                >
+                                                    -
+                                                </td>
+                                            );
+                                        }
+
                                         const val = Number((daily as Record<string | number, number>)[d] ?? 0);
                                         const colorClass = getCellColorClass(val);
                                         return (

@@ -3254,3 +3254,16 @@ body {
     cursor: not-allowed;
 }
 
+/* Locked date styling for dates beyond active update day */
+.ec-val-locked {
+    color: #52525b !important;
+    background: rgba(255, 255, 255, 0.015) !important;
+    font-weight: 500 !important;
+    user-select: none;
+}
+
+.ec-th-locked {
+    color: #71717a !important;
+    opacity: 0.6;
+}
+
