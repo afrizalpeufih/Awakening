@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useState, useMemo } from 'react';
 import type { SeRow } from '../types';
 import { fmtNum, fmtPct } from '../calc';
 
@@ -9,24 +9,10 @@ type Props = {
     activeDay?: number;
 };
 
-type RangeOption = '1-8' | '9-16' | '17-24' | '25-31' | 'all';
-
-/** Detect if screen is mobile (< 640px) */
-const isMobile = () => window.innerWidth < 640;
+type RangeOption = '1-8' | '9-16' | '17-24' | '25-31';
 
 export const EcTable: React.FC<Props> = ({ seList, onClose, currentTs, activeDay = 31 }) => {
-    // Default to '1-8' on mobile for readability, 'all' on desktop
-    const [range, setRange] = useState<RangeOption>(() => (isMobile() ? '1-8' : 'all'));
-    const [mobile, setMobile] = useState(() => isMobile());
-
-    useEffect(() => {
-        const handler = () => {
-            const m = isMobile();
-            setMobile(m);
-        };
-        window.addEventListener('resize', handler);
-        return () => window.removeEventListener('resize', handler);
-    }, []);
+    const [range, setRange] = useState<RangeOption>('1-8');
 
     const days = useMemo(() => {
         switch (range) {
@@ -38,8 +24,6 @@ export const EcTable: React.FC<Props> = ({ seList, onClose, currentTs, activeDay
                 return Array.from({ length: 8 }, (_, i) => i + 17);
             case '25-31':
                 return Array.from({ length: 7 }, (_, i) => i + 25);
-            case 'all':
-                return Array.from({ length: 31 }, (_, i) => i + 1);
         }
     }, [range]);
 
@@ -59,17 +43,15 @@ export const EcTable: React.FC<Props> = ({ seList, onClose, currentTs, activeDay
         return 'ec-val-mid';
     };
 
-    const handlePrevRange = () => {
-        if (range === '9-16') setRange('1-8');
-        else if (range === '17-24') setRange('9-16');
-        else if (range === '25-31') setRange('17-24');
-        else if (range === 'all') setRange('25-31');
+    const rangeOrder: RangeOption[] = ['1-8', '9-16', '17-24', '25-31'];
+    const currentIndex = rangeOrder.indexOf(range);
+
+    const handlePrev = () => {
+        if (currentIndex > 0) setRange(rangeOrder[currentIndex - 1]);
     };
 
-    const handleNextRange = () => {
-        if (range === '1-8') setRange('9-16');
-        else if (range === '9-16') setRange('17-24');
-        else if (range === '17-24') setRange('25-31');
+    const handleNext = () => {
+        if (currentIndex < rangeOrder.length - 1) setRange(rangeOrder[currentIndex + 1]);
     };
 
     return (
@@ -77,18 +59,14 @@ export const EcTable: React.FC<Props> = ({ seList, onClose, currentTs, activeDay
             {/* Header Section */}
             <div className="panel-head ec-panel-head">
                 <div className="ec-header-info">
-                    <h2 className="panel-title">
-                        EFFECTIVE CALL (EC){!mobile && <span className="highlight-text"> — {currentTs}</span>}
-                    </h2>
-                    {mobile && (
-                        <div className="ec-ts-label">{currentTs}</div>
-                    )}
+                    <h2 className="panel-title">EFFECTIVE CALL (EC)</h2>
+                    <div className="ec-ts-label">{currentTs}</div>
                     <div className="ec-summary-chips">
                         <span className="ec-summary-chip">
                             <strong>{seList.length}</strong> SE
                         </span>
                         <span className="ec-summary-chip">
-                            {mobile ? '' : 'Total: '}<strong>{fmtNum(totalEc)}</strong> / {mobile ? '' : 'Target: '}<strong>{fmtNum(targetEc)}</strong>
+                            <strong>{fmtNum(totalEc)}</strong> / <strong>{fmtNum(targetEc)}</strong>
                         </span>
                         <span
                             className="ec-summary-chip ec-summary-pct"
@@ -102,78 +80,49 @@ export const EcTable: React.FC<Props> = ({ seList, onClose, currentTs, activeDay
                                         : 'rgba(248, 113, 113, 0.15)',
                             }}
                         >
-                            {mobile ? '' : 'Achievement: '}<strong>{fmtPct(overallPct)}</strong>
+                            <strong>{fmtPct(overallPct)}</strong>
                         </span>
                     </div>
                 </div>
                 <button className="btn-close" onClick={onClose} aria-label="Tutup detail EC">
-                    {mobile ? '✕' : 'Tutup ✕'}
+                    ✕
                 </button>
             </div>
 
             {/* Date Range Selector Toolbar */}
             <div className="ec-range-toolbar">
                 <div className="ec-range-pills">
-                    {!mobile && (
+                    {rangeOrder.map((r) => (
                         <button
+                            key={r}
                             type="button"
-                            className={`ec-range-pill ${range === 'all' ? 'active' : ''}`}
-                            onClick={() => setRange('all')}
+                            className={`ec-range-pill ${range === r ? 'active' : ''}`}
+                            onClick={() => setRange(r)}
                         >
-                            Semua (1–31)
+                            {r}
                         </button>
-                    )}
+                    ))}
+                </div>
+                <div className="ec-range-nav">
                     <button
                         type="button"
-                        className={`ec-range-pill ${range === '1-8' ? 'active' : ''}`}
-                        onClick={() => setRange('1-8')}
+                        className="ec-nav-btn"
+                        disabled={currentIndex === 0}
+                        onClick={handlePrev}
+                        title="Periode Sebelumnya"
                     >
-                        1–8
+                        ‹
                     </button>
                     <button
                         type="button"
-                        className={`ec-range-pill ${range === '9-16' ? 'active' : ''}`}
-                        onClick={() => setRange('9-16')}
+                        className="ec-nav-btn"
+                        disabled={currentIndex === rangeOrder.length - 1}
+                        onClick={handleNext}
+                        title="Periode Berikutnya"
                     >
-                        9–16
-                    </button>
-                    <button
-                        type="button"
-                        className={`ec-range-pill ${range === '17-24' ? 'active' : ''}`}
-                        onClick={() => setRange('17-24')}
-                    >
-                        17–24
-                    </button>
-                    <button
-                        type="button"
-                        className={`ec-range-pill ${range === '25-31' ? 'active' : ''}`}
-                        onClick={() => setRange('25-31')}
-                    >
-                        25–31
+                        ›
                     </button>
                 </div>
-                {range !== 'all' && (
-                    <div className="ec-range-nav">
-                        <button
-                            type="button"
-                            className="ec-nav-btn"
-                            disabled={range === '1-8'}
-                            onClick={handlePrevRange}
-                            title="Periode Sebelumnya"
-                        >
-                            ‹
-                        </button>
-                        <button
-                            type="button"
-                            className="ec-nav-btn"
-                            disabled={range === '25-31'}
-                            onClick={handleNextRange}
-                            title="Periode Berikutnya"
-                        >
-                            ›
-                        </button>
-                    </div>
-                )}
             </div>
 
             {/* Table Section */}
@@ -204,7 +153,6 @@ export const EcTable: React.FC<Props> = ({ seList, onClose, currentTs, activeDay
                                 <tr key={r.seName + '|' + r.tsName}>
                                     <td className="ec-sticky-col ec-td-se">
                                         <div className="ec-se-name">{r.seName}</div>
-                                        {!mobile && <small className="ec-se-ts">{r.tsName}</small>}
                                     </td>
                                     <td className="ec-sticky-col-target ec-td-target">
                                         <div className="ec-target-text">
@@ -256,12 +204,10 @@ export const EcTable: React.FC<Props> = ({ seList, onClose, currentTs, activeDay
                 </table>
             </div>
 
-            {/* Mobile navigation hint */}
-            {mobile && (
-                <div className="ec-mobile-hint">
-                    ← Geser tabel ke kanan untuk melihat tanggal lainnya
-                </div>
-            )}
+            {/* Scroll hint */}
+            <div className="ec-mobile-hint">
+                ← Geser tabel untuk melihat tanggal lainnya
+            </div>
         </section>
     );
 };
