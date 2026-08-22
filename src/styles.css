@@ -3267,3 +3267,145 @@ body {
     opacity: 0.6;
 }
 
+/* Target separator */
+.ec-target-sep {
+    color: var(--muted);
+    margin: 0 2px;
+    font-size: 11px;
+}
+
+/* Territory label shown under title on mobile */
+.ec-ts-label {
+    font-size: 12px;
+    color: var(--pink-soft);
+    font-weight: 700;
+    margin-top: 2px;
+    margin-bottom: 4px;
+}
+
+/* Mobile hint bar */
+.ec-mobile-hint {
+    text-align: center;
+    font-size: 11px;
+    color: var(--muted);
+    padding: 8px 0 2px;
+    letter-spacing: 0.3px;
+    opacity: 0.7;
+}
+
+/* ============================================================
+   RESPONSIVE OVERRIDES — EC Table (Mobile < 640px)
+   ============================================================ */
+@media (max-width: 639px) {
+
+    .ec-panel-wrap {
+        margin-top: 16px;
+    }
+
+    /* Shrink sticky SE column */
+    .ec-sticky-col,
+    .ec-table th.ec-sticky-col,
+    .ec-table td.ec-sticky-col {
+        min-width: 110px !important;
+        max-width: 110px !important;
+        width: 110px !important;
+    }
+
+    /* Shrink sticky Target column */
+    .ec-sticky-col-target,
+    .ec-table th.ec-sticky-col-target,
+    .ec-table td.ec-sticky-col-target {
+        left: 110px !important;
+        min-width: 84px !important;
+        max-width: 84px !important;
+        width: 84px !important;
+    }
+
+    /* Shrink date columns */
+    .ec-th-day,
+    .ec-td-day {
+        min-width: 42px !important;
+        max-width: 42px !important;
+        width: 42px !important;
+        font-size: 12px !important;
+        padding: 8px 4px !important;
+    }
+
+    /* Shrink table header */
+    .ec-table th {
+        font-size: 9px !important;
+        padding: 10px 5px !important;
+        letter-spacing: 0.4px !important;
+    }
+
+    /* Shrink SE name */
+    .ec-se-name {
+        font-size: 11px !important;
+    }
+
+    /* Shrink target text */
+    .ec-target-text {
+        font-size: 11px !important;
+    }
+
+    .ec-target-text strong {
+        font-size: 12px !important;
+    }
+
+    .ec-pct-badge {
+        font-size: 10px !important;
+        padding: 2px 5px !important;
+    }
+
+    /* Table cell padding reduction */
+    .ec-table td {
+        padding: 9px 5px !important;
+    }
+
+    /* Compact summary chips */
+    .ec-summary-chips {
+        gap: 6px;
+    }
+
+    .ec-summary-chip {
+        font-size: 11px !important;
+        padding: 4px 10px !important;
+    }
+
+    /* Range pills — make compact */
+    .ec-range-pill {
+        padding: 5px 10px !important;
+        font-size: 11px !important;
+    }
+
+    /* Range toolbar layout */
+    .ec-range-toolbar {
+        padding: 8px 10px !important;
+        gap: 8px;
+    }
+
+    /* Nav arrows smaller */
+    .ec-nav-btn {
+        padding: 5px 10px !important;
+        font-size: 14px !important;
+        font-weight: 800 !important;
+        min-width: 36px;
+    }
+
+    /* Panel title smaller */
+    .ec-panel-head .panel-title {
+        font-size: 15px !important;
+    }
+
+    /* Tutup button compact */
+    .ec-panel-head .btn-close {
+        padding: 6px 10px !important;
+        font-size: 16px !important;
+        min-width: 36px;
+    }
+
+    /* max height taller on mobile to show more rows */
+    .ec-table-wrap {
+        max-height: 60vh;
+    }
+}

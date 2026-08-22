@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import type { SeRow } from '../types';
 import { fmtNum, fmtPct } from '../calc';
 
@@ -11,8 +11,22 @@ type Props = {
 
 type RangeOption = '1-8' | '9-16' | '17-24' | '25-31' | 'all';
 
+/** Detect if screen is mobile (< 640px) */
+const isMobile = () => window.innerWidth < 640;
+
 export const EcTable: React.FC<Props> = ({ seList, onClose, currentTs, activeDay = 31 }) => {
-    const [range, setRange] = useState<RangeOption>('all');
+    // Default to '1-8' on mobile for readability, 'all' on desktop
+    const [range, setRange] = useState<RangeOption>(() => (isMobile() ? '1-8' : 'all'));
+    const [mobile, setMobile] = useState(() => isMobile());
+
+    useEffect(() => {
+        const handler = () => {
+            const m = isMobile();
+            setMobile(m);
+        };
+        window.addEventListener('resize', handler);
+        return () => window.removeEventListener('resize', handler);
+    }, []);
 
     const days = useMemo(() => {
         switch (range) {
@@ -49,6 +63,7 @@ export const EcTable: React.FC<Props> = ({ seList, onClose, currentTs, activeDay
         if (range === '9-16') setRange('1-8');
         else if (range === '17-24') setRange('9-16');
         else if (range === '25-31') setRange('17-24');
+        else if (range === 'all') setRange('25-31');
     };
 
     const handleNextRange = () => {
@@ -63,14 +78,17 @@ export const EcTable: React.FC<Props> = ({ seList, onClose, currentTs, activeDay
             <div className="panel-head ec-panel-head">
                 <div className="ec-header-info">
                     <h2 className="panel-title">
-                        EFFECTIVE CALL (EC) <span className="highlight-text">— {currentTs}</span>
+                        EFFECTIVE CALL (EC){!mobile && <span className="highlight-text"> — {currentTs}</span>}
                     </h2>
+                    {mobile && (
+                        <div className="ec-ts-label">{currentTs}</div>
+                    )}
                     <div className="ec-summary-chips">
                         <span className="ec-summary-chip">
                             <strong>{seList.length}</strong> SE
                         </span>
                         <span className="ec-summary-chip">
-                            Total: <strong>{fmtNum(totalEc)}</strong> / Target: <strong>{fmtNum(targetEc)}</strong>
+                            {mobile ? '' : 'Total: '}<strong>{fmtNum(totalEc)}</strong> / {mobile ? '' : 'Target: '}<strong>{fmtNum(targetEc)}</strong>
                         </span>
                         <span
                             className="ec-summary-chip ec-summary-pct"
@@ -84,52 +102,54 @@ export const EcTable: React.FC<Props> = ({ seList, onClose, currentTs, activeDay
                                         : 'rgba(248, 113, 113, 0.15)',
                             }}
                         >
-                            Achievement: <strong>{fmtPct(overallPct)}</strong>
+                            {mobile ? '' : 'Achievement: '}<strong>{fmtPct(overallPct)}</strong>
                         </span>
                     </div>
                 </div>
                 <button className="btn-close" onClick={onClose} aria-label="Tutup detail EC">
-                    Tutup ✕
+                    {mobile ? '✕' : 'Tutup ✕'}
                 </button>
             </div>
 
             {/* Date Range Selector Toolbar */}
             <div className="ec-range-toolbar">
                 <div className="ec-range-pills">
-                    <button
-                        type="button"
-                        className={`ec-range-pill ${range === 'all' ? 'active' : ''}`}
-                        onClick={() => setRange('all')}
-                    >
-                        Semua TGL (1–31)
-                    </button>
+                    {!mobile && (
+                        <button
+                            type="button"
+                            className={`ec-range-pill ${range === 'all' ? 'active' : ''}`}
+                            onClick={() => setRange('all')}
+                        >
+                            Semua (1–31)
+                        </button>
+                    )}
                     <button
                         type="button"
                         className={`ec-range-pill ${range === '1-8' ? 'active' : ''}`}
                         onClick={() => setRange('1-8')}
                     >
-                        TGL 1–8
+                        1–8
                     </button>
                     <button
                         type="button"
                         className={`ec-range-pill ${range === '9-16' ? 'active' : ''}`}
                         onClick={() => setRange('9-16')}
                     >
-                        TGL 9–16
+                        9–16
                     </button>
                     <button
                         type="button"
                         className={`ec-range-pill ${range === '17-24' ? 'active' : ''}`}
                         onClick={() => setRange('17-24')}
                     >
-                        TGL 17–24
+                        17–24
                     </button>
                     <button
                         type="button"
                         className={`ec-range-pill ${range === '25-31' ? 'active' : ''}`}
                         onClick={() => setRange('25-31')}
                     >
-                        TGL 25–31
+                        25–31
                     </button>
                 </div>
                 {range !== 'all' && (
@@ -141,7 +161,7 @@ export const EcTable: React.FC<Props> = ({ seList, onClose, currentTs, activeDay
                             onClick={handlePrevRange}
                             title="Periode Sebelumnya"
                         >
-                            ‹ Prev
+                            ‹
                         </button>
                         <button
                             type="button"
@@ -150,7 +170,7 @@ export const EcTable: React.FC<Props> = ({ seList, onClose, currentTs, activeDay
                             onClick={handleNextRange}
                             title="Periode Berikutnya"
                         >
-                            Next ›
+                            ›
                         </button>
                     </div>
                 )}
@@ -161,13 +181,13 @@ export const EcTable: React.FC<Props> = ({ seList, onClose, currentTs, activeDay
                 <table className="ec-table">
                     <thead>
                         <tr>
-                            <th className="ec-sticky-col ec-th-se">SALES EXECUTIVE</th>
-                            <th className="ec-sticky-col-target ec-th-target">TOTAL VS TARGET</th>
+                            <th className="ec-sticky-col ec-th-se">SE</th>
+                            <th className="ec-sticky-col-target ec-th-target">TGT</th>
                             {days.map((d) => {
                                 const isLocked = d > activeDay;
                                 return (
                                     <th key={d} className={`ec-th-day ${isLocked ? 'ec-th-locked' : ''}`}>
-                                        TGL {d}
+                                        {d}
                                     </th>
                                 );
                             })}
@@ -184,11 +204,13 @@ export const EcTable: React.FC<Props> = ({ seList, onClose, currentTs, activeDay
                                 <tr key={r.seName + '|' + r.tsName}>
                                     <td className="ec-sticky-col ec-td-se">
                                         <div className="ec-se-name">{r.seName}</div>
-                                        <small className="ec-se-ts">{r.tsName}</small>
+                                        {!mobile && <small className="ec-se-ts">{r.tsName}</small>}
                                     </td>
                                     <td className="ec-sticky-col-target ec-td-target">
                                         <div className="ec-target-text">
-                                            <strong>{fmtNum(ecTotal)}</strong> / <small>{fmtNum(ecTarget)}</small>
+                                            <strong>{fmtNum(ecTotal)}</strong>
+                                            <span className="ec-target-sep">/</span>
+                                            <small>{fmtNum(ecTarget)}</small>
                                         </div>
                                         <div
                                             className="ec-pct-badge"
@@ -233,6 +255,13 @@ export const EcTable: React.FC<Props> = ({ seList, onClose, currentTs, activeDay
                     </tbody>
                 </table>
             </div>
+
+            {/* Mobile navigation hint */}
+            {mobile && (
+                <div className="ec-mobile-hint">
+                    ← Geser tabel ke kanan untuk melihat tanggal lainnya
+                </div>
+            )}
         </section>
     );
 };
