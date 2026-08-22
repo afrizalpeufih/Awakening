@@ -16,6 +16,10 @@ export type SeRow = {
     visitedRetailers: number;
     transactedRetailers: number;
     untransactedRetailers: number;
+    ecTotal?: number;
+    ecTarget?: number;
+    ecPct?: number;
+    ecDaily?: Record<number, number>;
 };
 
 export type Retailer = {
@@ -50,6 +54,9 @@ export type Totals = {
     visitedRetailers: number;
     transactedRetailers: number;
     untransactedRetailers: number;
+    ecTotal?: number;
+    ecTarget?: number;
+    ecPct?: number;
 };
 
 export type DashboardData = {

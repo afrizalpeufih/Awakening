@@ -3,10 +3,13 @@ import type { DashboardData, Totals } from './types';
 import KpiCard from './components/KpiCard';
 import RetailerTable from './components/RetailerTable';
 import type { MetricKey } from './components/RetailerTable';
+import EcTable from './components/EcTable';
 import LandingPage from './components/LandingPage';
 import { UploadModal } from './components/UploadModal';
 import { getUploadHistory, loadHistoryItemData } from './supabaseDb';
 import { fmtNum, fmtPct } from './calc';
+
+export type ExtendedMetricKey = MetricKey | 'ec';
 
 const ALL = 'AWAKENING';
 const DEFAULT_TERRITORY = 'CS North Minahasa';
@@ -59,14 +62,14 @@ export default function App() {
     const [viewMode, setViewMode] = useState<'landing' | 'dashboard'>('landing');
     const [selectedTs, setSelectedTs] = useState<string | null>(null);
     const [selectedSe, setSelectedSe] = useState<string>(ALL);
-    const [activeMetric, setActiveMetric] = useState<MetricKey | null>('osa');
+    const [activeMetric, setActiveMetric] = useState<ExtendedMetricKey | null>('osa');
     const [open, setOpen] = useState(false);
     const [updateLabel, setUpdateLabel] = useState<string>('');
     const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
     const [activeHistoryId, setActiveHistoryId] = useState<string | null>(null);
     const filterRef = useRef<HTMLDivElement>(null);
 
-    const handleMetric = (m: MetricKey) =>
+    const handleMetric = (m: ExtendedMetricKey) =>
         setActiveMetric((cur) => (cur === m ? null : m));
 
     const applyRouting = (d: DashboardData) => {
@@ -244,6 +247,10 @@ export default function App() {
         const targetIncremental = territorySeRows.reduce((s, r) => s + (r.targetIncremental || 40), 0);
         const targetVisit = territorySeRows.reduce((s, r) => s + (r.targetVisit || 20), 0);
 
+        const ecTotal = territorySeRows.reduce((s, r) => s + (r.ecTotal || 0), 0);
+        const ecTarget = territorySeRows.reduce((s, r) => s + (r.ecTarget || 0), 0);
+        const ecPct = ecTarget > 0 ? (ecTotal / ecTarget) * 100 : 0;
+
         viewTotals = {
             osaMtd,
             targetOsa,
@@ -260,6 +267,9 @@ export default function App() {
             visitedRetailers,
             transactedRetailers,
             untransactedRetailers,
+            ecTotal,
+            ecTarget,
+            ecPct,
         };
     } else if (row) {
         viewTotals = {
@@ -278,6 +288,9 @@ export default function App() {
             visitedRetailers: row.visitedRetailers,
             transactedRetailers: row.transactedRetailers,
             untransactedRetailers: row.untransactedRetailers,
+            ecTotal: row.ecTotal || 0,
+            ecTarget: row.ecTarget || 0,
+            ecPct: row.ecPct || 0,
         };
         viewRetailers = territoryRetailers.filter((r) => r.seName === selectedSe);
     } else {
@@ -376,6 +389,16 @@ export default function App() {
                             </div>
                     </div>
                     <div className="hero-stats">
+                        <div
+                            className={`chip chip-clickable ${activeMetric === 'ec' ? 'active' : ''}`}
+                            onClick={() => handleMetric('ec')}
+                            title={`Klik untuk melihat detail pencapaian Effective Call (Total: ${fmtNum(t.ecTotal || 0)} / Target: ${fmtNum(t.ecTarget || 0)})`}
+                        >
+                            <span>EC</span>
+                            <strong className="chip-value">
+                                {fmtPct(t.ecPct || 0)}
+                            </strong>
+                        </div>
                         <div className="chip">
                             <span>PJP</span>
                             <strong className="chip-value">
@@ -472,7 +495,15 @@ export default function App() {
                     />
                 </section>
 
-                {activeMetric && (
+                {activeMetric === 'ec' && (
+                    <EcTable
+                        seList={selectedSe === ALL ? territorySeRows : territorySeRows.filter((r) => r.seName === selectedSe)}
+                        onClose={() => setActiveMetric(null)}
+                        currentTs={selectedSe === ALL ? currentTs : `${selectedSe} (${currentTs})`}
+                    />
+                )}
+
+                {activeMetric && activeMetric !== 'ec' && (
                     <RetailerTable
                         metric={activeMetric}
                         allRetailers={viewRetailers}

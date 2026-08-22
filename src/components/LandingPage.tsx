@@ -59,6 +59,11 @@ export default function LandingPage({ data, onDataLoaded, activeHistoryId, onSel
     const incrementalTarget = tsData.reduce((sum, r) => sum + (r.targetIncremental || 40), 0);
     const incrementalPct = incrementalTarget > 0 ? (totalIncremental / incrementalTarget) * 100 : 0;
 
+    // Total EC vs Total Target EC for territory
+    const totalEcTotal = tsData.reduce((sum, r) => sum + (r.ecTotal || 0), 0);
+    const totalEcTarget = tsData.reduce((sum, r) => sum + (r.ecTarget || 0), 0);
+    const ecPct = totalEcTarget > 0 ? (totalEcTotal / totalEcTarget) * 100 : 0;
+
     return {
       totalRetailers,
       seCount: tsData.length,
@@ -66,6 +71,7 @@ export default function LandingPage({ data, onDataLoaded, activeHistoryId, onSel
       sellinPct,
       biometrikPct,
       incrementalPct,
+      ecPct,
     };
   };
 

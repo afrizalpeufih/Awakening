@@ -2954,3 +2954,303 @@ body {
         font-size: 20px;
     }
 }
+
+/* ---------- EC TABLE MODAL & STYLES ---------- */
+
+.chip-clickable {
+    cursor: pointer;
+    user-select: none;
+    transition: all 0.25s ease;
+}
+
+.chip-clickable:hover {
+    border-color: var(--pink-soft);
+    box-shadow: 0 0 16px rgba(255, 95, 180, 0.25);
+    transform: translateY(-2px);
+}
+
+.chip-clickable.active {
+    border-color: var(--pink);
+    background: linear-gradient(180deg, rgba(255, 95, 180, 0.2), rgba(255, 138, 61, 0.1));
+    box-shadow: 0 0 20px rgba(255, 95, 180, 0.4);
+}
+
+.ec-modal-content {
+    max-width: 1280px !important;
+    width: 95vw !important;
+    padding: 24px 28px !important;
+}
+
+.ec-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+    margin-bottom: 16px;
+}
+
+.ec-header-info {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex: 1;
+    min-width: 0;
+}
+
+.ec-title-badge {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.ec-summary-chips {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-top: 4px;
+}
+
+.ec-summary-chip {
+    font-size: 13px;
+    padding: 5px 14px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--glass-brd);
+    color: var(--muted);
+    backdrop-filter: blur(8px);
+}
+
+.ec-summary-chip strong {
+    color: #fff;
+    font-weight: 700;
+}
+
+.ec-summary-pct {
+    font-weight: 800;
+    letter-spacing: 0.5px;
+}
+
+.ec-table-wrap {
+    width: 100%;
+    max-height: 65vh;
+    overflow-x: auto;
+    overflow-y: auto;
+    border-radius: 16px;
+    border: 1px solid var(--glass-brd);
+    background: rgba(18, 12, 32, 0.85);
+    backdrop-filter: blur(16px);
+    margin-top: 10px;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 20px 50px rgba(0, 0, 0, 0.5);
+}
+
+.ec-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    font-size: 13px;
+    color: var(--text);
+}
+
+.ec-table th,
+.ec-table td {
+    padding: 12px 14px;
+    white-space: nowrap;
+    text-align: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    border-right: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+.ec-table th {
+    background: rgba(28, 19, 46, 0.96);
+    font-weight: 800;
+    text-transform: uppercase;
+    font-size: 11px;
+    letter-spacing: 1px;
+    color: var(--pink-soft);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.ec-sticky-col {
+    position: sticky;
+    left: 0;
+    z-index: 12;
+    background: rgba(22, 14, 38, 0.98) !important;
+    text-align: left !important;
+    min-width: 180px;
+    max-width: 180px;
+    width: 180px;
+    border-right: 1px solid var(--glass-brd) !important;
+}
+
+.ec-table th.ec-sticky-col {
+    z-index: 20;
+}
+
+.ec-sticky-col-target {
+    position: sticky;
+    left: 180px;
+    z-index: 12;
+    background: rgba(22, 14, 38, 0.98) !important;
+    text-align: center !important;
+    min-width: 130px;
+    max-width: 130px;
+    width: 130px;
+    border-right: 2px solid var(--glass-brd) !important;
+}
+
+.ec-table th.ec-sticky-col-target {
+    z-index: 20;
+}
+
+.ec-se-name {
+    font-weight: 700;
+    color: #fff;
+    font-size: 13px;
+}
+
+.ec-se-ts {
+    font-size: 11px;
+    color: var(--muted);
+    display: block;
+}
+
+.ec-target-text {
+    font-size: 12px;
+    color: var(--muted);
+}
+
+.ec-target-text strong {
+    color: #fff;
+    font-size: 13px;
+}
+
+.ec-pct-badge {
+    display: inline-block;
+    padding: 3px 8px;
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: 800;
+    margin-top: 3px;
+}
+
+.ec-th-day,
+.ec-td-day {
+    min-width: 68px;
+    max-width: 68px;
+    width: 68px;
+}
+
+/* Zero achievement RED */
+.ec-val-zero {
+    color: #f87171 !important;
+    background: rgba(248, 113, 113, 0.09);
+    font-weight: 700;
+}
+
+/* 1..5 achievement WHITE */
+.ec-val-mid {
+    color: #ffffff !important;
+    background: rgba(255, 255, 255, 0.04);
+    font-weight: 700;
+}
+
+/* >= 6 achievement GREEN */
+.ec-val-high {
+    color: #4ade80 !important;
+    background: rgba(74, 222, 128, 0.14);
+    font-weight: 800;
+    text-shadow: 0 0 10px rgba(74, 222, 128, 0.5);
+}
+
+/* ---------- EC PANEL & TOOLBAR STYLES ---------- */
+
+.ec-panel-wrap {
+    margin-top: 24px;
+    animation: fadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.ec-panel-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+    margin-bottom: 16px;
+}
+
+.ec-range-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+    padding: 10px 14px;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--glass-brd);
+    margin-bottom: 14px;
+}
+
+.ec-range-pills {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.ec-range-pill {
+    padding: 6px 14px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--muted);
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.ec-range-pill:hover {
+    color: #fff;
+    border-color: var(--pink-soft);
+    background: rgba(255, 75, 145, 0.12);
+}
+
+.ec-range-pill.active {
+    color: #fff;
+    background: linear-gradient(135deg, rgba(255, 75, 145, 0.35), rgba(255, 138, 61, 0.25));
+    border-color: var(--pink);
+    box-shadow: 0 0 14px rgba(255, 75, 145, 0.3);
+}
+
+.ec-range-nav {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.ec-nav-btn {
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 700;
+    color: #fff;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid var(--glass-brd);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.ec-nav-btn:hover:not(:disabled) {
+    background: var(--pink-light);
+    border-color: var(--pink-soft);
+}
+
+.ec-nav-btn:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+}
+
