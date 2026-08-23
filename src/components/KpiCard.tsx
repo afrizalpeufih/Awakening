@@ -19,9 +19,29 @@ type Props = {
     active?: boolean;
     hint?: string;
     subLabels?: [SubLabelGroup, SubLabelGroup];
+    /** Growth vs data upload sebelumnya. delta null => tidak ada pembanding. */
+    growth?: { delta: number | null; prevLabel?: string };
 };
 
-export default function KpiCard({ title, value, sub, pct, accent, onClick, active, hint, subLabels }: Props) {
+/** Ikon panah growth (▲ / ▼ / netral) */
+const GrowthArrow = ({ dir }: { dir: 'up' | 'down' | 'flat' }) => {
+    if (dir === 'flat') {
+        return <span className="kpi-growth-dash">—</span>;
+    }
+    return (
+        <svg
+            className="kpi-growth-arrow"
+            viewBox="0 0 12 12"
+            fill="currentColor"
+            aria-hidden="true"
+            style={dir === 'down' ? { transform: 'rotate(180deg)' } : undefined}
+        >
+            <path d="M6 1.5 11 8H1z" />
+        </svg>
+    );
+};
+
+export default function KpiCard({ title, value, sub, pct, accent, onClick, active, hint, subLabels, growth }: Props) {
     const clamped = Math.max(0, Math.min(100, pct));
     const interactive = Boolean(onClick);
 
@@ -66,9 +86,42 @@ export default function KpiCard({ title, value, sub, pct, accent, onClick, activ
         >
             <div className="kpi-top">
                 <span className="kpi-title">{title}</span>
-                <span className="kpi-badge" style={{ color: pctColor(pct) }}>
-                    {clamped.toFixed(0)}%
-                </span>
+                {growth ? (
+                    (() => {
+                        const d = growth.delta;
+                        if (d === null || d === undefined) {
+                            return (
+                                <span
+                                    className="kpi-growth kpi-growth--flat"
+                                    title="Tidak ada data sebelumnya sebagai pembanding"
+                                >
+                                    <GrowthArrow dir="flat" />
+                                </span>
+                            );
+                        }
+                        const dir = d > 0 ? 'up' : d < 0 ? 'down' : 'flat';
+                        const cls = d > 0 ? 'up' : d < 0 ? 'down' : 'flat';
+                        const abs = Math.abs(d);
+                        const text = (Number.isInteger(abs) ? abs.toFixed(0) : abs.toFixed(1)) + '%';
+                        return (
+                            <span
+                                className={`kpi-growth kpi-growth--${cls}`}
+                                title={
+                                    growth.prevLabel
+                                        ? `Growth vs ${growth.prevLabel}`
+                                        : 'Growth vs data sebelumnya'
+                                }
+                            >
+                                {dir !== 'flat' && <GrowthArrow dir={dir} />}
+                                <span>{text}</span>
+                            </span>
+                        );
+                    })()
+                ) : (
+                    <span className="kpi-badge" style={{ color: pctColor(pct) }}>
+                        {clamped.toFixed(0)}%
+                    </span>
+                )}
             </div>
             <div className="kpi-value">{value}</div>
             {subLabels ? (

@@ -7,7 +7,7 @@ import EcTable from './components/EcTable';
 import LandingPage from './components/LandingPage';
 import { UploadModal } from './components/UploadModal';
 import { getUploadHistory, loadHistoryItemData } from './supabaseDb';
-import { fmtNum, fmtPct, slugify, MONTH_MAP } from './calc';
+import { fmtNum, fmtPct, slugify, MONTH_MAP, parseFileDate, computeMetricPcts } from './calc';
 
 export type ExtendedMetricKey = MetricKey | 'ec';
 
@@ -61,6 +61,8 @@ export default function App() {
     const [updateLabel, setUpdateLabel] = useState<string>('');
     const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
     const [activeHistoryId, setActiveHistoryId] = useState<string | null>(null);
+    const [prevData, setPrevData] = useState<DashboardData | null>(null);
+    const [prevFileName, setPrevFileName] = useState<string | null>(null);
     const filterRef = useRef<HTMLDivElement>(null);
 
     const handleMetric = (m: ExtendedMetricKey) =>
@@ -137,6 +139,63 @@ export default function App() {
 
         loadInitial();
     }, []);
+
+    // Resolve & muat dataset upload sebelumnya untuk perhitungan growth
+    useEffect(() => {
+        let cancelled = false;
+        const resolvePrev = async () => {
+            setPrevData(null);
+            setPrevFileName(null);
+            try {
+                const items = await getUploadHistory();
+                if (!items || items.length === 0) return;
+
+                // Urutkan berdasarkan tanggal dari nama file (fallback: waktu upload)
+                const sorted = [...items].sort((a, b) => {
+                    const ta = parseFileDate(a.fileName);
+                    const tb = parseFileDate(b.fileName);
+                    if (ta !== null && tb !== null && ta !== tb) return ta - tb;
+                    return new Date(a.uploadedAt).getTime() - new Date(b.uploadedAt).getTime();
+                });
+
+                const idx = sorted.findIndex((c) => c.id === activeHistoryId);
+                // Tanggal file aktif: dari item aktif, atau label update yang sedang tampil
+                const activeDate = parseFileDate(
+                    sorted.find((c) => c.id === activeHistoryId)?.fileName || updateLabel || ''
+                );
+
+                let prev: typeof sorted[number] | undefined;
+                if (activeDate !== null) {
+                    // Cari snapshot dengan tanggal file paling dekat di bawah tanggal aktif
+                    for (const c of [...sorted].reverse()) {
+                        if (c.id === activeHistoryId) continue;
+                        const t = parseFileDate(c.fileName);
+                        if (t !== null && t < activeDate) {
+                            prev = c;
+                            break;
+                        }
+                    }
+                }
+                // Fallback urutan: item tepat sebelum item aktif dalam daftar terurut
+                if (!prev && idx > 0) {
+                    prev = sorted[idx - 1];
+                }
+
+                if (!prev || cancelled) return;
+                const d = await loadHistoryItemData(prev);
+                if (!cancelled && d) {
+                    setPrevData(d);
+                    setPrevFileName(prev.fileName);
+                }
+            } catch {
+                // Growth bersifat opsional: abaikan kegagalan fetch riwayat
+            }
+        };
+        resolvePrev();
+        return () => {
+            cancelled = true;
+        };
+    }, [activeHistoryId, data, updateLabel]);
 
     useEffect(() => {
         const onPopState = () => {
@@ -334,6 +393,29 @@ export default function App() {
         ? (t.incremental / incrementalTarget) * 100
         : 0;
 
+    // ── Growth vs data upload sebelumnya ─────────────────────────────
+    let growthOsa: number | null = null;
+    let growthSellin: number | null = null;
+    let growthBio: number | null = null;
+    let growthInc: number | null = null;
+    if (prevData) {
+        const cur = computeMetricPcts(data, currentTs, selectedSe);
+        const prev = computeMetricPcts(prevData, currentTs, selectedSe);
+        growthOsa = cur.osa - prev.osa;
+        growthSellin = cur.sellin - prev.sellin;
+        growthBio = cur.bio - prev.bio;
+        growthInc = cur.inc - prev.inc;
+        // Angka sangat kecil (pembulatan floating point) dianggap 0
+        const snap = (v: number) => (Math.abs(v) < 0.05 ? 0 : v);
+        growthOsa = snap(growthOsa);
+        growthSellin = snap(growthSellin);
+        growthBio = snap(growthBio);
+        growthInc = snap(growthInc);
+    }
+    const prevLabelShort = prevFileName
+        ? parseUpdateLabel(prevFileName).replace(/^Update data :\s*/i, '')
+        : undefined;
+
     const choose = (value: string) => {
         setSelectedSe(value);
         setOpen(false);
@@ -447,6 +529,7 @@ export default function App() {
                             { label: 'Achievement', count: t.osaMtd, total: t.targetOsa, showTotal: false, format: 'accounting', pct: achievementOsaPct },
                             { label: 'GAP', count: gapOsa, total: t.targetOsa, showTotal: false, format: 'accounting', pct: gapOsaPct },
                         ]}
+                        growth={{ delta: growthOsa, prevLabel: prevLabelShort }}
                     />
                     <KpiCard
                         title="SELLIN SP3GB SE"
@@ -460,6 +543,7 @@ export default function App() {
                             { label: 'Achievement', count: t.sellinMtd, total: t.targetSellin },
                             { label: 'Retailer 3pcs', count: sellinGte3Count, total: t.totalRetailers },
                         ]}
+                        growth={{ delta: growthSellin, prevLabel: prevLabelShort }}
                     />
                     <KpiCard
                         title="BIOMETRIK"
@@ -473,6 +557,7 @@ export default function App() {
                             { label: 'Telco', count: telcoBioCount, total: telcoRetailers.length },
                             { label: 'Retailer QSSO', count: qssoCount, total: t.totalRetailers },
                         ]}
+                        growth={{ delta: growthBio, prevLabel: prevLabelShort }}
                     />
                     <KpiCard
                         title="INCREMENTAL"
@@ -504,6 +589,7 @@ export default function App() {
                                     : '0.0',
                             },
                         ]}
+                        growth={{ delta: growthInc, prevLabel: prevLabelShort }}
                     />
                 </section>
 

@@ -924,6 +924,44 @@ body {
     font-weight: 700;
 }
 
+/* ---------- GROWTH BADGE (vs upload sebelumnya) ---------- */
+.kpi-growth {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 13px;
+    font-weight: 800;
+    padding: 3px 9px;
+    border-radius: 999px;
+    line-height: 1;
+    letter-spacing: 0.2px;
+}
+
+.kpi-growth-arrow {
+    width: 10px;
+    height: 10px;
+    flex: none;
+}
+
+.kpi-growth-dash {
+    font-weight: 700;
+}
+
+.kpi-growth--up {
+    color: var(--ok);
+    background: var(--ok-bg);
+}
+
+.kpi-growth--down {
+    color: var(--bad);
+    background: var(--bad-bg);
+}
+
+.kpi-growth--flat {
+    color: var(--muted);
+    background: rgba(160, 174, 192, 0.14);
+}
+
 .kpi-value {
     font-size: 38px;
     font-weight: 800;
