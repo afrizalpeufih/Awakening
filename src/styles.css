@@ -1495,11 +1495,9 @@ body {
     contain-intrinsic-size: auto 52px;
 }
 
-/* When a retailer-item holds an incremental-grid, force it to stack vertically */
+/* When a retailer-item holds an incremental-grid, stack vertically and fill width */
 .retailer-item:has(.incremental-grid) {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 8px;
+    display: block;
 }
 
 .retailer-item:hover {
@@ -1543,10 +1541,9 @@ body {
 
 /* When val-wrap holds an incremental-grid, stretch it to full width */
 .retailer-item:has(.incremental-grid) .retailer-val-wrap {
-    align-items: flex-start;
     width: 100%;
-    flex: 1 1 100%;
-    max-width: 100%;
+    align-items: stretch;
+    margin-top: 8px;
 }
 
 .retailer-val {
@@ -1575,8 +1572,8 @@ body {
 .incremental-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 4px 8px;
-    align-items: center;
+    gap: 8px;
+    align-items: stretch;
     width: 100%;
     min-width: 0;
 }
@@ -1585,8 +1582,24 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 2px;
+    justify-content: center;
+    gap: 5px;
     min-width: 0;
+    padding: 9px 6px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    transition: background 0.18s ease, border-color 0.18s ease;
+}
+
+.inc-cell--pos {
+    background: rgba(52, 211, 153, 0.08);
+    border-color: rgba(52, 211, 153, 0.22);
+}
+
+.inc-cell--neg {
+    background: rgba(248, 113, 113, 0.07);
+    border-color: rgba(248, 113, 113, 0.20);
 }
 
 .inc-cell--pos .inc-val {
@@ -1598,19 +1611,20 @@ body {
 }
 
 .inc-label {
-    font-size: 8px;
-    letter-spacing: 0.4px;
+    font-size: 9px;
+    letter-spacing: 0.6px;
     text-transform: uppercase;
     color: var(--muted);
     white-space: nowrap;
+    font-weight: 600;
 }
 
 .inc-val {
-    font-size: 12px;
-    font-weight: 700;
+    font-size: 15px;
+    font-weight: 800;
     line-height: 1;
     font-variant-numeric: tabular-nums;
-    color: var(--fg);
+    color: var(--text);
 }
 
 .retailer-empty {
@@ -3460,5 +3474,34 @@ body {
     /* max height taller on mobile to show more rows */
     .ec-table-wrap {
         max-height: 60vh;
+    }
+}
+
+/* ---------- INCREMENTAL GRID — MOBILE RESPONSIVE ---------- */
+@media (max-width: 640px) {
+    /* Retailer item stacks name on top, chips below, tighter padding */
+    .retailer-item:has(.incremental-grid) {
+        gap: 6px;
+        padding: 10px 10px;
+    }
+
+    /* 2 x 2 chip layout on phones */
+    .incremental-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 6px;
+    }
+
+    .inc-cell {
+        padding: 7px 4px;
+        border-radius: 9px;
+    }
+
+    .inc-label {
+        font-size: 8px;
+        letter-spacing: 0.5px;
+    }
+
+    .inc-val {
+        font-size: 13px;
     }
 }

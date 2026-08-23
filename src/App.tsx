@@ -528,8 +528,8 @@ export default function App() {
                         active={activeMetric === 'osa'}
                         hint={`Null Transaksi : (${osaNullCount})`}
                         subLabels={[
-                            { label: 'Achievement', count: t.osaMtd, total: t.targetOsa, showTotal: false, format: 'accounting', pct: achievementOsaPct },
-                            { label: 'GAP', count: gapOsa, total: t.targetOsa, showTotal: false, format: 'accounting', pct: gapOsaPct },
+                            { label: 'Achieve', count: t.osaMtd, total: t.targetOsa, showTotal: false, format: 'accounting', pct: achievementOsaPct },
+                            { label: 'GAP', count: gapOsa, total: t.targetOsa, showTotal: false, format: 'accounting', pct: gapOsaPct, signed: true },
                         ]}
                         growth={{ delta: growthOsa, prevLabel: prevLabelShort }}
                     />
@@ -542,7 +542,7 @@ export default function App() {
                         active={activeMetric === 'sellin'}
                         hint={`Null Sellin : (${sellinNullCount})`}
                         subLabels={[
-                            { label: 'Achievement', count: t.sellinMtd, total: t.targetSellin },
+                            { label: 'Achieve', count: t.sellinMtd, total: t.targetSellin },
                             { label: 'Retailer 3pcs', count: sellinGte3Count, total: t.totalRetailers },
                         ]}
                         growth={{ delta: growthSellin, prevLabel: prevLabelShort }}
@@ -586,6 +586,7 @@ export default function App() {
                                 total: incrementalTarget,
                                 format: 'ratio',
                                 showTotal: false,
+                                signed: true,
                                 pct: incrementalTarget > 0
                                     ? ((incrementalGap / incrementalTarget) * 100).toFixed(1)
                                     : '0.0',

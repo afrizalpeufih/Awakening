@@ -7,6 +7,8 @@ export type SubLabelGroup = {
     showTotal?: boolean;
     format?: 'ratio' | 'accounting';
     pct?: string;
+    /** Tanda eksplisit: '-' saat belum mencapai target, '+' saat tercapai/lebih */
+    signed?: boolean;
 };
 
 type Props = {
@@ -52,6 +54,20 @@ export default function KpiCard({ title, value, sub, pct, accent, onClick, activ
             : g.count;
 
         if (g.showTotal === false) {
+            // Format bertanda (GAP): '-N' saat belum capai (count positif), '+N' saat tercapai/lebih
+            if (g.signed) {
+                const belumCapai = g.count > 0;
+                const absCount = Math.abs(g.count);
+                const absStr = g.format === 'accounting'
+                    ? absCount.toLocaleString('id-ID')
+                    : String(absCount);
+                const numStr = `${belumCapai ? '-' : '+'}${absStr}`;
+                if (g.pct) {
+                    const pctAbs = String(g.pct).replace(/^[-+]/, '');
+                    return `${numStr} (${belumCapai ? '-' : '+'}${pctAbs}%)`;
+                }
+                return numStr;
+            }
             // Jika ada pct, tampilkan: "countStr (pct%)"
             if (g.pct) {
                 return `${countStr} (${g.pct}%)`;

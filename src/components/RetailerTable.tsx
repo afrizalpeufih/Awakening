@@ -104,7 +104,7 @@ const META: Record<MetricKey, MetricMeta> = {
     },
 };
 
-const MAX_VISIBLE = 10;
+const MAX_VISIBLE = 6;
 
 function RetailerRows({ rows, metric, expanded, onToggleExpanded }: {
     rows: Retailer[];
@@ -138,10 +138,16 @@ function RetailerRows({ rows, metric, expanded, onToggleExpanded }: {
                     </li>
                 ))}
             </ul>
-            {hiddenCount > 0 && !expanded && (
+            {rows.length > MAX_VISIBLE && (
                 <button className="show-more-btn" onClick={onToggleExpanded}>
-                    <span>Lihat selengkapnya</span>
-                    <span className="show-more-count">+{hiddenCount} outlet</span>
+                    {expanded ? (
+                        <span>Sembunyikan</span>
+                    ) : (
+                        <>
+                            <span>Lihat selengkapnya</span>
+                            <span className="show-more-count">+{hiddenCount} outlet</span>
+                        </>
+                    )}
                 </button>
             )}
         </>
@@ -186,8 +192,8 @@ export default function RetailerTable({ metric, allRetailers, onClose }: Props) 
 
     const [sortLeft, setSortLeft] = useState<SortDir>(metric === 'incremental' ? 'desc' : null);
     const [sortRight, setSortRight] = useState<SortDir>(null);
-    const [expandedLeft, setExpandedLeft] = useState(true);
-    const [expandedRight, setExpandedRight] = useState(true);
+    const [expandedLeft, setExpandedLeft] = useState(false);
+    const [expandedRight, setExpandedRight] = useState(false);
 
     const left = useMemo(() => sortRows(leftAll, sortLeft, meta.sortValue), [leftAll, sortLeft, meta]);
     const right = useMemo(() => sortRows(rightAll, sortRight, meta.sortValue), [rightAll, sortRight, meta]);
