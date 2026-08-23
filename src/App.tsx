@@ -7,15 +7,12 @@ import EcTable from './components/EcTable';
 import LandingPage from './components/LandingPage';
 import { UploadModal } from './components/UploadModal';
 import { getUploadHistory, loadHistoryItemData } from './supabaseDb';
-import { fmtNum, fmtPct } from './calc';
+import { fmtNum, fmtPct, slugify, MONTH_MAP } from './calc';
 
 export type ExtendedMetricKey = MetricKey | 'ec';
 
 const ALL = 'AWAKENING';
 const DEFAULT_TERRITORY = 'CS North Minahasa';
-
-const slugify = (text: string): string =>
-    text.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9\-]/g, '');
 
 /** Parse tanggal dari nama file sumber, misal "UPDATE 31 JULI.xlsx" => "Update data : 31 July 2026" */
 function parseUpdateLabel(source: string): string {
@@ -26,28 +23,14 @@ function parseUpdateLabel(source: string): string {
     const day = m[1];
     const monthRaw = m[2].toUpperCase();
     const year = m[3] || '2026';
-    const months: Record<string, string> = {
-        JANUARI: 'January', JAN: 'January', JANUARY: 'January',
-        FEBRUARI: 'February', FEB: 'February', FEBRUARY: 'February',
-        MARET: 'March', MAR: 'March', MARCH: 'March',
-        APRIL: 'April', APR: 'April',
-        MEI: 'May', MAY: 'May',
-        JUNI: 'June', JUN: 'June', JUNE: 'June',
-        JULI: 'July', JUL: 'July', JULY: 'July',
-        AGUSTUS: 'August', AGUS: 'August', AGT: 'August', AUG: 'August', AUGUST: 'August',
-        SEPTEMBER: 'September', SEP: 'September',
-        OKTOBER: 'October', OKT: 'October', OCT: 'October', OCTOBER: 'October',
-        NOVEMBER: 'November', NOV: 'November',
-        DESEMBER: 'December', DES: 'December', DEC: 'December', DECEMBER: 'December',
-    };
-    const monthEng = months[monthRaw] || monthRaw;
+    const monthEng = MONTH_MAP[monthRaw] || monthRaw;
     return `Update data : ${day} ${monthEng} ${year}`;
 }
 
 /** Parse active day number from file source or update label (e.g. "20 August 2026" => 20) */
 function parseActiveDay(sourceOrLabel?: string): number {
     if (!sourceOrLabel) return 31;
-    const m = sourceOrLabel.match(/(?:UPDATE\s+|Update\s+data\s*:\s*)?(\d{1,2})/i);
+    const m = sourceOrLabel.match(/(?:UPDATE\s+|Update\s+data\s*:\s*)?(\d{1,2})\s+[A-Za-z]{3,}/i);
     if (m) {
         const day = parseInt(m[1], 10);
         if (day >= 1 && day <= 31) return day;
@@ -266,7 +249,7 @@ export default function App() {
         const sellinMtd = territoryRetailers.reduce((s, r) => s + r.sellinMtd, 0);
         const targetSellin = territorySeRows.reduce((s, r) => s + r.targetSellin, 0);
         const sellinPct = targetSellin > 0 ? (sellinMtd / targetSellin) * 100 : 0;
-        const bioGt1 = territoryRetailers.filter((r) => r.bioMtd >= 1).length;
+        const bioGt1 = territoryRetailers.filter((r) => r.bioMtd > 1).length;
         const biometrikPct = totalRetailers > 0 ? (bioGt1 / totalRetailers) * 100 : 0;
         const incremental = territorySeRows.reduce((s, r) => s + r.incremental, 0);
         const visitedRetailers = territoryRetailers.filter((r) => r.visit >= 1).length;
@@ -331,12 +314,12 @@ export default function App() {
     const osaNullCount = viewRetailers.filter((r) => r.osaMtd === 0).length;
     const sellinGte3Count = viewRetailers.filter((r) => r.sellinMtd >= 3).length;
     const sellinNullCount = viewRetailers.filter((r) => r.sellinMtd === 0).length;
-    const bioGte1Count = viewRetailers.filter((r) => r.bioMtd >= 1).length;
+    const bioGt1Count = viewRetailers.filter((r) => r.bioMtd > 1).length;
     const bioNullCount = viewRetailers.filter((r) => r.bioMtd === 0).length;
     const telcoRetailers = viewRetailers.filter((r) => r.type !== 'Outlet Non-Telco');
-    const telcoBioCount = telcoRetailers.filter((r) => r.bioMtd >= 1).length;
+    const telcoBioCount = telcoRetailers.filter((r) => r.bioMtd > 1).length;
     const qssoCount = viewRetailers.filter((r) => r.bioMtd >= 3).length;
-    const bioPct = t.totalRetailers > 0 ? (bioGte1Count / t.totalRetailers) * 100 : 0;
+    const bioPct = t.totalRetailers > 0 ? (bioGt1Count / t.totalRetailers) * 100 : 0;
     const visitGte1Count = viewRetailers.filter((r) => r.visit >= 1).length;
 
     const gapOsa = t.targetOsa - t.osaMtd;

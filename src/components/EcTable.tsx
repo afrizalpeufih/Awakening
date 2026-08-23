@@ -43,6 +43,9 @@ export const EcTable: React.FC<Props> = ({ seList, onClose, currentTs, activeDay
         return 'ec-val-mid';
     };
 
+    const ecTone = (val: number): string =>
+        val >= 100 ? 'ec-pct-good' : val >= 75 ? 'ec-pct-warn' : 'ec-pct-bad';
+
     const rangeOrder: RangeOption[] = ['1-8', '9-16', '17-24', '25-31'];
     const currentIndex = rangeOrder.indexOf(range);
 
@@ -68,18 +71,7 @@ export const EcTable: React.FC<Props> = ({ seList, onClose, currentTs, activeDay
                         <span className="ec-summary-chip">
                             <strong>{fmtNum(totalEc)}</strong> / <strong>{fmtNum(targetEc)}</strong>
                         </span>
-                        <span
-                            className="ec-summary-chip ec-summary-pct"
-                            style={{
-                                color: overallPct >= 100 ? '#4ade80' : overallPct >= 75 ? '#facc15' : '#f87171',
-                                backgroundColor:
-                                    overallPct >= 100
-                                        ? 'rgba(74, 222, 128, 0.15)'
-                                        : overallPct >= 75
-                                        ? 'rgba(250, 204, 21, 0.15)'
-                                        : 'rgba(248, 113, 113, 0.15)',
-                            }}
-                        >
+                        <span className={`ec-summary-chip ec-summary-pct ${ecTone(overallPct)}`}>
                             <strong>{fmtPct(overallPct)}</strong>
                         </span>
                     </div>
@@ -160,18 +152,7 @@ export const EcTable: React.FC<Props> = ({ seList, onClose, currentTs, activeDay
                                             <span className="ec-target-sep">/</span>
                                             <small>{fmtNum(ecTarget)}</small>
                                         </div>
-                                        <div
-                                            className="ec-pct-badge"
-                                            style={{
-                                                color: ecPct >= 100 ? '#4ade80' : ecPct >= 75 ? '#facc15' : '#f87171',
-                                                backgroundColor:
-                                                    ecPct >= 100
-                                                        ? 'rgba(74, 222, 128, 0.15)'
-                                                        : ecPct >= 75
-                                                        ? 'rgba(250, 204, 21, 0.15)'
-                                                        : 'rgba(248, 113, 113, 0.15)',
-                                            }}
-                                        >
+                                        <div className={`ec-pct-badge ${ecTone(ecPct)}`}>
                                             {fmtPct(ecPct)}
                                         </div>
                                     </td>

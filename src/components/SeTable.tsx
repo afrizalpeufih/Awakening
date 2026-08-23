@@ -1,15 +1,8 @@
 import type { SeRow } from '../types';
+import { pctColor } from '../calc';
 
 type Props = {
     rows: SeRow[];
-};
-
-const pctColor = (pct: number, target: number): string => {
-    if (target <= 0) return 'var(--muted)';
-    const diff = pct - target;
-    if (diff >= 0) return 'var(--good)';
-    if (diff >= -5) return 'var(--warn)';
-    return 'var(--bad)';
 };
 
 export default function SeTable({ rows }: Props) {
@@ -42,13 +35,13 @@ export default function SeTable({ rows }: Props) {
                                 <small>outlet</small>
                             </td>
                             <td>
-                                <span className="pill" style={{ color: pctColor(r.osaPct, r.targetOsa) }}>
+                                <span className="pill" style={{ color: pctColor(r.osaPct) }}>
                                     {r.osaPct.toFixed(1)}%
                                 </span>
                                 <small>target {r.targetOsa.toFixed(0)}%</small>
                             </td>
                             <td>
-                                <span className="pill" style={{ color: pctColor(r.sellinPct, r.targetSellin) }}>
+                                <span className="pill" style={{ color: pctColor(r.sellinPct) }}>
                                     {r.sellinPct.toFixed(1)}%
                                 </span>
                                 <small>target {r.targetSellin.toFixed(0)}%</small>

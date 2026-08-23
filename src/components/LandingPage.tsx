@@ -1,13 +1,7 @@
 import { useMemo, useState } from 'react';
 import type { DashboardData } from '../types';
 import { UploadModal } from './UploadModal';
-
-// Helper to convert TS Name to URL-friendly slug
-const slugify = (text: string): string =>
-  text
-    .toLowerCase()
-    .replace(/\s+/g, '-')
-    .replace(/[^a-z0-9\-]/g, '');
+import { slugify, MONTH_MAP } from '../calc';
 
 type Props = {
   data: DashboardData;
@@ -51,7 +45,7 @@ export default function LandingPage({ data, onDataLoaded, activeHistoryId, onSel
     const sellinPct = totalTargetSellin > 0 ? (totalSellinMtd / totalTargetSellin) * 100 : 0;
     
     // Actual retailer count for biometrik (matching DashboardView)
-    const biometrikCount = tsRetailers.filter((r) => r.bioMtd >= 1).length;
+    const biometrikCount = tsRetailers.filter((r) => r.bioMtd > 1).length;
     const biometrikPct = totalRetailers > 0 ? (biometrikCount / totalRetailers) * 100 : 0;
     
     // Actual incremental calculation (matching DashboardView dynamic TARGET sheet)
@@ -88,46 +82,7 @@ export default function LandingPage({ data, onDataLoaded, activeHistoryId, onSel
     if (!match) return cleanSource;
 
     const [, day, monthRaw, year] = match;
-    const months: Record<string, string> = {
-      JAN: 'January',
-      JANUARI: 'January',
-      JANUARY: 'January',
-      FEB: 'February',
-      FEBRUARI: 'February',
-      FEBRUARY: 'February',
-      MAR: 'March',
-      MARET: 'March',
-      MARCH: 'March',
-      APR: 'April',
-      APRIL: 'April',
-      MEI: 'May',
-      MAY: 'May',
-      JUN: 'June',
-      JUNI: 'June',
-      JUNE: 'June',
-      JUL: 'July',
-      JULI: 'July',
-      JULY: 'July',
-      AGT: 'August',
-      AGUS: 'August',
-      AGUSTUS: 'August',
-      AUG: 'August',
-      AUGUST: 'August',
-      SEP: 'September',
-      SEPTEMBER: 'September',
-      OKT: 'October',
-      OKTOBER: 'October',
-      OCT: 'October',
-      OCTOBER: 'October',
-      NOV: 'November',
-      NOVEMBER: 'November',
-      DES: 'December',
-      DESEMBER: 'December',
-      DEC: 'December',
-      DECEMBER: 'December',
-    };
-
-    const month = months[monthRaw.toUpperCase()] ?? monthRaw;
+    const month = MONTH_MAP[monthRaw.toUpperCase()] ?? monthRaw;
     return `${Number(day)} ${month} ${year}`;
   };
 
