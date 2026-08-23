@@ -863,6 +863,11 @@ body {
     margin-bottom: 30px;
 }
 
+/* Sembunyikan KPI card saat panel EC dibuka (tetap ter-mount di DOM) */
+.kpi-grid-hidden {
+    display: none;
+}
+
 .kpi {
     position: relative;
     width: 100%;

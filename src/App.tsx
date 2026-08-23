@@ -434,7 +434,7 @@ export default function App() {
             </header>
 
             <main className="container">
-                <section className="kpi-grid">
+                <section className={'kpi-grid' + (activeMetric === 'ec' ? ' kpi-grid-hidden' : '')}>
                     <KpiCard
                         title="OSA KPI SE"
                         value={fmtPct(t.osaPct)}
