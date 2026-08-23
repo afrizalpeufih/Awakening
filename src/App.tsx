@@ -375,11 +375,13 @@ export default function App() {
     const sellinNullCount = viewRetailers.filter((r) => r.sellinMtd === 0).length;
     const bioGt1Count = viewRetailers.filter((r) => r.bioMtd > 1).length;
     const bioNullCount = viewRetailers.filter((r) => r.bioMtd === 0).length;
-    const telcoRetailers = viewRetailers.filter((r) => r.type !== 'Outlet Non-Telco');
-    const telcoBioCount = telcoRetailers.filter((r) => r.bioMtd > 1).length;
     const qssoCount = viewRetailers.filter((r) => r.bioMtd >= 3).length;
+    // GrossAd achieve = total semua Biometrik MTD (bukan hitungan retailer)
+    const grossAdAchieve = viewRetailers.reduce((s, r) => s + r.bioMtd, 0);
     const bioPct = t.totalRetailers > 0 ? (bioGt1Count / t.totalRetailers) * 100 : 0;
-    const visitGte1Count = viewRetailers.filter((r) => r.visit >= 1).length;
+    // Total visit = jumlah seluruh visit (tanpa memperdulikan besar/kecilnya)
+    const totalVisit = viewRetailers.reduce((s, r) => s + r.visit, 0);
+    const visitPct = t.targetVisit > 0 ? ((totalVisit / t.targetVisit) * 100).toFixed(1) : '0.0';
 
     const gapOsa = t.targetOsa - t.osaMtd;
     const gapOsaPct = t.targetOsa > 0 ? ((gapOsa / t.targetOsa) * 100).toFixed(1) : '0.0';
@@ -554,7 +556,7 @@ export default function App() {
                         active={activeMetric === 'biometrik'}
                         hint={`Null Biometrik : (${bioNullCount})`}
                         subLabels={[
-                            { label: 'Telco', count: telcoBioCount, total: telcoRetailers.length },
+                            { label: 'GrossAd', count: grossAdAchieve, total: t.targetSellin },
                             { label: 'Retailer QSSO', count: qssoCount, total: t.totalRetailers },
                         ]}
                         growth={{ delta: growthBio, prevLabel: prevLabelShort }}
@@ -566,7 +568,7 @@ export default function App() {
                         accent="orange"
                         onClick={() => handleMetric('incremental')}
                         active={activeMetric === 'incremental'}
-                        hint={`Visit ≥1 : (${visitGte1Count})`}
+                        hint={`Visit 1,5 Jam : ${totalVisit}/${t.targetVisit} (${visitPct}%)`}
                         subLabels={[
                             {
                                 label: 'Incremental',
