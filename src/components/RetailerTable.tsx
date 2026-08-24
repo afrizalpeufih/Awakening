@@ -190,8 +190,8 @@ export default function RetailerTable({ metric, allRetailers, onClose }: Props) 
     const leftAll = allRetailers.filter(meta.match);
     const rightAll = meta.dual ? allRetailers.filter(meta.opposite) : [];
 
-    const [sortLeft, setSortLeft] = useState<SortDir>(metric === 'incremental' ? 'desc' : null);
-    const [sortRight, setSortRight] = useState<SortDir>(null);
+    const [sortLeft, setSortLeft] = useState<SortDir>('desc');
+    const [sortRight, setSortRight] = useState<SortDir>('desc');
     const [expandedLeft, setExpandedLeft] = useState(false);
     const [expandedRight, setExpandedRight] = useState(false);
 
