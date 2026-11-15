@@ -3095,12 +3095,12 @@ body {
     backdrop-filter: blur(8px);
 }
 
-/* Chip average punya label teks di atas angka */
+/* Chip average punya label teks sejajar dengan angka */
 .ec-summary-avg {
-    display: flex;
-    flex-direction: column;
+    display: inline-flex;
+    flex-direction: row;
     align-items: center;
-    gap: 1px;
+    gap: 6px;
     padding: 5px 14px;
 }
 
