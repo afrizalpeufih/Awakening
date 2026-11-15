@@ -84,6 +84,23 @@ export function calcIncrementalPct(bioLmtd: number, bioMtd: number): string {
 }
 
 /**
+ * Hitung rata-rata EC harian untuk seorang SE berdasarkan hari aktif (val > 0)
+ */
+export function calcSeEcAvg(r: { ecDaily?: Record<number, number>; ecTotal?: number }): number {
+    const daily = r.ecDaily || {};
+    const activeDays = Object.values(daily).filter((v) => Number(v) > 0).length;
+    return activeDays > 0 ? (r.ecTotal || 0) / activeDays : 0;
+}
+
+/**
+ * Format angka 1 desimal dengan koma (misal: 70,8 atau 55,9)
+ */
+export function fmtAvg(val: number): string {
+    if (!val || isNaN(val) || val <= 0) return '0,0';
+    return val.toLocaleString('id-ID', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+}
+
+/**
  * Hitung persentase 4 KPI card (OSA, SELLIN, BIOMETRIK, INCREMENTAL)
  * untuk dataset tertentu pada territory & SE terpilih.
  * Rumus identik dengan perhitungan view totals di App.tsx.

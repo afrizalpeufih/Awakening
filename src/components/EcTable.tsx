@@ -31,6 +31,28 @@ export const EcTable: React.FC<Props> = ({ seList, onClose, currentTs, activeDay
     const targetEc = seList.reduce((sum, r) => sum + (r.ecTarget || 0), 0);
     const overallPct = targetEc > 0 ? (totalEc / targetEc) * 100 : 0;
 
+    /** Hitung rata-rata EC per hari aktif (val > 0) */
+    const calcSeAvg = (r: SeRow): number => {
+        const daily = r.ecDaily || {};
+        const activeDays = Object.values(daily).filter((v) => Number(v) > 0).length;
+        return activeDays > 0 ? (r.ecTotal || 0) / activeDays : 0;
+    };
+
+    /** Format 1 desimal koma tanpa teks "Avg" (misal: 70,8) */
+    const fmtAvg = (val: number): string => {
+        if (!val || isNaN(val) || val <= 0) return '0,0';
+        return val.toLocaleString('id-ID', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+    };
+
+    /** Warna Average: hijau jika > 70, merah jika <= 70 */
+    const avgTone = (val: number): string => (val > 70 ? 'ec-avg-high' : 'ec-avg-low');
+
+    const overallAvg = useMemo(() => {
+        if (seList.length === 0) return 0;
+        const totalAvg = seList.reduce((sum, r) => sum + calcSeAvg(r), 0);
+        return totalAvg / seList.length;
+    }, [seList]);
+
     /**
      * Color rules per user directive:
      * - val === 0 -> RED (#f87171)
@@ -73,6 +95,9 @@ export const EcTable: React.FC<Props> = ({ seList, onClose, currentTs, activeDay
                         </span>
                         <span className={`ec-summary-chip ec-summary-pct ${ecTone(overallPct)}`}>
                             <strong>{fmtPct(overallPct)}</strong>
+                        </span>
+                        <span className={`ec-summary-chip ec-summary-avg ${avgTone(overallAvg)}`}>
+                            <strong>{fmtAvg(overallAvg)}</strong>
                         </span>
                     </div>
                 </div>
@@ -140,6 +165,7 @@ export const EcTable: React.FC<Props> = ({ seList, onClose, currentTs, activeDay
                             const ecTarget = r.ecTarget || 0;
                             const ecPct = r.ecPct || 0;
                             const daily = r.ecDaily || {};
+                            const seAvg = calcSeAvg(r);
 
                             return (
                                 <tr key={r.seName + '|' + r.tsName}>
@@ -152,8 +178,13 @@ export const EcTable: React.FC<Props> = ({ seList, onClose, currentTs, activeDay
                                             <span className="ec-target-sep">/</span>
                                             <small>{fmtNum(ecTarget)}</small>
                                         </div>
-                                        <div className={`ec-pct-badge ${ecTone(ecPct)}`}>
-                                            {fmtPct(ecPct)}
+                                        <div className="ec-target-badges">
+                                            <span className={`ec-pct-badge ${ecTone(ecPct)}`}>
+                                                {fmtPct(ecPct)}
+                                            </span>
+                                            <span className={`ec-pct-badge ec-avg-badge ${avgTone(seAvg)}`}>
+                                                {fmtAvg(seAvg)}
+                                            </span>
                                         </div>
                                     </td>
                                     {days.map((d) => {

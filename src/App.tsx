@@ -7,7 +7,7 @@ import EcTable from './components/EcTable';
 import LandingPage from './components/LandingPage';
 import { UploadModal } from './components/UploadModal';
 import { getUploadHistory, loadHistoryItemData } from './supabaseDb';
-import { fmtNum, fmtPct, slugify, MONTH_MAP, parseFileDate, computeMetricPcts, isIncremental20 } from './calc';
+import { fmtNum, fmtPct, slugify, MONTH_MAP, parseFileDate, computeMetricPcts, isIncremental20, calcSeEcAvg, fmtAvg } from './calc';
 
 export type ExtendedMetricKey = MetricKey | 'ec';
 
@@ -405,6 +405,13 @@ export default function App() {
         ? ((incrementalGap / t.totalRetailers) * 100).toFixed(1)
         : '0.0';
 
+    // Rata-rata EC harian per hari aktif (val > 0)
+    const ecAvg = isAll
+        ? (territorySeRows.length > 0
+            ? territorySeRows.reduce((sum, r) => sum + calcSeEcAvg(r), 0) / territorySeRows.length
+            : 0)
+        : (row ? calcSeEcAvg(row) : 0);
+
     // ── Growth vs data upload sebelumnya ─────────────────────────────
     let growthOsa: number | null = null;
     let growthSellin: number | null = null;
@@ -498,11 +505,11 @@ export default function App() {
                         <div
                             className={`chip chip-clickable ${activeMetric === 'ec' ? 'active' : ''}`}
                             onClick={() => handleMetric('ec')}
-                            title={`Klik untuk melihat detail pencapaian Effective Call (Total: ${fmtNum(t.ecTotal || 0)} / Target: ${fmtNum(t.ecTarget || 0)})`}
+                            title={`Klik untuk melihat detail pencapaian Effective Call (Rata-rata: ${fmtAvg(ecAvg)}%, Total: ${fmtNum(t.ecTotal || 0)} / Target: ${fmtNum(t.ecTarget || 0)})`}
                         >
                             <span>EC</span>
                             <strong className="chip-value">
-                                {fmtPct(t.ecPct || 0)}
+                                {fmtAvg(ecAvg)}%
                             </strong>
                         </div>
                         <div className="chip">
