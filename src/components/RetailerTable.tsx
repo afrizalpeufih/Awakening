@@ -1,5 +1,6 @@
 import { useState, useMemo } from 'react';
 import type { Retailer } from '../types';
+import { calcIncrementalPct } from '../calc';
 
 export type MetricKey = 'osa' | 'sellin' | 'biometrik' | 'incremental';
 
@@ -89,9 +90,11 @@ const META: Record<MetricKey, MetricMeta> = {
                     <span className="inc-label">BIO MTD</span>
                     <span className="inc-val">{formatVal(r.bioMtd)}</span>
                 </div>
-                <div className={`inc-cell ${r.incremental > 0 && r.visit >= 1 ? 'inc-cell--pos' : 'inc-cell--neg'}`}>
+                <div className={`inc-cell ${r.incremental > 0 ? 'inc-cell--pos' : 'inc-cell--neg'}`}>
                     <span className="inc-label">Incremental</span>
-                    <span className="inc-val">{formatVal(r.incremental)}</span>
+                    <span className="inc-val">
+                        {formatVal(r.incremental)} <span className="inc-pct">({calcIncrementalPct(r.bioLmtd, r.bioMtd)})</span>
+                    </span>
                 </div>
                 <div className={`inc-cell ${r.visit > 0 ? 'inc-cell--pos' : 'inc-cell--neg'}`}>
                     <span className="inc-label">Visit</span>

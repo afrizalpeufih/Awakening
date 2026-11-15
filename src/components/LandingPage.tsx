@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react';
 import type { DashboardData } from '../types';
 import { UploadModal } from './UploadModal';
-import { slugify, MONTH_MAP } from '../calc';
+import { slugify, MONTH_MAP, isIncremental20 } from '../calc';
 
 type Props = {
   data: DashboardData;
@@ -49,10 +49,9 @@ export default function LandingPage({ data, onDataLoaded, activeHistoryId, onSel
     const totalTargetGrossAd = tsData.reduce((sum, r) => sum + (r.targetGrossAd ?? r.targetSellin), 0);
     const biometrikPct = totalTargetGrossAd > 0 ? (grossAdAchieve / totalTargetGrossAd) * 100 : 0;
     
-    // Actual incremental calculation (matching DashboardView dynamic TARGET sheet)
-    const totalIncremental = tsData.reduce((sum, r) => sum + r.incremental, 0);
-    const incrementalTarget = tsData.reduce((sum, r) => sum + (r.targetIncremental || 40), 0);
-    const incrementalPct = incrementalTarget > 0 ? (totalIncremental / incrementalTarget) * 100 : 0;
+    // Incremental >= 20% (Bio LMTD vs Bio MTD) for territory (matching DashboardView)
+    const incrementalRetailers = tsRetailers.filter((r) => isIncremental20(r.bioLmtd, r.bioMtd)).length;
+    const incrementalPct = totalRetailers > 0 ? (incrementalRetailers / totalRetailers) * 100 : 0;
 
     // Total EC vs Total Target EC for territory
     const totalEcTotal = tsData.reduce((sum, r) => sum + (r.ecTotal || 0), 0);

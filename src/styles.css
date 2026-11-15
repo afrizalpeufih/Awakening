@@ -1627,6 +1627,13 @@ body {
     color: var(--text);
 }
 
+.inc-pct {
+    font-size: 0.85em;
+    font-weight: 700;
+    opacity: 0.92;
+    margin-left: 2px;
+}
+
 .retailer-empty {
     font-size: 13px;
     color: var(--muted);

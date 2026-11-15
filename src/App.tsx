@@ -7,7 +7,7 @@ import EcTable from './components/EcTable';
 import LandingPage from './components/LandingPage';
 import { UploadModal } from './components/UploadModal';
 import { getUploadHistory, loadHistoryItemData } from './supabaseDb';
-import { fmtNum, fmtPct, slugify, MONTH_MAP, parseFileDate, computeMetricPcts } from './calc';
+import { fmtNum, fmtPct, slugify, MONTH_MAP, parseFileDate, computeMetricPcts, isIncremental20 } from './calc';
 
 export type ExtendedMetricKey = MetricKey | 'ec';
 
@@ -383,21 +383,27 @@ export default function App() {
     const targetGrossAd = t.targetGrossAd ?? t.targetSellin;
     // Nilai utama BIOMETRIK = persentase GrossAd (grossAdAchieve / targetGrossAd)
     const bioPct = targetGrossAd > 0 ? (grossAdAchieve / targetGrossAd) * 100 : 0;
-    // Total visit = jumlah seluruh visit (tanpa memperdulikan besar/kecilnya)
-    const totalVisit = viewRetailers.reduce((s, r) => s + r.visit, 0);
-    const visitPct = t.targetVisit > 0 ? ((totalVisit / t.targetVisit) * 100).toFixed(1) : '0.0';
+    // Visit Retailer: retailer dengan visit > 0 dibagi total retailer
+    const visitedRetailerCount = viewRetailers.filter((r) => r.visit > 0).length;
+    const visitRetailerPct = t.totalRetailers > 0
+        ? ((visitedRetailerCount / t.totalRetailers) * 100).toFixed(1)
+        : '0.0';
 
     const gapOsa = t.targetOsa - t.osaMtd;
     const gapOsaPct = t.targetOsa > 0 ? ((gapOsa / t.targetOsa) * 100).toFixed(1) : '0.0';
     const achievementOsaPct = t.targetOsa > 0 ? ((t.osaMtd / t.targetOsa) * 100).toFixed(1) : '0.0';
 
-    const incrementalTarget = isAll
-        ? territorySeRows.reduce((sum, r) => sum + (r.targetIncremental || 40), 0)
-        : (territorySeRows.find((r) => r.seName === selectedSe)?.targetIncremental || 40);
-    const incrementalGap = incrementalTarget - t.incremental;
-    const incrementalPct = incrementalTarget > 0
-        ? (t.incremental / incrementalTarget) * 100
+    // Incremental >= 20% (Bio LMTD vs Bio MTD)
+    const incrementalRetailerCount = viewRetailers.filter((r) =>
+        isIncremental20(r.bioLmtd, r.bioMtd)
+    ).length;
+    const incrementalPct = t.totalRetailers > 0
+        ? (incrementalRetailerCount / t.totalRetailers) * 100
         : 0;
+    const incrementalGap = t.totalRetailers - incrementalRetailerCount;
+    const incrementalGapPct = t.totalRetailers > 0
+        ? ((incrementalGap / t.totalRetailers) * 100).toFixed(1)
+        : '0.0';
 
     // ── Growth vs data upload sebelumnya ─────────────────────────────
     let growthOsa: number | null = null;
@@ -572,28 +578,23 @@ export default function App() {
                         accent="orange"
                         onClick={() => handleMetric('incremental')}
                         active={activeMetric === 'incremental'}
-                        hint={`Visit 1,5 Jam : ${totalVisit}/${t.targetVisit} (${visitPct}%)`}
+                        hint={`Visit Retailer : ${visitedRetailerCount}/${t.totalRetailers} (${visitRetailerPct}%)`}
                         subLabels={[
                             {
                                 label: 'Incremental',
-                                count: t.incremental,
-                                total: incrementalTarget,
+                                count: incrementalRetailerCount,
+                                total: t.totalRetailers,
                                 format: 'ratio',
-                                showTotal: false,
-                                pct: incrementalTarget > 0
-                                    ? ((t.incremental / incrementalTarget) * 100).toFixed(1)
-                                    : '0.0',
+                                showTotal: true,
                             },
                             {
                                 label: 'GAP',
                                 count: incrementalGap,
-                                total: incrementalTarget,
+                                total: t.totalRetailers,
                                 format: 'ratio',
                                 showTotal: false,
                                 signed: true,
-                                pct: incrementalTarget > 0
-                                    ? ((incrementalGap / incrementalTarget) * 100).toFixed(1)
-                                    : '0.0',
+                                pct: incrementalGapPct,
                             },
                         ]}
                         growth={{ delta: growthInc, prevLabel: prevLabelShort }}

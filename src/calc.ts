@@ -61,6 +61,29 @@ export function parseFileDate(sourceOrLabel?: string | null): number | null {
 }
 
 /**
+ * Mengecek apakah retailer memiliki incremental >= 20% (Bio LMTD vs Bio MTD):
+ * - Jika Bio LMTD = 0 dan Bio MTD > 0: dihitung incremental (tumbuh dari 0).
+ * - Jika Bio LMTD > 0: dihitung incremental jika pertumbuhan ((Bio MTD - Bio LMTD) / Bio LMTD) >= 0.20 (20%).
+ */
+export function isIncremental20(bioLmtd: number, bioMtd: number): boolean {
+    if (bioLmtd === 0) return bioMtd > 0;
+    return (bioMtd - bioLmtd) / bioLmtd >= 0.20;
+}
+
+/**
+ * Menghitung persentase pertumbuhan Incremental (Bio LMTD vs Bio MTD) untuk retailer:
+ * - Jika Bio MTD <= Bio LMTD (0 atau minus): 0%
+ * - Jika Bio LMTD = 0 dan Bio MTD > 0: 100%
+ * - Jika Bio LMTD > 0 dan Bio MTD > Bio LMTD: ((Bio MTD - Bio LMTD) / Bio LMTD) * 100%
+ */
+export function calcIncrementalPct(bioLmtd: number, bioMtd: number): string {
+    if (bioMtd <= bioLmtd) return '0%';
+    if (bioLmtd === 0) return '100%';
+    const pct = ((bioMtd - bioLmtd) / bioLmtd) * 100;
+    return Number.isInteger(pct) ? `${pct}%` : `${pct.toFixed(1)}%`;
+}
+
+/**
  * Hitung persentase 4 KPI card (OSA, SELLIN, BIOMETRIK, INCREMENTAL)
  * untuk dataset tertentu pada territory & SE terpilih.
  * Rumus identik dengan perhitungan view totals di App.tsx.
@@ -94,9 +117,9 @@ export function computeMetricPcts(
     const targetGrossAd = scopedSeRows.reduce((s, r) => s + (r.targetGrossAd ?? r.targetSellin), 0);
     const bioPct = targetGrossAd > 0 ? (grossAdAchieve / targetGrossAd) * 100 : 0;
 
-    const incremental = scopedSeRows.reduce((s, r) => s + r.incremental, 0);
-    const targetIncremental = scopedSeRows.reduce((s, r) => s + (r.targetIncremental || 40), 0);
-    const incPct = targetIncremental > 0 ? (incremental / targetIncremental) * 100 : 0;
+    const totalRetailers = scopedRetailers.length;
+    const incrementalRetailers = scopedRetailers.filter((r) => isIncremental20(r.bioLmtd, r.bioMtd)).length;
+    const incPct = totalRetailers > 0 ? (incrementalRetailers / totalRetailers) * 100 : 0;
 
     return { osa: osaPct, sellin: sellinPct, bio: bioPct, inc: incPct };
 }
