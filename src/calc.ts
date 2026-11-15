@@ -23,10 +23,10 @@ export const MONTH_MAP: Record<string, string> = {
     MEI: 'May', MAY: 'May',
     JUN: 'June', JUNI: 'June', JUNE: 'June',
     JUL: 'July', JULI: 'July', JULY: 'July',
-    AGT: 'August', AGUS: 'August', AGUSTUS: 'August', AUG: 'August', AUGUST: 'August',
+    AGU: 'August', AGT: 'August', AGUS: 'August', AGUSTUS: 'August', AUG: 'August', AUGUST: 'August',
     SEP: 'September', SEPTEMBER: 'September',
     OKT: 'October', OKTOBER: 'October', OCT: 'October', OCTOBER: 'October',
-    NOV: 'November', NOVEMBER: 'November',
+    NOV: 'November', NOVEMBER: 'November', NOP: 'November', NOPEMBER: 'November',
     DES: 'December', DESEMBER: 'December', DEC: 'December', DECEMBER: 'December',
 };
 
@@ -84,12 +84,87 @@ export function calcIncrementalPct(bioLmtd: number, bioMtd: number): string {
 }
 
 /**
- * Hitung rata-rata EC harian untuk seorang SE berdasarkan hari aktif (val > 0)
+ * Daftar hari libur nasional Indonesia (format "YYYY-MM-DD")
  */
-export function calcSeEcAvg(r: { ecDaily?: Record<number, number>; ecTotal?: number }): number {
-    const daily = r.ecDaily || {};
-    const activeDays = Object.values(daily).filter((v) => Number(v) > 0).length;
-    return activeDays > 0 ? (r.ecTotal || 0) / activeDays : 0;
+export const NATIONAL_HOLIDAYS: Set<string> = new Set([
+    // 2025
+    '2025-01-01', '2025-01-27', '2025-01-29', '2025-03-29', '2025-03-31', '2025-04-01',
+    '2025-04-18', '2025-05-01', '2025-05-12', '2025-05-29', '2025-06-01', '2025-06-07',
+    '2025-06-27', '2025-08-17', '2025-09-05', '2025-12-25',
+    // 2026
+    '2026-01-01', // Tahun Baru 2026 Masehi
+    '2026-01-16', // Isra Mikraj Nabi Muhammad SAW
+    '2026-02-17', // Tahun Baru Imlek 2577 Kongzili
+    '2026-03-19', // Hari Suci Nyepi (Tahun Baru Saka 1948)
+    '2026-03-21', // Hari Raya Idul Fitri 1447 H
+    '2026-03-22', // Hari Raya Idul Fitri 1447 H
+    '2026-04-03', // Wafat Yesus Kristus
+    '2026-05-01', // Hari Buruh Internasional
+    '2026-05-14', // Kenaikan Yesus Kristus
+    '2026-05-27', // Hari Raya Idul Adha 1447 H
+    '2026-05-31', // Hari Raya Waisak 2570
+    '2026-06-01', // Hari Lahir Pancasila
+    '2026-06-16', // Tahun Baru Islam 1448 H
+    '2026-08-17', // Proklamasi Kemerdekaan
+    '2026-08-25', // Maulid Nabi Muhammad SAW
+    '2026-12-25', // Kelahiran Yesus Kristus (Natal)
+]);
+
+export const HOLIDAYS_2026 = NATIONAL_HOLIDAYS;
+
+/**
+ * Mengecek apakah tanggal tertentu merupakan hari kerja:
+ * - Hari Minggu (getDay() === 0): BUKAN hari kerja
+ * - Hari Libur Nasional: BUKAN hari kerja
+ * - Hari Senin-Sabtu: Hari kerja
+ */
+export function isWorkingDay(year: number, monthIdx: number, day: number): boolean {
+    const dt = new Date(year, monthIdx, day);
+    if (dt.getDay() === 0) return false;
+    const mStr = String(monthIdx + 1).padStart(2, '0');
+    const dStr = String(day).padStart(2, '0');
+    const dateKey = `${year}-${mStr}-${dStr}`;
+    if (NATIONAL_HOLIDAYS.has(dateKey)) return false;
+    return true;
+}
+
+/**
+ * Menghitung total hari kerja dari tanggal 1 s/d cutoffDay dalam bulan & tahun tertentu
+ */
+export function countWorkingDays(year: number, monthIdx: number, cutoffDay: number): number {
+    let count = 0;
+    const maxDay = Math.min(Math.max(1, cutoffDay), 31);
+    for (let d = 1; d <= maxDay; d++) {
+        if (isWorkingDay(year, monthIdx, d)) {
+            count++;
+        }
+    }
+    return Math.max(1, count);
+}
+
+/**
+ * Parse tanggal, bulan, dan tahun dari nama file / label sumber data
+ */
+export function parseDateInfo(sourceOrLabel?: string | null): { day: number; monthIdx: number; year: number } {
+    const defaultRes = { day: 31, monthIdx: 10, year: 2026 };
+    if (!sourceOrLabel) return defaultRes;
+    const clean = sourceOrLabel.replace(/\.[^/.]+$/, '').replace(/[-_]/g, ' ').trim();
+    const m = clean.match(/(?:UPDATE\s+|Update\s+data\s*:\s*)?(\d{1,2})\s+([A-Za-z]+)(?:\s+(\d{4}))?/i);
+    if (!m) return defaultRes;
+    const day = parseInt(m[1], 10);
+    const monthRaw = m[2].toUpperCase();
+    const monthEng = MONTH_MAP[monthRaw];
+    const monthIdx = monthEng && MONTH_INDEX[monthEng] !== undefined ? MONTH_INDEX[monthEng] : defaultRes.monthIdx;
+    const year = m[3] ? parseInt(m[3], 10) : defaultRes.year;
+    return { day: day >= 1 && day <= 31 ? day : 31, monthIdx, year };
+}
+
+/**
+ * Hitung rata-rata EC harian untuk seorang SE berdasarkan total EC dibagi hari kerja
+ */
+export function calcSeEcAvg(total?: number, workingDays?: number): number {
+    const days = workingDays && workingDays > 0 ? workingDays : 1;
+    return (total || 0) / days;
 }
 
 /**

@@ -1,17 +1,18 @@
 import React, { useState, useMemo } from 'react';
 import type { SeRow } from '../types';
-import { fmtNum, fmtPct } from '../calc';
+import { fmtNum, fmtPct, calcSeEcAvg, fmtAvg } from '../calc';
 
 type Props = {
     seList: SeRow[];
     onClose: () => void;
     currentTs: string;
     activeDay?: number;
+    workingDays?: number;
 };
 
 type RangeOption = '1-8' | '9-16' | '17-24' | '25-31';
 
-export const EcTable: React.FC<Props> = ({ seList, onClose, currentTs, activeDay = 31 }) => {
+export const EcTable: React.FC<Props> = ({ seList, onClose, currentTs, activeDay = 31, workingDays = 1 }) => {
     const [range, setRange] = useState<RangeOption>('1-8');
 
     const days = useMemo(() => {
@@ -30,28 +31,16 @@ export const EcTable: React.FC<Props> = ({ seList, onClose, currentTs, activeDay
     const totalEc = seList.reduce((sum, r) => sum + (r.ecTotal || 0), 0);
     const targetEc = seList.reduce((sum, r) => sum + (r.ecTarget || 0), 0);
     const overallPct = targetEc > 0 ? (totalEc / targetEc) * 100 : 0;
-
-    /** Hitung rata-rata EC per hari aktif (val > 0) */
-    const calcSeAvg = (r: SeRow): number => {
-        const daily = r.ecDaily || {};
-        const activeDays = Object.values(daily).filter((v) => Number(v) > 0).length;
-        return activeDays > 0 ? (r.ecTotal || 0) / activeDays : 0;
-    };
-
-    /** Format 1 desimal koma tanpa teks "Avg" (misal: 70,8) */
-    const fmtAvg = (val: number): string => {
-        if (!val || isNaN(val) || val <= 0) return '0,0';
-        return val.toLocaleString('id-ID', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
-    };
+    const effectiveWorkingDays = workingDays && workingDays > 0 ? workingDays : 1;
 
     /** Warna Average: hijau jika > 70, merah jika <= 70 */
     const avgTone = (val: number): string => (val > 70 ? 'ec-avg-high' : 'ec-avg-low');
 
     const overallAvg = useMemo(() => {
         if (seList.length === 0) return 0;
-        const totalAvg = seList.reduce((sum, r) => sum + calcSeAvg(r), 0);
+        const totalAvg = seList.reduce((sum, r) => sum + calcSeEcAvg(r.ecTotal || 0, effectiveWorkingDays), 0);
         return totalAvg / seList.length;
-    }, [seList]);
+    }, [seList, effectiveWorkingDays]);
 
     /**
      * Color rules per user directive:
@@ -165,7 +154,7 @@ export const EcTable: React.FC<Props> = ({ seList, onClose, currentTs, activeDay
                             const ecTarget = r.ecTarget || 0;
                             const ecPct = r.ecPct || 0;
                             const daily = r.ecDaily || {};
-                            const seAvg = calcSeAvg(r);
+                            const seAvg = calcSeEcAvg(ecTotal, effectiveWorkingDays);
 
                             return (
                                 <tr key={r.seName + '|' + r.tsName}>
@@ -194,7 +183,7 @@ export const EcTable: React.FC<Props> = ({ seList, onClose, currentTs, activeDay
                                                 <td
                                                     key={d}
                                                     className="ec-td-day ec-val-locked"
-                                                    title={`Tanggal ${d} belum berjalan (Data per ${activeDay} Agt)`}
+                                                    title={`Tanggal ${d} belum berjalan (Data per tanggal ${activeDay})`}
                                                 >
                                                     -
                                                 </td>

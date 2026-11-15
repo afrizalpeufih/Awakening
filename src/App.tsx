@@ -7,7 +7,7 @@ import EcTable from './components/EcTable';
 import LandingPage from './components/LandingPage';
 import { UploadModal } from './components/UploadModal';
 import { getUploadHistory, loadHistoryItemData } from './supabaseDb';
-import { fmtNum, fmtPct, slugify, MONTH_MAP, parseFileDate, computeMetricPcts, isIncremental20, calcSeEcAvg, fmtAvg } from './calc';
+import { fmtNum, fmtPct, slugify, MONTH_MAP, parseFileDate, computeMetricPcts, isIncremental20, calcSeEcAvg, fmtAvg, parseDateInfo, countWorkingDays } from './calc';
 
 export type ExtendedMetricKey = MetricKey | 'ec';
 
@@ -17,25 +17,14 @@ const DEFAULT_TERRITORY = 'CS North Minahasa';
 /** Parse tanggal dari nama file sumber, misal "UPDATE 31 JULI.xlsx" => "Update data : 31 July 2026" */
 function parseUpdateLabel(source: string): string {
     if (!source) return '';
-    const clean = source.replace(/\.[^/.]+$/, '').trim();
-    const m = clean.match(/(?:UPDATE\s+)?(\d{1,2})\s+([A-Za-z]+)(?:\s+(\d{4}))?/i);
+    const clean = source.replace(/\.[^/.]+$/, '').replace(/[-_]/g, ' ').trim();
+    const m = clean.match(/(?:UPDATE\s+|Update\s+data\s*:\s*)?(\d{1,2})\s+([A-Za-z]+)(?:\s+(\d{4}))?/i);
     if (!m) return clean.startsWith('Update') ? clean : `Update data : ${clean}`;
     const day = m[1];
     const monthRaw = m[2].toUpperCase();
     const year = m[3] || '2026';
     const monthEng = MONTH_MAP[monthRaw] || monthRaw;
     return `Update data : ${day} ${monthEng} ${year}`;
-}
-
-/** Parse active day number from file source or update label (e.g. "20 August 2026" => 20) */
-function parseActiveDay(sourceOrLabel?: string): number {
-    if (!sourceOrLabel) return 31;
-    const m = sourceOrLabel.match(/(?:UPDATE\s+|Update\s+data\s*:\s*)?(\d{1,2})\s+[A-Za-z]{3,}/i);
-    if (m) {
-        const day = parseInt(m[1], 10);
-        if (day >= 1 && day <= 31) return day;
-    }
-    return 31;
 }
 
 const CaretIcon = () => (
@@ -405,12 +394,15 @@ export default function App() {
         ? ((incrementalGap / t.totalRetailers) * 100).toFixed(1)
         : '0.0';
 
-    // Rata-rata EC harian per hari aktif (val > 0)
+    const dateInfo = parseDateInfo(updateLabel || data.source);
+    const workingDays = countWorkingDays(dateInfo.year, dateInfo.monthIdx, dateInfo.day);
+
+    // Rata-rata EC harian sesuai hari kerja (Senin-Sabtu, kecuali hari libur nasional)
     const ecAvg = isAll
         ? (territorySeRows.length > 0
-            ? territorySeRows.reduce((sum, r) => sum + calcSeEcAvg(r), 0) / territorySeRows.length
+            ? territorySeRows.reduce((sum, r) => sum + calcSeEcAvg(r.ecTotal || 0, workingDays), 0) / territorySeRows.length
             : 0)
-        : (row ? calcSeEcAvg(row) : 0);
+        : (row ? calcSeEcAvg(row.ecTotal || 0, workingDays) : 0);
 
     // ── Growth vs data upload sebelumnya ─────────────────────────────
     let growthOsa: number | null = null;
@@ -613,7 +605,8 @@ export default function App() {
                         seList={selectedSe === ALL ? territorySeRows : territorySeRows.filter((r) => r.seName === selectedSe)}
                         onClose={() => setActiveMetric(null)}
                         currentTs={selectedSe === ALL ? currentTs : `${selectedSe} (${currentTs})`}
-                        activeDay={parseActiveDay(updateLabel || data.source)}
+                        activeDay={dateInfo.day}
+                        workingDays={workingDays}
                     />
                 )}
 
