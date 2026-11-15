@@ -86,6 +86,7 @@ export const EcTable: React.FC<Props> = ({ seList, onClose, currentTs, activeDay
                             <strong>{fmtPct(overallPct)}</strong>
                         </span>
                         <span className={`ec-summary-chip ec-summary-avg ${avgTone(overallAvg)}`}>
+                            <span className="ec-avg-label">Average</span>
                             <strong>{fmtAvg(overallAvg)}</strong>
                         </span>
                     </div>

@@ -3095,6 +3095,15 @@ body {
     backdrop-filter: blur(8px);
 }
 
+/* Chip average punya label teks di atas angka */
+.ec-summary-avg {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1px;
+    padding: 5px 14px;
+}
+
 .ec-summary-chip strong {
     color: #fff;
     font-weight: 700;
@@ -3261,6 +3270,17 @@ body {
 
 .ec-summary-chip.ec-avg-low strong {
     color: var(--bad);
+}
+
+.ec-avg-label {
+    display: block;
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    opacity: 0.75;
+    margin-bottom: 2px;
+    line-height: 1;
 }
 
 .ec-th-day,
