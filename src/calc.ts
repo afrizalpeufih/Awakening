@@ -91,8 +91,8 @@ export function computeMetricPcts(
     const targetSellin = scopedSeRows.reduce((s, r) => s + r.targetSellin, 0);
     const sellinPct = targetSellin > 0 ? (sellinMtd / targetSellin) * 100 : 0;
 
-    const bioGt1 = scopedRetailers.filter((r) => r.bioMtd > 1).length;
-    const bioPct = totalRetailers > 0 ? (bioGt1 / totalRetailers) * 100 : 0;
+    const grossAdAchieve = scopedRetailers.reduce((s, r) => s + r.bioMtd, 0);
+    const bioPct = targetSellin > 0 ? (grossAdAchieve / targetSellin) * 100 : 0;
 
     const incremental = scopedSeRows.reduce((s, r) => s + r.incremental, 0);
     const targetIncremental = scopedSeRows.reduce((s, r) => s + (r.targetIncremental || 40), 0);

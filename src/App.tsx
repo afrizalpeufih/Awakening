@@ -371,14 +371,15 @@ export default function App() {
     const t = viewTotals;
 
     const osaNullCount = viewRetailers.filter((r) => r.osaMtd === 0).length;
-    const sellinGte3Count = viewRetailers.filter((r) => r.sellinMtd >= 3).length;
+    const sellinGte5Count = viewRetailers.filter((r) => r.sellinMtd >= 5).length;
     const sellinNullCount = viewRetailers.filter((r) => r.sellinMtd === 0).length;
     const bioGt1Count = viewRetailers.filter((r) => r.bioMtd > 1).length;
     const bioNullCount = viewRetailers.filter((r) => r.bioMtd === 0).length;
     const qssoCount = viewRetailers.filter((r) => r.bioMtd >= 3).length;
     // GrossAd achieve = total semua Biometrik MTD (bukan hitungan retailer)
     const grossAdAchieve = viewRetailers.reduce((s, r) => s + r.bioMtd, 0);
-    const bioPct = t.totalRetailers > 0 ? (bioGt1Count / t.totalRetailers) * 100 : 0;
+    // Nilai utama BIOMETRIK = persentase GrossAd (grossAdAchieve / targetSellin)
+    const bioPct = t.targetSellin > 0 ? (grossAdAchieve / t.targetSellin) * 100 : 0;
     // Total visit = jumlah seluruh visit (tanpa memperdulikan besar/kecilnya)
     const totalVisit = viewRetailers.reduce((s, r) => s + r.visit, 0);
     const visitPct = t.targetVisit > 0 ? ((totalVisit / t.targetVisit) * 100).toFixed(1) : '0.0';
@@ -543,7 +544,7 @@ export default function App() {
                         hint={`Null Sellin : (${sellinNullCount})`}
                         subLabels={[
                             { label: 'Achieve', count: t.sellinMtd, total: t.targetSellin },
-                            { label: 'Retailer 3pcs', count: sellinGte3Count, total: t.totalRetailers },
+                            { label: 'Retailer 5pcs', count: sellinGte5Count, total: t.totalRetailers },
                         ]}
                         growth={{ delta: growthSellin, prevLabel: prevLabelShort }}
                     />
