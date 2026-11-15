@@ -307,6 +307,7 @@ export default function App() {
         const osaPct = targetOsa > 0 ? (osaMtd / targetOsa) * 100 : 0;
         const sellinMtd = territoryRetailers.reduce((s, r) => s + r.sellinMtd, 0);
         const targetSellin = territorySeRows.reduce((s, r) => s + r.targetSellin, 0);
+        const targetGrossAd = territorySeRows.reduce((s, r) => s + (r.targetGrossAd ?? r.targetSellin), 0);
         const sellinPct = targetSellin > 0 ? (sellinMtd / targetSellin) * 100 : 0;
         const bioGt1 = territoryRetailers.filter((r) => r.bioMtd > 1).length;
         const biometrikPct = totalRetailers > 0 ? (bioGt1 / totalRetailers) * 100 : 0;
@@ -328,6 +329,7 @@ export default function App() {
             osaPct,
             sellinMtd,
             targetSellin,
+            targetGrossAd,
             sellinPct,
             biometrikCount: bioGt1,
             biometrikPct,
@@ -349,6 +351,7 @@ export default function App() {
             osaPct: row.osaPct,
             sellinMtd: row.sellinMtd,
             targetSellin: row.targetSellin,
+            targetGrossAd: row.targetGrossAd ?? row.targetSellin,
             sellinPct: row.sellinPct,
             biometrikCount: row.bioGt1,
             biometrikPct: row.biometrikPct,
@@ -377,8 +380,9 @@ export default function App() {
     const qssoCount = viewRetailers.filter((r) => r.bioMtd >= 3).length;
     // GrossAd achieve = total semua Biometrik MTD (bukan hitungan retailer)
     const grossAdAchieve = viewRetailers.reduce((s, r) => s + r.bioMtd, 0);
-    // Nilai utama BIOMETRIK = persentase GrossAd (grossAdAchieve / targetSellin)
-    const bioPct = t.targetSellin > 0 ? (grossAdAchieve / t.targetSellin) * 100 : 0;
+    const targetGrossAd = t.targetGrossAd ?? t.targetSellin;
+    // Nilai utama BIOMETRIK = persentase GrossAd (grossAdAchieve / targetGrossAd)
+    const bioPct = targetGrossAd > 0 ? (grossAdAchieve / targetGrossAd) * 100 : 0;
     // Total visit = jumlah seluruh visit (tanpa memperdulikan besar/kecilnya)
     const totalVisit = viewRetailers.reduce((s, r) => s + r.visit, 0);
     const visitPct = t.targetVisit > 0 ? ((totalVisit / t.targetVisit) * 100).toFixed(1) : '0.0';
@@ -556,7 +560,7 @@ export default function App() {
                         active={activeMetric === 'biometrik'}
                         hint={`Null Biometrik : (${bioNullCount})`}
                         subLabels={[
-                            { label: 'GrossAd', count: grossAdAchieve, total: t.targetSellin },
+                            { label: 'GrossAd', count: grossAdAchieve, total: targetGrossAd },
                             { label: 'Retailer QSSO', count: qssoCount, total: t.totalRetailers },
                         ]}
                         growth={{ delta: growthBio, prevLabel: prevLabelShort }}

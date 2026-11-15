@@ -44,9 +44,10 @@ export default function LandingPage({ data, onDataLoaded, activeHistoryId, onSel
     const totalTargetSellin = tsData.reduce((sum, r) => sum + r.targetSellin, 0);
     const sellinPct = totalTargetSellin > 0 ? (totalSellinMtd / totalTargetSellin) * 100 : 0;
     
-    // Actual retailer count for biometrik (matching DashboardView)
-    const biometrikCount = tsRetailers.filter((r) => r.bioMtd > 1).length;
-    const biometrikPct = totalRetailers > 0 ? (biometrikCount / totalRetailers) * 100 : 0;
+    // GrossAd vs Target GrossAd for territory (matching DashboardView)
+    const grossAdAchieve = tsRetailers.reduce((sum, r) => sum + r.bioMtd, 0);
+    const totalTargetGrossAd = tsData.reduce((sum, r) => sum + (r.targetGrossAd ?? r.targetSellin), 0);
+    const biometrikPct = totalTargetGrossAd > 0 ? (grossAdAchieve / totalTargetGrossAd) * 100 : 0;
     
     // Actual incremental calculation (matching DashboardView dynamic TARGET sheet)
     const totalIncremental = tsData.reduce((sum, r) => sum + r.incremental, 0);

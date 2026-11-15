@@ -107,14 +107,21 @@ const getDayFromKey = (key: string): number | null => {
         }
     }
 
-    const targetBySe: Record<string, { tsName: string; targetOsa: number; targetSellin: number; targetIncremental: number; targetVisit: number }> = {};
+    const targetBySe: Record<string, { tsName: string; targetOsa: number; targetSellin: number; targetGrossAd: number; targetIncremental: number; targetVisit: number }> = {};
     for (const t of targetRows) {
         const se = String(getVal(t, ['SE_NAME', 'SE NAME', 'SE']) ?? '').trim();
         if (se) {
+            const targetSellin = num(getVal(t, ['Target Sellin SP3GB', 'TARGET SELLIN SP3GB', 'TARGET SELLIN']));
+            const targetGrossAdRaw = getVal(t, ['Target GrossAd', 'TARGET GROSSAD', 'Target Gross Ad', 'TARGET GROSS AD', 'TARGET GROSS']);
+            const targetGrossAd = (targetGrossAdRaw !== undefined && targetGrossAdRaw !== null && String(targetGrossAdRaw).trim() !== '')
+                ? num(targetGrossAdRaw)
+                : targetSellin;
+
             targetBySe[se] = {
                 tsName: String(getVal(t, ['TS_NAME', 'TS NAME', 'TS']) ?? '').trim(),
                 targetOsa: num(getVal(t, ['TARGET OSA JULY', 'TARGET OSA AUGUST', 'TARGET OSA', 'TARGET OSA MONTH'])),
-                targetSellin: num(getVal(t, ['Target Sellin SP3GB', 'TARGET SELLIN SP3GB', 'TARGET SELLIN'])),
+                targetSellin,
+                targetGrossAd,
                 targetIncremental: num(getVal(t, ['Target INCREMENTAL', 'TARGET INCREMENTAL', 'INCREMENTAL TARGET', 'TARGET INC'])) || 40,
                 targetVisit: num(getVal(t, ['Target VISIT', 'TARGET VISIT', 'VISIT TARGET'])) || 20,
             };
@@ -154,6 +161,7 @@ const getDayFromKey = (key: string): number | null => {
 
     const targetOsa = Object.values(targetBySe).reduce((s, t) => s + t.targetOsa, 0);
     const targetSellin = Object.values(targetBySe).reduce((s, t) => s + t.targetSellin, 0);
+    const targetGrossAd = Object.values(targetBySe).reduce((s, t) => s + (t.targetGrossAd ?? t.targetSellin), 0);
     const targetIncremental = Object.values(targetBySe).reduce((s, t) => s + t.targetIncremental, 0);
     const targetVisit = Object.values(targetBySe).reduce((s, t) => s + t.targetVisit, 0);
 
@@ -174,6 +182,7 @@ const getDayFromKey = (key: string): number | null => {
         osaPct,
         sellinMtd,
         targetSellin,
+        targetGrossAd,
         sellinPct,
         biometrikCount: bioGt1,
         biometrikPct,
@@ -196,7 +205,7 @@ const getDayFromKey = (key: string): number | null => {
     }
 
     const seList: SeRow[] = Object.entries(bySe).map(([seName, rows]) => {
-        const t = targetBySe[seName] || { tsName: rows[0]?.tsName || '', targetOsa: 0, targetSellin: 0, targetIncremental: 40, targetVisit: 20 };
+        const t = targetBySe[seName] || { tsName: rows[0]?.tsName || '', targetOsa: 0, targetSellin: 0, targetGrossAd: 0, targetIncremental: 40, targetVisit: 20 };
         const seTsName = t.tsName || rows[0]?.tsName || '';
         const seOsa = rows.reduce((s, r) => s + r.osaMtd, 0);
         const seSellin = rows.reduce((s, r) => s + r.sellinMtd, 0);
@@ -222,6 +231,7 @@ const getDayFromKey = (key: string): number | null => {
             untransactedRetailers: seUntransacted,
             targetOsa: t.targetOsa,
             targetSellin: t.targetSellin,
+            targetGrossAd: t.targetGrossAd ?? t.targetSellin,
             osaPct: t.targetOsa ? (seOsa / t.targetOsa) * 100 : 0,
             sellinPct: t.targetSellin ? (seSellin / t.targetSellin) * 100 : 0,
             biometrikPct: rows.length ? (seBio / rows.length) * 100 : 0,

@@ -7,6 +7,7 @@ export type SeRow = {
     osaPct: number;
     sellinMtd: number;
     targetSellin: number;
+    targetGrossAd?: number;
     sellinPct: number;
     bioGt1: number;
     biometrikPct: number;
@@ -44,6 +45,7 @@ export type Totals = {
     osaPct: number;
     sellinMtd: number;
     targetSellin: number;
+    targetGrossAd?: number;
     sellinPct: number;
     biometrikCount: number;
     biometrikPct: number;
