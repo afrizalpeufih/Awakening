@@ -81,7 +81,6 @@ export function computeMetricPcts(
         ? seRows.filter((r) => r.seName === seName)
         : seRows;
 
-    const totalRetailers = scopedRetailers.length;
 
     const osaMtd = scopedRetailers.reduce((s, r) => s + r.osaMtd, 0);
     const targetOsa = scopedSeRows.reduce((s, r) => s + r.targetOsa, 0);

@@ -373,7 +373,6 @@ export default function App() {
     const osaNullCount = viewRetailers.filter((r) => r.osaMtd === 0).length;
     const sellinGte5Count = viewRetailers.filter((r) => r.sellinMtd >= 5).length;
     const sellinNullCount = viewRetailers.filter((r) => r.sellinMtd === 0).length;
-    const bioGt1Count = viewRetailers.filter((r) => r.bioMtd > 1).length;
     const bioNullCount = viewRetailers.filter((r) => r.bioMtd === 0).length;
     const qssoCount = viewRetailers.filter((r) => r.bioMtd >= 3).length;
     // GrossAd achieve = total semua Biometrik MTD (bukan hitungan retailer)
